@@ -1,0 +1,31 @@
+import { createApp } from 'vue'
+
+import router from './router'
+
+import { createPinia } from 'pinia'
+const pinia = createPinia()
+
+import { Quasar } from 'quasar'
+import '@quasar/extras/material-icons/material-icons.css'
+import 'quasar/src/css/index.sass'
+
+import VueApexCharts from 'vue3-apexcharts'
+
+import '../css/_variables.css'
+import '../css/fonts.css'
+import '../css/app.css'
+
+import IndexPage from './pages/IndexPage.vue'
+
+const app = createApp(IndexPage)
+
+app.use(Quasar, {
+    plugins: {}, // import Quasar plugins and add here
+})
+    .use(VueApexCharts)
+    .use(pinia)
+    .use(router)
+
+router.isReady().then(() => {
+    app.mount('#app')
+})

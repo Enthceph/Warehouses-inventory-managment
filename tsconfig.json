@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "module": "es2022",
+        "strict": true,
+        "jsx": "preserve",
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": false,
+        "types": ["vite/client"],
+        "allowJs": true,
+        "baseUrl": ".",
+
+        "paths": {
+            "@/*": [
+                "resources/*"
+            ],
+            "tslib": [
+                "node_modules/tslib/tslib.d.ts"
+            ]
+        },
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    },
+    "include": [
+        "resources/**/*.ts",
+        "resources/**/*.vue",
+        "auto-imports.d.ts",
+        "tests/**/*.ts"
+    ],
+    "exclude": ["node_modules"]
+}
