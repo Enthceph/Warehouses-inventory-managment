@@ -1,9 +1,7 @@
 <?php
 
-use Database\Seeders\RolesSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,12 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
-            $table->string('role')->unique();
+            $table->unsignedBigInteger('organization_id');
+            $table->foreign('organization_id')->references('id')->on('organisations');
+            $table->string('warehouse_name');
+            $table->string('location')->nullable();
+            $table->string('contact_info')->nullable();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rolesSeeder');
+        Schema::dropIfExists('warehouses');
     }
 };

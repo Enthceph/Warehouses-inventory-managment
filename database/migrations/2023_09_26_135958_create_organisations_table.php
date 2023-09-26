@@ -16,17 +16,10 @@ return new class extends Migration
         Schema::create('organisations', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('contact_info')->nullable();
-
-            $table->foreignId('employees')->constrained(
-                table: 'employees'
-            )->nullable();
-
-            $table->foreignId('owner_id')->constrained(
-                table: 'users'
-            );
-
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

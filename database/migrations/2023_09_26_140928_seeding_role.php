@@ -14,7 +14,6 @@ return new class extends Migration
      */
     public function up()
     {
-
         Artisan::call( 'db:seed', [
                 '--class' => 'RolesSeeder',
                 '--force' => true ]

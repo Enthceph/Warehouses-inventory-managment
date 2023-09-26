@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-
-            $table->foreignId('role')->constrained(
-                table: 'roles'
-            );
-
-            $table->timestamps();
+        Schema::table('inventory', function (Blueprint $table) {
+            Schema::table('inventory', function (Blueprint $table) {
+                $table->dropUnique(['product_name']);
+            });
         });
     }
 
@@ -32,6 +27,5 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
     }
 };

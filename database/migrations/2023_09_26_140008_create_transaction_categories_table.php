@@ -1,9 +1,7 @@
 <?php
 
-use Database\Seeders\RolesSeeder;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,12 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
+        Schema::create('transaction_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('role')->unique();
+            $table->string('category')->unique();
             $table->timestamps();
         });
-
     }
 
     /**
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rolesSeeder');
+        Schema::dropIfExists('transaction_categories');
     }
 };

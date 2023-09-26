@@ -14,15 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignId('account_id')->constrained(table: 'accounts');
-            $table->foreignId('suppliers_id')->constrained(table: 'suppliers')->nullable();
-            $table->foreignId('outlets_id')->constrained(table: 'outlets')->nullable();
-            $table->foreignId('type_id')->constrained(table: 'transactions_categories', column: "id");
-
-            $table->BigInteger('amount');
+            $table->id();;
+            $table->decimal('amount');
             $table->string('description')->nullable();
+            $table->foreignId('type')->constrained('transaction_categories');
+            $table->foreignId('outlet_id')->constrained('outlets');
+
+            $table->foreignId('product')->constrained('inventory');
 
             $table->timestamps();
         });
