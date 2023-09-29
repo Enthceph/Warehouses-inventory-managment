@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('outlets', function (Blueprint $table) {
+            $table->renameColumn('organization_id', 'organisation_id');
+        });
+    }
+
+    public function down()
+    {
+        Schema::table('outlets', function (Blueprint $table) {
+            $table->renameColumn('organisation_id', 'organization_id');
+        });
+    }
+};

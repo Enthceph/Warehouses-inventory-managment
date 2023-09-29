@@ -1,6 +1,7 @@
-<script setup lang="ts"></script>
+<script lang="ts" setup></script>
 
 <template>
+    <q-ajax-bar/>
     <slot/>
 </template>
 

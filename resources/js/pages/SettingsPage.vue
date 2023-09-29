@@ -5,6 +5,7 @@ import { logout } from "@/api/auth";
 import { deleteToken } from "@/js/utils/token";
 
 import { useDialogPluginComponent } from 'quasar'
+import useApi from "@/js/composables/useApi";
 
 
 defineEmits([
@@ -49,7 +50,7 @@ const onExitOk = () => {
 const fetchChangePassword = () => {
 
 }
-
+const user = useApi('user')
 </script>
 
 
@@ -62,7 +63,7 @@ const fetchChangePassword = () => {
         <q-separator inset />
 
         <q-card-section class="grid grid-cols-4 gap-4 items-center">
-            <q-btn :disabled="newName.length < 2" color="primary" @click="">
+            <q-btn :disabled="newName.length < 2" color="primary" @click="user.execute()">
                 Сменить имя
             </q-btn>
 

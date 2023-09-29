@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import {defineConfig} from 'vite'
 import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -20,11 +20,11 @@ export default defineConfig({
             },
         }),
         AutoImport({
-            dts: 'types/auto-imports.d.ts',
+            dts: 'resources/js/types/auto-imports.d.ts',
             vueTemplate: true,
 
             imports: ['vue', 'vue-router'],
-            dirs: ['resourses/js/composables'],
+            dirs: ['resources/js/composables'],
         }),
     ],
     resolve: {

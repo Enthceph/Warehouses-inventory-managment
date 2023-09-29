@@ -1,9 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\BudgetFormController;
-use App\Http\Controllers\Api\BudgetHistoryController;
-use App\Http\Controllers\Api\BudgetReportController;
+use App\Http\Controllers\Api\OutletController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,22 +29,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('user', 'user');
-        Route::patch('changeName', 'changeName');
-
-        Route::get('currentMonthBudget', 'currentMonthBudget');
+        Route::patch('changeName', 'changeName')->middleware('restrictRole:admin');
+        Route::get('getUserOrganisation', 'getUserOrganisation');
     });
 
-    Route::controller(BudgetFormController::class)->group(function () {
-        Route::post('newIncome', 'newIncome');
-        Route::post('newExpense', 'newExpense');
+    Route::apiResource('outlet', OutletController::class);
 
-        Route::get('getIncomeCategories', 'getIncomeCategories');
-        Route::get('getExpenseCategories', 'getExpenseCategories');
-
-        Route::get('getAllCategories', 'getAllCategories');
-        Route::get('getAllCategoriesWithKeys', 'getAllCategoriesWithKeys');
-    });
-
-    Route::apiResource('budgetHistory', BudgetHistoryController::class);
-    Route::apiResource('budgetReport', BudgetReportController::class);
 });

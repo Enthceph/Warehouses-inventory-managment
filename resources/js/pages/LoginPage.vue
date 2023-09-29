@@ -1,56 +1,48 @@
-<script setup lang="ts">
-import { setToken } from "../utils/token";
-import useApi from "../composables/useApi";
+<script lang="ts" setup>
+import {setToken} from "../utils/token";
+
 const router = useRouter()
 
-//FORM
 const form_data = reactive({
     email: 'test@test.com',
     password: 'qwertyui',
 })
 
-const {
-    response,
-    data,
-    isError,
-    error,
-    errors,
-    execute,
-} = useApi('login', form_data, {
+const login = useApi('login', {
     immediate: false,
-    onFetchResponse: () => {
-        setToken(data.value!.access_token as string )
+}).post(form_data).json()
+login.onFetchResponse(() => {
+    setToken(login.data.value!.access_token as string)
 
-        router.push({
-            path: '/outlets'
-        })
-    }
+    router.push({
+        path: '/organisation'
+    })
 })
-
 
 </script>
 
 <template>
     <div class="form-wrapper">
-        <q-form autocomplete="off" class="form" @submit.prevent="execute()">
+        <q-form autocomplete="off" class="form" @submit.prevent="login.execute">
 
             <h2>Форма авторизации</h2>
 
             <div class="form-inputs">
-                <q-input v-model="form_data.email" autocomplete="off" label="Email" required="true" type="email" />
-                <q-input v-model="form_data.password" autocomplete="off" label="Password" required="true" type="password" />
+                <q-input v-model="form_data.email" autocomplete="off" label="Email" required="true" type="email"/>
+                <q-input v-model="form_data.password" autocomplete="off" label="Password" required="true"
+                         type="password"/>
             </div>
 
-            <div v-if="isError" class="error-box">
-                {{ error }}
+            <div v-if="login.error" class="error-box">
+                {{ login.error }}
             </div>
 
             <div class="buttons-group">
-                <q-btn type="submit" color="info">
+                <q-btn color="info" type="submit">
                     Submit
                 </q-btn>
 
-                <q-btn type="reset" color="red">
+                <q-btn color="red" type="reset">
                     Clear
                 </q-btn>
             </div>
@@ -61,6 +53,7 @@ const {
 
         </q-form>
     </div>
+    <div class="dev">{{ login }}</div>
 
 </template>
 
@@ -76,7 +69,7 @@ const {
 }
 
 h2 {
-    font-size: 26px;
+    font-size:   26px;
     font-weight: bold;
 }
 
@@ -90,12 +83,12 @@ h2 {
 }
 
 .to-registration-form {
-    color: var(--va-primary);
+    color:     var(--va-primary);
     font-size: 12px;
 }
 
 .error-box {
-    color: red;
+    color:     red;
     font-size: 14px;
 }
 </style>

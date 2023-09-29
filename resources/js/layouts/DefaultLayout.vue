@@ -2,6 +2,7 @@
 import TheHeader from '../components/TheHeader.vue'</script>
 
 <template>
+    <q-ajax-bar/>
     <div class="default-layout">
         <the-header class="header"/>
         <div class="page">

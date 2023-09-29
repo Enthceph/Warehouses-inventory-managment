@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\CreateUserAndOrganisationRequest;
+use App\Models\Organisation;
 use App\Models\User;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -16,17 +19,31 @@ class AuthController extends Controller
      * Create User
      * @param Request $request
      */
-    public function register(CreateUserRequest $request)
+    public function register(CreateUserAndOrganisationRequest $request)
     {
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        $user->createToken("API TOKEN")->plainTextToken;
+        DB::transaction(function () use ($request) {
+            $user_data = $request->user_data;
+            $organisation_data = $request->organisation_data;
 
-        return response(['message' => 'User created'],200);
+            Debugbar::log($user_data, $organisation_data);
+
+            $user = User::create([
+                'first_name' => $user_data['first_name'],
+                'last_name' => $user_data['last_name'],
+                'email' => $user_data['email'],
+                'password' => Hash::make($user_data['password']),
+            ]);
+            $user->createToken("API TOKEN")->plainTextToken;
+
+            $organisation = Organisation::create([
+                'title' => $organisation_data['title'],
+                'address' => $organisation_data['address'],
+                'contact_info' => $organisation_data['contact_info'],
+                'owner_id' => $user->id
+            ]);
+        });
+
+        return response(['message' => 'User created'], 200);
     }
 
     /**
@@ -35,6 +52,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
         if (!Auth::attempt($credentials)) {
             return response('Email & Password does not match with our record.', 401);

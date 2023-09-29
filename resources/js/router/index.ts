@@ -1,7 +1,7 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import auth from './middleware/auth.js'
 import middlewarePipeline from './middleware/middlewarePipeline.js'
-import { Context } from '../types/router'
+import {Context} from '../types/router'
 
 declare module 'vue-router' {
     interface RouteMeta {
@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'Home',
         redirect: {
-            path: '/outlets',
+            path: '/organisation',
         },
     },
     {
@@ -72,12 +72,12 @@ const routes: Array<RouteRecordRaw> = [
     },
 
     {
-        path: '/outlets',
-        name: 'Outlets',
-        component: () => import('../pages/OutletsPage.vue'),
+        path: '/organisation',
+        name: 'Organisation',
+        component: () => import('../pages/OrganisationPage.vue'),
         meta: {
             middleware: [auth],
-            description: 'Outlets',
+            description: 'Organisation',
             icon: 'outlets',
         },
     },
@@ -169,7 +169,7 @@ router.beforeEach((to, from, next) => {
     }
 
     const middleware = to.meta.middleware
-    const context: Context = { to, from, next }
+    const context: Context = {to, from, next}
 
     return middleware[0]({
         ...context,

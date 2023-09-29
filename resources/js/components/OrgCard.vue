@@ -1,25 +1,27 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 const props = defineProps<{
-    title: String,
-    address?: String,
-    contact_info?: String,
-    owner?: String,
+    outlet: {
+        id: Number,
+        name: String,
+        address?: String,
+        contact_info?: String,
+        owner?: String,
+    }
 }>()
-
 </script>
 
 <template>
-    <router-link :to="'outlets/' + title">
+    <router-link :to="'outlets/' + outlet.id">
         <q-card class="org-card">
             <q-card-section>
-                <div class="text-h6 text-center">{{ title }}</div>
+                <div class="text-h6 text-center">{{ outlet.name }}</div>
             </q-card-section>
 
 
             <q-card-section>
-                <div class="text-subtitle2">{{ address }}</div>
-                <div class="text-subtitle2">{{ contact_info }}</div>
-                <div class="text-subtitle2">{{ owner }}</div>
+                <div class="text-subtitle2">{{ outlet.address }}</div>
+                <div class="text-subtitle2">{{ outlet.contact_info }}</div>
+                <div class="text-subtitle2">{{ outlet.owner }}</div>
             </q-card-section>
         </q-card>
     </router-link>
@@ -27,9 +29,9 @@ const props = defineProps<{
 
 <style scoped>
 .org-card {
+    aspect-ratio:        1 / 1;
+    min-width:           172px;
     transition-duration: 0.3s;
-    aspect-ratio: 1 / 1;
-    min-width: 172px;
 }
 
 .org-card:hover,
