@@ -4,20 +4,16 @@ import {useOutletStore} from "@/js/stores/outlet";
 
 const route = useRoute()
 const outletStore = useOutletStore()
-// const onOrgChildPageRegexp = new RegExp(/^\/outlets\/[^\/]+\/[^\/]+$/)
-
-// const onOutletPage = computed(() => onOrgChildPageRegexp.test(route.fullPath))
 
 const organisation = useApi('getUserOrganisation').get().json()
 organisation.onFetchResponse(() => {
-    company_name.value = organisation.data.value.title
+    company_name.value = organisation.data.value.name
 })
 const company_name = ref('')
 
 </script>
 
 <template>
-
     <header class="bg-brown-6">
         <q-breadcrumbs>
             <q-breadcrumbs-el :label="company_name" to="/organisation"/>
@@ -27,7 +23,6 @@ const company_name = ref('')
                 :label="outletStore.name"
                 :to="'/outlets/' + route.params.outlet"
             />
-
         </q-breadcrumbs>
 
         <router-link to="/settings">

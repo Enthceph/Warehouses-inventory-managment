@@ -51,7 +51,20 @@ class OutletController extends Controller
      */
     public function show($id)
     {
-        return Outlet::find($id);
+        $userId = Auth::id();
+        $orgId = Auth::user()->organisation->id;
+        $outlet = Outlet::find($id);
+
+        if (!$outlet) {
+            return response(['message' => 'Not Found'], 404);
+        }
+
+        if (!$userId || $outlet->organisation_id !== $orgId) {
+            return response(['message' => 'Unauthorized'], 401);
+        }
+
+
+        return $outlet;
     }
 
     /**

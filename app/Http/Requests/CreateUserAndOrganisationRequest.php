@@ -18,7 +18,7 @@ class CreateUserAndOrganisationRequest extends FormRequest
             'user_data.last_name' => 'required|string|max:255',
             'user_data.email' => 'required|email|unique:users,email',
             'user_data.password' => 'required|string|min:8|confirmed',
-            'organisation_data.title' => 'required|string|max:255',
+            'organisation_data.name' => 'required|string|max:255',
             'organisation_data.address' => 'nullable|string',
             'organisation_data.contact_info' => 'nullable|string',
         ];
@@ -35,7 +35,7 @@ class CreateUserAndOrganisationRequest extends FormRequest
             'user_data.password.required' => 'The password field is required.',
             'user_data.password.min' => 'The password must be at least 8 characters.',
             'user_data.password.confirmed' => 'The password confirmation does not match.',
-            'organisation_data.title.required' => 'The organization title field is required.',
+            'organisation_data.name.required' => 'The organization name field is required.',
         ];
     }
 }

@@ -14,7 +14,7 @@ const user_data = reactive({
 })
 const organisation_form = ref(null)
 const organisation_data = reactive({
-    title: 'test org name',
+    name: 'test org name',
     address: '',
     contact_info: '',
 })
@@ -101,7 +101,7 @@ const step = ref(1)
             >
                 <q-form ref="organisation_form" autocomplete="off" class="form" tag="form" @submit.prevent="">
                     <div class="form-inputs">
-                        <q-input v-model="organisation_data.title"
+                        <q-input v-model="organisation_data.name"
                                  hide-bottom-space
                                  label="Title"
                                  required

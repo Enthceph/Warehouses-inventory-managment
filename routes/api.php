@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\OutletController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('getUserOrganisation', 'getUserOrganisation');
     });
 
+    Route::apiResource('warehouse', WarehouseController::class);
     Route::apiResource('outlet', OutletController::class);
-
+    Route::apiResource('employee', EmployeeController::class);
 });

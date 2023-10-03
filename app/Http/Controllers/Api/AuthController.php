@@ -7,7 +7,6 @@ use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\CreateUserAndOrganisationRequest;
 use App\Models\Organisation;
 use App\Models\User;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -25,8 +24,6 @@ class AuthController extends Controller
             $user_data = $request->user_data;
             $organisation_data = $request->organisation_data;
 
-            Debugbar::log($user_data, $organisation_data);
-
             $user = User::create([
                 'first_name' => $user_data['first_name'],
                 'last_name' => $user_data['last_name'],
@@ -36,7 +33,7 @@ class AuthController extends Controller
             $user->createToken("API TOKEN")->plainTextToken;
 
             $organisation = Organisation::create([
-                'title' => $organisation_data['title'],
+                'name' => $organisation_data['name'],
                 'address' => $organisation_data['address'],
                 'contact_info' => $organisation_data['contact_info'],
                 'owner_id' => $user->id

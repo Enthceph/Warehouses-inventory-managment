@@ -1,11 +1,9 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 
 import router from './router'
 
-import { createPinia } from 'pinia'
-const pinia = createPinia()
-
-import { Quasar } from 'quasar'
+import {createPinia} from 'pinia'
+import {Notify, Quasar} from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 
@@ -17,10 +15,14 @@ import '../css/app.css'
 
 import IndexPage from './pages/IndexPage.vue'
 
+const pinia = createPinia()
+
 const app = createApp(IndexPage)
 
 app.use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: {
+        Notify
+    },
 })
     .use(VueApexCharts)
     .use(pinia)

@@ -6,7 +6,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -24,7 +23,6 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
-        'role'
     ];
 
     /**
@@ -45,7 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     protected $attributes = [
-        'role' => 2,
+        'role_id' => 2,
     ];
 
     public function organisation()
@@ -53,15 +51,9 @@ class User extends Authenticatable
         return $this->hasOne(Organisation::class, 'owner_id');
     }
 
-    public function getRole()
-    {
-        $id = Auth::id();
-
-        return User::findOrFail($id)->role;
-    }
-
     public function role()
     {
         return $this->belongsTo(Role::class);
+
     }
 }

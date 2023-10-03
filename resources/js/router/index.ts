@@ -5,7 +5,6 @@ import {Context} from '../types/router'
 
 declare module 'vue-router' {
     interface RouteMeta {
-        addToNavbar?: boolean
         layout?: string
         middleware?: Function[]
         description?: string
@@ -47,7 +46,6 @@ const routes: Array<RouteRecordRaw> = [
             middleware: [auth],
             description: 'Настройки',
             icon: 'settings',
-            addToNavbar: true,
         },
     },
 
@@ -58,7 +56,6 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             description: "Dev's page",
             icon: 'developer_mode',
-            addToNavbar: true,
         },
     },
 

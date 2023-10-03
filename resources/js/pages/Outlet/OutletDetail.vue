@@ -1,15 +1,26 @@
 <script lang="ts" setup>
 import useApi from "@/js/composables/useApi";
 import {useOutletStore} from "@/js/stores/outlet";
+import {useQuasar} from 'quasar'
 
+const $q = useQuasar()
 const outletStore = useOutletStore()
+const router = useRouter()
 const route = useRoute()
 
 const outlet = useApi('outlet/' + route.params.outlet).json()
 outlet.onFetchResponse(() => {
     outletStore.setOutlet(outlet.data.value)
 })
+outlet.onFetchError(() => {
+    $q.notify({
+        message: outlet.error.value,
+        type: 'negative',
+        position: 'top-right'
+    })
 
+    router.push('/organisation')
+})
 onUnmounted(() => {
     outletStore.clearOutlet()
 })
@@ -17,7 +28,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div>org detail page</div>
+    <div>{{ outlet.data }}</div>
 
 
     <q-tabs active-color="primary" class="text-grey" indicator-color="primary" narrow-indicator>

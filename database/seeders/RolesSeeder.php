@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +20,7 @@ class RolesSeeder extends Seeder
             ['role' => 'Auditor'],
             ['role' => 'Accountant'],
             ['role' => 'Manager'],
-            ['role' => 'Employee'],
+            ['role' => 'OrganisationEmployee'],
 
         ]);
     }

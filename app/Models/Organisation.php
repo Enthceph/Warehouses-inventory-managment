@@ -11,7 +11,7 @@ class Organisation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'name',
         'address',
         'contact_info',
         'employees',
@@ -20,11 +20,16 @@ class Organisation extends Model
 
 //    public function employees()
 //    {
-//        return $this->hasMany(Employee::class)->where('id', );
+//        return $this->hasMany(OrganisationEmployee::class)->where('id', );
 //    }
 
     public function outlets(): HasMany
     {
         return $this->hasMany(Outlet::class, 'organisation_id');
+    }
+
+    public function warehouses()
+    {
+        return $this->hasMany(Warehouse::class, 'organisation_id');
     }
 }

@@ -13,13 +13,19 @@ class Role extends Model
         'role'
     ];
 
-    public function getRoleId($id)
+    static public function getRoleId($name)
     {
-        return Role::findOrFail($id);
+        $role = self::where('role', $name)->first();
+
+        if ($role) {
+            return $role->id;
+        }
+
+        return null; // or any other default value or error handling mechanism you prefer
     }
 
-    public function getRoleByName($name)
+    static public function getRoleByName($name)
     {
-        return Role::findOrFail($name);
+        return Role::where('role', $name)->first();
     }
 }
