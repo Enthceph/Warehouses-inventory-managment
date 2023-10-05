@@ -33,27 +33,27 @@ onUnmounted(() => {
 
     <q-tabs active-color="primary" class="text-grey" indicator-color="primary" narrow-indicator>
         <q-route-tab
-            :to="`/outlets/${route.params.outlet}/overview`"
+            :to="`/outlet/${route.params.outlet}/overview`"
             label="обзор"
             name="overview"
         />
         <q-route-tab
-            :to="`/outlets/${route.params.outlet}/transactions`"
+            :to="`/outlet/${route.params.outlet}/transactions`"
             label="транзакции"
             name="transactions"
         />
         <q-route-tab
-            :to="`/outlets/${route.params.outlet}/reports`"
+            :to="`/outlet/${route.params.outlet}/reports`"
             label="отчеты"
             name="reports"
         />
         <q-route-tab
-            :to="`/outlets/${route.params.outlet}/employees`"
+            :to="`/outlet/${route.params.outlet}/employees`"
             label="сотрудники"
             name="employees"
         />
         <q-route-tab
-            :to="`/outlets/${route.params.outlet}/settings`"
+            :to="`/outlet/${route.params.outlet}/settings`"
             label="настройки"
             name="settings"
         />

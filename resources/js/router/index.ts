@@ -80,18 +80,7 @@ const routes: Array<RouteRecordRaw> = [
     },
 
     {
-        path: '/Outlets/reports',
-        name: 'OutletReports',
-        component: () => import('../pages/OutletsPageReports.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Outlets Reports',
-            icon: 'reports',
-        },
-    },
-
-    {
-        path: '/Outlets/:outlet',
+        path: '/Outlet/:outlet',
         name: 'OutletDetail',
         component: () => import('../pages/Outlet/OutletDetail.vue'),
         meta: {
@@ -114,7 +103,7 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'suppliers',
                 name: 'OutletSuppliers',
-                component: () => import('../pages/Outlet/OutletSuppliers.vue'),
+                component: () => import('../pages/Outlet/OutletSettings.vue'),
                 meta: {
                     middleware: [auth],
                     description: 'Outlet Suppliers',

@@ -45,7 +45,7 @@ add_outlet_fetch.onFetchFinally(() => {
         <TabCard
             v-for="outlet of outlets.data.value"
             :name="outlet.name"
-            :to="`outlets/${outlet.id}/overview`"
+            :to="`outlet/${outlet.id}/overview`"
         />
         <TabAddCard
             @click="show_add_outlet_dialog = true"

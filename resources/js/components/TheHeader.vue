@@ -21,7 +21,7 @@ const company_name = ref('')
             <q-breadcrumbs-el
                 v-if="route.params.outlet"
                 :label="outletStore.name"
-                :to="'/outlets/' + route.params.outlet"
+                :to="'/outlet/' + route.params.outlet"
             />
         </q-breadcrumbs>
 
