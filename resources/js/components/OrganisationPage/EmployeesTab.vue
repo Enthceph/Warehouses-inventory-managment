@@ -28,7 +28,6 @@ const fetchEditEmployee = async () => {
         immediate: false
     }).patch(editable_employee).json()
 
-
     edit_employee.execute()
     employees.execute()
 }
@@ -112,7 +111,6 @@ const fetchAddEmployee = async () => {
                 <q-select
                     v-model="editable_employee.role"
                     :options="[
-                        'Administrator',
                         'Auditor',
                         'Accountant',
                         'Manager',

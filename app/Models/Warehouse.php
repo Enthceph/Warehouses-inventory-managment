@@ -16,5 +16,8 @@ class Warehouse extends Model
         'organisation_id'
     ];
 
-
+    public function inventory()
+    {
+        return $this->hasOne(Inventory::class);
+    }
 }

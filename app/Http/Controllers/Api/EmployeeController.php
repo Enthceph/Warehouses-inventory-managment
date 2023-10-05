@@ -43,7 +43,7 @@ class EmployeeController extends Controller
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
-                'role_id' => $request->role_id,
+                'role_id' => $role_id,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -54,8 +54,8 @@ class EmployeeController extends Controller
                 'employee_id' => $user->id,
             ]);
         });
-
     }
+
 
     /**
      * Display the specified resource.
@@ -65,20 +65,13 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $userId = Auth::id();
-        $orgId = Auth::user()->organisation->id;
-        $outlet = Outlet::find($id);
+        $user = User::find($id);
 
-        if (!$outlet) {
+        if (!$user) {
             return response(['message' => 'Not Found'], 404);
         }
 
-        if (!$userId || $outlet->organisation_id !== $orgId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-
-        return $outlet;
+        return $user;
     }
 
     /**

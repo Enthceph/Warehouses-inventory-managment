@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,10 +14,9 @@ return new class extends Migration
     {
         Schema::create('organisation_employee', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('organisation_id');
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('organisation_id')->references('id')->on('organisations');
-            $table->foreign('employee_id')->references('id')->on('users');
+            $table->foreignId('organisation_id')->constrained('organisations');
+            $table->foreignId('employee_id')->constrained('users');
+            $table->foreignId('outlet_id')->nullable()->constrained('outlets');
             $table->timestamps();
         });
     }
