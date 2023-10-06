@@ -3,6 +3,7 @@ import {useDialogPluginComponent} from 'quasar'
 import TabCard from "@/js/components/OrganisationPage/TabCard.vue";
 import TabLayout from "@/js/components/OrganisationPage/TabLayout.vue";
 import TabAddCard from "@/js/components/OrganisationPage/TabAddCard.vue";
+import useApi from "@/js/composables/useApi";
 
 const props = defineProps({})
 
@@ -37,6 +38,8 @@ const fetchAddWarehouse = async () => {
 add_warehouse_fetch.onFetchResponse(() => {
     warehouses.execute()
 })
+
+const all_inventories = useApi('inventory').get().json()
 </script>
 
 <template>
@@ -88,6 +91,8 @@ add_warehouse_fetch.onFetchResponse(() => {
             </q-card-actions>
         </q-card>
     </q-dialog>
+
+    <div>{{ all_inventories.data }}</div>
 </template>
 
 <style scoped>

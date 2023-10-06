@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import('../pages/LoginPage.vue'),
+        component: () => import('../pages/Login.vue'),
         meta: {
             layout: 'NoLayout',
         },
@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/registration',
         name: 'Registration',
-        component: () => import('../pages/RegistrationPage.vue'),
+        component: () => import('../pages/Registration.vue'),
         meta: {
             layout: 'NoLayout',
         },
@@ -41,21 +41,11 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/settings',
         name: 'Settings',
-        component: () => import('../pages/SettingsPage.vue'),
+        component: () => import('../pages/Settings.vue'),
         meta: {
             middleware: [auth],
             description: 'Настройки',
             icon: 'settings',
-        },
-    },
-
-    {
-        path: '/dev',
-        name: 'Dev',
-        component: () => import('../pages/DevPage.vue'),
-        meta: {
-            description: "Dev's page",
-            icon: 'developer_mode',
         },
     },
 
@@ -71,7 +61,7 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/organisation',
         name: 'Organisation',
-        component: () => import('../pages/OrganisationPage.vue'),
+        component: () => import('../pages/Organisation.vue'),
         meta: {
             middleware: [auth],
             description: 'Organisation',
@@ -81,14 +71,24 @@ const routes: Array<RouteRecordRaw> = [
 
     {
         path: '/Outlet/:outlet',
-        name: 'OutletDetail',
-        component: () => import('../pages/Outlet/OutletDetail.vue'),
+        name: 'Outlet',
+        component: () => import('../pages/Outlet/Outlet.vue'),
         meta: {
             middleware: [auth],
             description: 'Outlet Detail',
-            icon: 'outlet-detail',
+            icon: 'outlet',
         },
         children: [
+            {
+                path: 'overview',
+                name: 'OutletOverview',
+                component: () => import('../pages/Outlet/OutletOverview.vue'),
+                meta: {
+                    middleware: [auth],
+                    description: 'Outlet Overview',
+                    icon: 'taxes',
+                },
+            },
             {
                 path: 'transactions',
                 name: 'OutletTransactions',
@@ -101,13 +101,13 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
-                path: 'suppliers',
-                name: 'OutletSuppliers',
-                component: () => import('../pages/Outlet/OutletSettings.vue'),
+                path: 'reports',
+                name: 'OutletReports',
+                component: () => import('../pages/Outlet/OutletReports.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Outlet Suppliers',
-                    icon: 'suppliers',
+                    description: 'Outlet Reports',
+                    icon: 'reports',
                 },
             },
             {
@@ -121,27 +121,69 @@ const routes: Array<RouteRecordRaw> = [
                 },
             },
             {
-                path: 'overview',
-                name: 'OutletOverview',
-                component: () => import('../pages/Outlet/OutletOverview.vue'),
+                path: 'settings',
+                name: 'OutletSettings',
+                component: () => import('../pages/Outlet/OutletSettings.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Outlet Overview',
-                    icon: 'taxes',
-                },
-            },
-            {
-                path: 'reports',
-                name: 'OutletReports',
-                component: () => import('../pages/Outlet/OutletReports.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Reports',
-                    icon: 'reports',
+                    description: 'Outlet Settings',
+                    icon: 'settings',
                 },
             },
         ],
     },
+    {
+        path: '/warehouse/:id',
+        name: 'Warehouse',
+        component: () => import('../pages/Warehouse/Warehouse.vue'),
+        meta: {
+            middleware: [auth],
+            description: 'Warehouse Detail',
+            icon: 'warehouse-detail',
+        },
+        children: [
+            {
+                path: 'overview',
+                name: 'WarehouseOverview',
+                component: () => import('../pages/Warehouse/WarehouseOverview.vue'),
+                meta: {
+                    middleware: [auth],
+                    description: 'Warehouse Overview',
+                    icon: 'overview',
+                },
+            },
+            {
+                path: 'transactions',
+                name: 'WarehouseTransactions',
+                component: () => import('../pages/Warehouse/WarehouseTransactions.vue'),
+                meta: {
+                    middleware: [auth],
+                    description: 'Warehouse Transactions',
+                    icon: 'transactions',
+                },
+            },
+            {
+                path: 'reports',
+                name: 'WarehouseReports',
+                component: () => import('../pages/Warehouse/WarehouseReports.vue'),
+                meta: {
+                    middleware: [auth],
+                    description: 'Warehouse Reports',
+                    icon: 'reports',
+                },
+            },
+            {
+                path: 'settings',
+                name: 'WarehouseSettings',
+                component: () => import('../pages/Warehouse/WarehouseSettings.vue'),
+                meta: {
+                    middleware: [auth],
+                    description: 'Warehouse Settings',
+                    icon: 'settings',
+                },
+            },
+        ]
+    }
 ]
 
 const router = createRouter({

@@ -28,6 +28,7 @@ class WarehouseController extends Controller
             'contact_info' => $request->contact_info,
             'organisation_id' => $org_id,
         ]);
+        //TODO сделать транзакцию, добавляя инвентарь
     }
 
     public function show($id)

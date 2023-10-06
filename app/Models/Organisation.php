@@ -23,6 +23,7 @@ class Organisation extends Model
 //        return $this->hasMany(OrganisationEmployee::class)->where('id', );
 //    }
 
+
     public function outlets(): HasMany
     {
         return $this->hasMany(Outlet::class, 'organisation_id');

@@ -3,7 +3,9 @@
 </script>
 
 <template>
-    Settings
+    warehouse transactions
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

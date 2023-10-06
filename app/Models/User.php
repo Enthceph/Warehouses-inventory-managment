@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function organisation()
     {
-        return $this->hasOne(Organisation::class, 'owner_id');
+        return $this->hasOne(Organisation::class, 'owner_id', 'id');
     }
 
     public function role()

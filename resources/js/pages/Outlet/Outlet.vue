@@ -25,13 +25,12 @@ onUnmounted(() => {
     outletStore.clearOutlet()
 })
 
+const tab = ref('overview')
+console.log(route.params)
 </script>
 
 <template>
-    <div>{{ outlet.data }}</div>
-
-
-    <q-tabs active-color="primary" class="text-grey" indicator-color="primary" narrow-indicator>
+    <q-tabs v-model="tab" active-color="primary" class="text-grey" indicator-color="primary" narrow-indicator>
         <q-route-tab
             :to="`/outlet/${route.params.outlet}/overview`"
             label="обзор"

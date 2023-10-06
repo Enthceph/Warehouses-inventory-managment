@@ -3,7 +3,9 @@
 </script>
 
 <template>
-    Settings
+    warehouse reports
 </template>
 
-<style scoped></style>
+<style scoped>
+
+</style>

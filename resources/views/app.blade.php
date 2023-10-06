@@ -13,8 +13,8 @@
 
 </head>
 <body>
-    <div id="app">
-        <index-page></index-page>
-    </div>
+<div id="app">
+    <index></index>
+</div>
 </body>
 </html>

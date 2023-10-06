@@ -13,11 +13,11 @@ import '../css/_variables.css'
 import '../css/fonts.css'
 import '../css/app.css'
 
-import IndexPage from './pages/IndexPage.vue'
+import Index from './pages/Index.vue'
 
 const pinia = createPinia()
 
-const app = createApp(IndexPage)
+const app = createApp(Index)
 
 app.use(Quasar, {
     plugins: {

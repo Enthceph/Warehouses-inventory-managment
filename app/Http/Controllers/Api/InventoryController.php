@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Warehouse;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -15,9 +18,15 @@ class InventoryController extends Controller
      */
     public function index()
     {
-//        $org = Inventory::where('owner_id', Auth::id())->first();
+        $org = Auth::user()->organisation;
 
-        return $org->outlets;
+        $warehouses = $org->warehouses;
+
+        $inventories = $warehouses->map(function ($warehouse) {
+            return $warehouse->inventories;
+        });
+
+        return $inventories;
     }
 
     /**
@@ -29,38 +38,34 @@ class InventoryController extends Controller
     public function store(CreateOutletRequest $request)
     {
 
-        $orgId = Auth::user()->organisation->id;
-
-        Outlet::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'contact_info' => $request->contact_info,
-            'organisation_id' => $orgId,
-        ]);
+//        $orgId = Auth::user()->organisation->id;
+//
+//        Outlet::create([
+//            'name' => $request->name,
+//            'address' => $request->address,
+//            'contact_info' => $request->contact_info,
+//            'organisation_id' => $orgId,
+//        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param int $warehouse_id
      * @return Response
      */
-    public function show($id)
+    public function show($warehouse_id)
     {
-        $userId = Auth::id();
-        $orgId = Auth::user()->organisation->id;
-        $outlet = Outlet::find($id);
+        $warehouse = Warehouse::find($warehouse_id);
 
-        if (!$outlet) {
+        Debugbar::log($warehouse->inventories);
+
+        if (!$warehouse) {
             return response(['message' => 'Not Found'], 404);
         }
 
-        if (!$userId || $outlet->organisation_id !== $orgId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
 
-
-        return $outlet;
+        return $warehouse->inventories;
     }
 
     /**
