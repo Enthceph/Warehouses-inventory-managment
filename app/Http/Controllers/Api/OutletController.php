@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOutletRequest;
-use App\Models\Organisation;
-use App\Models\Outlet;
+use App\Services\OutletService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -17,11 +16,9 @@ class OutletController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(OutletService $service)
     {
-        $org = Organisation::where('owner_id', Auth::id())->first();
-
-        return $org->outlets;
+        return $service->getOutlets();
     }
 
     /**
@@ -30,41 +27,9 @@ class OutletController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(CreateOutletRequest $request)
+    public function store(CreateOutletRequest $request, OutletService $service)
     {
-
-        $orgId = Auth::user()->organisation->id;
-
-        Outlet::create([
-            'name' => $request->name,
-            'address' => $request->address,
-            'contact_info' => $request->contact_info,
-            'organisation_id' => $orgId,
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        $userId = Auth::id();
-        $orgId = Auth::user()->organisation->id;
-        $outlet = Outlet::find($id);
-
-        if (!$outlet) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
-        if (!$userId || $outlet->organisation_id !== $orgId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-
-        return $outlet;
+        $service->store($request);
     }
 
     /**
@@ -74,19 +39,40 @@ class OutletController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id, OutletService $service)
     {
-        $outlet = Outlet::find($id);
+        $outlet = $service->show($id);
 
         if (!$outlet) return response('Cant find outlet', 404);
 
-        $outlet->update([
-            'name' => $request->name,
-            'address' => $request->name,
-            'contact_info' => $request->name,
-        ]);
+        $service->update($request, $outlet);
 
         return response('Outlet changed successfully');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function show($id, OutletService $service)
+    {
+
+        $userId = Auth::id();
+        $orgId = Auth::user()->organisation->id;
+
+        $outlet = $service->show($id);
+
+        if (!$userId || $outlet->organisation_id !== $orgId) {
+            return response(['message' => 'Unauthorized'], 401);
+        }
+
+        if (!$outlet) {
+            return response(['message' => 'Not Found'], 404);
+        }
+
+        return $outlet;
     }
 
     /**

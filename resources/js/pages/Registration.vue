@@ -37,7 +37,6 @@ const fetchRegistration = async () => {
     await registration.execute()
 }
 
-
 const step = ref(1)
 
 </script>

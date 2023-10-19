@@ -3,7 +3,6 @@ import OutletsTab from "@/js/components/OrganisationPage/OutletsTab.vue";
 import WarehousesTab from "@/js/components/OrganisationPage/WarehousesTab.vue";
 import EmployeesTab from "@/js/components/OrganisationPage/EmployeesTab.vue";
 
-
 const tab = ref('employees')
 </script>
 
@@ -13,7 +12,6 @@ const tab = ref('employees')
         active-color="primary"
         align="justify"
         class="bg-grey-2"
-
     >
         <q-tab label="outlets" name="outlets"/>
         <q-tab label="warehouses" name="warehouses"/>
@@ -38,9 +36,4 @@ const tab = ref('employees')
 
         </q-tab-panel>
     </q-tab-panels>
-
-
 </template>
-
-<style scoped>
-</style>

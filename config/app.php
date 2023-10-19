@@ -41,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -214,5 +214,5 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
 
     ])->toArray(),
-    'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
+    'Debugbar' => Barryvdh\Debugbar\Facade::class,
 ];

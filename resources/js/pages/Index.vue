@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import {useFetching} from "@/js/composables/useFetching";
+import {user} from "@/api/user";
+import {useUserStore} from "@/js/stores/user";
+
+const userStore = useUserStore()
 
 let layout = computed(() => {
     const {meta} = useRoute();
@@ -11,6 +16,12 @@ let layout = computed(() => {
     );
 })
 
+const {fetch: fetchUser} = useFetching(user)
+
+onBeforeMount(async () => {
+    const res = await fetchUser()
+    userStore.setUser(res)
+})
 </script>
 
 <template>
@@ -18,5 +29,3 @@ let layout = computed(() => {
         <router-view/>
     </component>
 </template>
-
-<style scoped></style>

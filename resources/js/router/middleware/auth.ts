@@ -1,5 +1,5 @@
-import { checkAuth } from '@/api/auth'
-import { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
+import {checkAuth} from '@/api/auth'
+import {NavigationGuardNext, RouteLocationNormalized} from 'vue-router'
 
 type Context = {
     to: RouteLocationNormalized
@@ -7,9 +7,9 @@ type Context = {
     next: NavigationGuardNext
 }
 
-const auth = async ({ next }: Context) => {
+const auth = async ({next}: Context) => {
     if (!localStorage.getItem('access_token')) {
-        return next({ path: '/login' })
+        return next({path: '/login'})
     }
 
 
@@ -22,7 +22,7 @@ const auth = async ({ next }: Context) => {
                 '%cauth failed, redirecting to login page',
                 'color: Crimson'
             )
-            return next({ path: '/login' })
+            return next({path: '/login'})
         }
     }
 

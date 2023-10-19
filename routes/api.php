@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(UserController::class)->group(function () {
         Route::get('user', 'user');
-        Route::patch('changeName', 'changeName')->middleware('restrictRole:admin');
+        Route::patch('changeName', 'changeName');
         Route::get('getUserOrganisation', 'getUserOrganisation');
     });
 
@@ -41,3 +41,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('outlet', OutletController::class);
     Route::apiResource('employee', EmployeeController::class);
 });
+//        Route::patch('changeName', 'changeName')->middleware('restrictRole:admin');

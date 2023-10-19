@@ -11,6 +11,9 @@ organisation.onFetchResponse(() => {
 })
 const company_name = ref('')
 
+
+// const {} => useFetching(getUser)
+
 </script>
 
 <template>

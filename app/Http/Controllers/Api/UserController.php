@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Organisation;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,17 +12,24 @@ class UserController extends Controller
 {
     public function changeName(Request $request)
     {
-        Auth::user()->update(['name' => $request['name']]);
-
-        return response()->json(['name' => $request['name']]);
+        Auth::user()->update([
+            'first_name' => $request['first_name'],
+            'last_name' => $request['last_name']
+        ]);
     }
 
     public function user()
     {
+        $user = Auth::user();
 
-        Debugbar::log(Auth::user());
+        if ($user) {
+            $userPublic = $user->only(['first_name', 'last_name', 'email']);
+            $userPublic['role'] = $user->role->role;
 
-        return Auth::user();
+            return response()->json($userPublic);
+        }
+
+        return response()->json(['message' => 'User not found'], 404);
     }
 
     public function getUserOrganisation()
