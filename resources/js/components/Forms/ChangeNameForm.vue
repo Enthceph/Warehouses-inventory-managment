@@ -9,7 +9,7 @@ const name = reactive({
     first_name: '',
     last_name: ''
 })
-
+// TODO отправлять данные в emit
 const {fetch} = useFetching(changeName)
 
 onMounted(() => {
@@ -40,9 +40,4 @@ onMounted(() => {
             placeholder="Фамилия"
         />
     </q-form>
-
 </template>
-
-<style scoped>
-
-</style>

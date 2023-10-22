@@ -1,94 +1,27 @@
 <script lang="ts" setup>
-import {setToken} from "../utils/token";
+import {useFetching} from "@/js/composables/useFetching";
+import {login} from "@/api/auth";
+import LoginForm from "@/js/components/Forms/LoginForm.vue";
+import {setToken} from "@/js/utils/token";
 
 const router = useRouter()
 
-const form_data = reactive({
-    email: 'test@test.com',
-    password: 'qwertyui',
-})
+const {fetch: fetchLogin} = useFetching(login)
 
-const login = useApi('login', {
-    immediate: false,
-}).post(form_data).json()
-login.onFetchResponse(() => {
-    setToken(login.data.value!.access_token as string)
+const onFormSubmit = async (formData: { email: string, password: string }) => {
+    const res = await fetchLogin(formData)
+
+    setToken(res.access_token as string)
 
     router.push({
         path: '/organisation'
     })
-})
+}
 
 </script>
 
 <template>
-    <div class="form-wrapper">
-        <q-form autocomplete="off" class="form" @submit.prevent="login.execute">
-
-            <h2>Форма авторизации</h2>
-
-            <div class="form-inputs">
-                <q-input v-model="form_data.email" autocomplete="off" label="Email" required="true" type="email"/>
-                <q-input v-model="form_data.password" autocomplete="off" label="Password" required="true"
-                         type="password"/>
-            </div>
-
-            <div v-if="login.error" class="error-box">
-                {{ login.error }}
-            </div>
-
-            <div class="buttons-group">
-                <q-btn color="info" type="submit">
-                    Submit
-                </q-btn>
-
-                <q-btn color="red" type="reset">
-                    Clear
-                </q-btn>
-            </div>
-
-            <div class="to-registration-form">
-                <router-link to="/registration">Еще не зарегестрированы?</router-link>
-            </div>
-
-        </q-form>
-    </div>
-    <div class="dev">{{ login }}</div>
-
+    <LoginForm
+        @submit="onFormSubmit"
+    />
 </template>
-
-<style scoped>
-.form-wrapper {
-    @apply flex-center w-full h-screen;
-}
-
-.form {
-    @apply flex flex-col items-center justify-center w-full gap-6 p-8 max-w-lg px-12 py-9 rounded-lg;
-    background-color: var(--va-background-secondary);
-
-}
-
-h2 {
-    font-size:   26px;
-    font-weight: bold;
-}
-
-.form-inputs {
-    @apply flex flex-col gap-y-4;
-    width: 100%;
-}
-
-.buttons-group {
-    @apply flex justify-between w-full max-w-sm;
-}
-
-.to-registration-form {
-    color:     var(--va-primary);
-    font-size: 12px;
-}
-
-.error-box {
-    color:     red;
-    font-size: 14px;
-}
-</style>

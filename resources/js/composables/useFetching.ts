@@ -23,6 +23,7 @@ export const useFetching = (callback: Function) => {
             return data.value
         } catch (e: any) {
             isError.value = true
+            console.log({e})
             statusCode.value = e.response.status
 
             const errorResponse = await e.response.json()

@@ -9,8 +9,6 @@ import ChangeNameForm from "@/js/components/Forms/ChangeNameForm.vue";
 import ChangePasswordForm from "@/js/components/Forms/ChangePasswordForm.vue";
 
 defineEmits([
-    // REQUIRED; need to specify some events that your
-    // component will emit through useDialogPluginComponent()
     ...useDialogPluginComponent.emits
 ])
 

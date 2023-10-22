@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Login',
         component: () => import('../pages/Login.vue'),
         meta: {
-            layout: 'NoLayout',
+            layout: 'CenterLayout',
         },
     },
 
@@ -34,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Registration',
         component: () => import('../pages/Registration.vue'),
         meta: {
-            layout: 'NoLayout',
+            layout: 'CenterLayout',
         },
     },
 
