@@ -1,4 +1,6 @@
 import {defineStore} from 'pinia';
+import {useFetching} from "@/js/composables/useFetching";
+import {user} from "@/api/user";
 
 interface User {
     first_name: string
@@ -15,14 +17,20 @@ export const useUserStore = defineStore({
         email: '',
         role: '',
     }),
+    getters: {},
     actions: {
+        async fetchUser() {
+            const {fetch: fetchUser} = useFetching(user)
+            const res = await fetchUser()
+            this.setUser(res)
+        },
         setUser(user: User) {
             this.first_name = user.first_name
             this.last_name = user.last_name
             this.email = user.email
             this.role = user.role
         },
-        clearOutlet() {
+        clearUser() {
             this.first_name = ''
             this.last_name = ''
             this.email = ''

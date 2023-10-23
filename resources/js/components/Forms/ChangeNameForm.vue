@@ -12,7 +12,8 @@ const name = reactive({
 // TODO отправлять данные в emit
 const {fetch} = useFetching(changeName)
 
-onMounted(() => {
+onMounted(async () => {
+    await userStore.fetchUser()
     name.first_name = userStore.first_name
     name.last_name = userStore.last_name
 })

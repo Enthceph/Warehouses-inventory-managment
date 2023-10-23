@@ -1,5 +1,7 @@
 <script lang="js" setup>
 import {useDialogPluginComponent, useQuasar} from 'quasar'
+import EditEmployeeForm from "@/js/components/Forms/EditEmployeeForm.vue";
+import AddEmployeeForm from "@/js/components/Forms/AddEmployeeForm.vue";
 
 defineEmits([
     ...useDialogPluginComponent.emits
@@ -7,49 +9,46 @@ defineEmits([
 
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
 const $q = useQuasar()
-//get
+
+//get-------------------------------------
+
 const employees = useApi('employee', {
     immediate: false
 }).get().json()
 employees.execute()
-//edit
-const show_edit_dialog = ref(false)
-const edit_employee_form = ref(null)
-const editable_employee = ref({})
+
+//edit-------------------------------------------
+
+const editDialogIsVisible = ref(false)
+const editableEmployee = ref({})
 
 const showEditDialog = (employee) => {
-    editable_employee.value = employee
-    show_edit_dialog.value = true
+    editableEmployee.value = employee
+    editDialogIsVisible.value = true
 }
 
 const fetchEditEmployee = async () => {
-    if(!await edit_employee_form.value.validate()) return;
-    const edit_employee = useApi(`employee/${editable_employee.value.id}`, {
+
+    const edit_employee = useApi(`employee/${editableEmployee.value.id}`, {
         immediate: false
-    }).patch(editable_employee).json()
+    }).patch(editableEmployee).json()
 
     edit_employee.execute()
     employees.execute()
 }
 
-// add
-const add_employee_form = ref(null)
-const show_add_dialog = ref(false)
-const add_employee_data = reactive({
-    first_name: '',
-    last_name: '',
-    email: '',
-    password: '',
-    role: ''
-})
-const fetchAddEmployee = async () => {
-    if(!await add_employee_form.value.validate()) return;
+// add-----------------------------------------
 
+const showAddDialog = ref(false)
+
+const fetchAddEmployee = (employee) => {
     const add_employee = useApi(`employee`, {
         immediate: false
-    }).post(add_employee_data).json()
+    }).post(employee).json()
+
     add_employee.execute()
-    // employees.execute()
+    employees.execute()
+    showAddDialog.value = false
 }
 
 </script>
@@ -92,92 +91,20 @@ const fetchAddEmployee = async () => {
     </q-markup-table>
 
     <div class="w-full mt-4 flex justify-center">
-        <q-btn class="mx-auto" color="brown-6" icon="add" round @click="show_add_dialog = true"/>
+        <q-btn class="mx-auto" color="brown-6" icon="add" round @click="showAddDialog = true"/>
     </div>
 
-    <q-dialog ref="dialogRef" v-model="show_edit_dialog" @hide="onDialogHide">
-        <q-card class="q-pa-md">
-
-            <q-form ref="edit_employee_form" @submit.prevent>
-                <q-input
-                    v-model="editable_employee.first_name"
-                    :rules="[v => v.length >= 2 || `Имя должно иметь хотя бы 2 буквы`]"
-                    label="first_name"
-                />
-                <q-input
-                    v-model="editable_employee.last_name"
-                    :rules="[v => v.length >= 2 || `Фамилия должна иметь хотя бы 2 буквы`]"
-                    label="last_name"/>
-                <q-select
-                    v-model="editable_employee.role"
-                    :options="[
-                        'Auditor',
-                        'Accountant',
-                        'Manager',
-                        'Employee'
-                    ]"
-                    :rules="[v => !!v || `Роль должна быть выбрана`]"
-                    label="role"
-                />
-            </q-form>
-
-
-            <q-card-actions align="right">
-                <q-btn color="orange" label="Edit" @click="fetchEditEmployee"/>
-                <q-btn v-close-popup color="grey" label="Cancel"/>
-            </q-card-actions>
-
-        </q-card>
+    <q-dialog ref="dialogRef" v-model="editDialogIsVisible" @hide="onDialogHide">
+        <EditEmployeeForm
+            :employee="editableEmployee"
+            @submit="fetchEditEmployee"
+        />
     </q-dialog>
 
-    <q-dialog ref="dialogRef" v-model="show_add_dialog" @hide="onDialogHide">
-        <q-card class="q-pa-md">
-
-            <q-form ref="add_employee_form" @submit.prevent>
-                <q-input
-                    v-model="add_employee_data.first_name"
-                    :rules="[v => v.length >= 2 || `Имя должно иметь хотя бы 2 буквы`]"
-                    label="first_name"
-                />
-                <q-input
-                    v-model="add_employee_data.last_name"
-                    :rules="[v => v.length >= 2 || `Фамилия должна иметь хотя бы 2 буквы`]"
-                    label="last_name"/>
-                <q-input
-                    v-model="add_employee_data.email"
-                    :rules="[v => v.length >= 1 || `Введите email`]"
-                    label="email"
-                    type="email"
-                />
-                <q-input v-model="add_employee_data.password" autocomplete="off" label="Password" required
-                         type="password"/>
-                <q-input v-model="add_employee_data.password_confirmation"
-                         :rules="[v => v === add_employee_data.password || `Пароли не равны`]"
-                         hide-bottom-space
-                         label="Repeat password"
-                         required
-                         type="password"/>
-                <q-select
-                    v-model="add_employee_data.role"
-                    :options="[
-                        'Administrator',
-                        'Auditor',
-                        'Accountant',
-                        'Manager',
-                        'Employee'
-                    ]"
-                    :rules="[v => !!v || `Роль должна быть выбрана`]"
-                    label="role"
-                />
-            </q-form>
-
-
-            <q-card-actions align="right">
-                <q-btn color="orange" label="Edit" @click="fetchAddEmployee"/>
-                <q-btn v-close-popup color="grey" label="Cancel"/>
-            </q-card-actions>
-
-        </q-card>
+    <q-dialog ref="dialogRef" v-model="showAddDialog" @hide="onDialogHide">
+        <AddEmployeeForm
+            @submit="fetchAddEmployee"
+        />
     </q-dialog>
 </template>
 

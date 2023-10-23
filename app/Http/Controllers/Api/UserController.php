@@ -12,7 +12,8 @@ class UserController extends Controller
 {
     public function changeName(Request $request)
     {
-        Auth::user()->update([
+//        TODO этот return возвращает 1 или 0
+        return Auth::user()->update([
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name']
         ]);

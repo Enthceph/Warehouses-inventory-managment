@@ -18,14 +18,12 @@ const formData = reactive({
 const onSubmit = () => {
     emit('submit', formData);
 };
-
-
 </script>
 
 <template>
     <q-form ref="form" autocomplete="off" class="form" @submit.prevent="onSubmit">
 
-        <h2 class="text-h5 font-bold">Форма авторизации</h2>
+        <h2 class="text-h5 font-bold">Вход</h2>
 
         <div class="form-inputs">
             <q-input
@@ -49,12 +47,8 @@ const onSubmit = () => {
         </div>
 
         <div class="buttons-group">
-            <q-btn color="red" type="reset">
-                Clear
-            </q-btn>
-
-            <q-btn color="info" type="submit">
-                Submit
+            <q-btn class="w-full" color="info" type="submit">
+                Войти
             </q-btn>
         </div>
 
@@ -66,7 +60,7 @@ const onSubmit = () => {
 
 <style scoped>
 .form {
-    @apply flex flex-col items-center justify-center w-full gap-6 p-8 max-w-lg px-12 py-9 rounded-lg;
+    @apply flex flex-col items-center justify-center gap-6 p-8 px-12 py-9 rounded-lg;
     background-color: var(--va-background-secondary);
 }
 
@@ -75,7 +69,7 @@ const onSubmit = () => {
 }
 
 .buttons-group {
-    @apply flex justify-between w-full max-w-sm;
+    @apply flex justify-center w-full max-w-sm;
 }
 
 .to-registration-form {

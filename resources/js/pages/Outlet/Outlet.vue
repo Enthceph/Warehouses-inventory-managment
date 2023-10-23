@@ -26,7 +26,7 @@ onUnmounted(() => {
 })
 
 const tab = ref('overview')
-console.log(route.params)
+
 </script>
 
 <template>
