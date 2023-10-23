@@ -107,7 +107,3 @@ const fetchAddEmployee = (employee) => {
         />
     </q-dialog>
 </template>
-
-<style scoped>
-
-</style>
