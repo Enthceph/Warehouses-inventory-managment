@@ -4,42 +4,23 @@ import TabCard from "@/js/components/OrganisationPage/TabCard.vue";
 import TabLayout from "@/js/components/OrganisationPage/TabLayout.vue";
 import TabAddCard from "@/js/components/OrganisationPage/TabAddCard.vue";
 import useApi from "@/js/composables/useApi";
+import AddWarehouseForm, {Warehouse} from "@/js/components/Forms/AddWarehouseForm.vue";
 
-const props = defineProps({})
-
-defineEmits([
-    ...useDialogPluginComponent.emits
-])
-
+defineEmits([...useDialogPluginComponent.emits])
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
-
 
 const warehouses = useApi('warehouse').get().json()
 
+const showAddWarehouseModal = ref(false)
 
-const show_add_warehouse_dialog = ref(false)
-const add_warehouse_form = ref(null)
-const add_warehouse_data = reactive({
-    name: '',
-    address: '',
-    contact_info: ''
-})
-
-const add_warehouse_fetch = useApi('warehouse', {immediate: false}).post(add_warehouse_data).json()
-
-const fetchAddWarehouse = async () => {
-    // @ts-ignore
-    const form_validated = await add_warehouse_form.value.validate()
-
-    if (!form_validated) return;
-
-    add_warehouse_fetch.execute()
+const fetchAddWarehouse = (data: Warehouse) => {
+    const addWarehouseFetch = useApi('warehouse', {immediate: false}).post(data).json()
+    addWarehouseFetch.execute().then(() => {
+        warehouses.execute()
+    })
 }
-add_warehouse_fetch.onFetchResponse(() => {
-    warehouses.execute()
-})
 
-const all_inventories = useApi('inventory').get().json()
+const inventories = useApi('inventory').get().json()
 </script>
 
 <template>
@@ -51,50 +32,17 @@ const all_inventories = useApi('inventory').get().json()
         />
 
         <TabAddCard
-            @click="show_add_warehouse_dialog = true"
+            @click="showAddWarehouseModal = true"
         />
     </TabLayout>
 
-    <q-dialog ref="dialogRef" v-model="show_add_warehouse_dialog" @hide="onDialogHide">
-        <q-card class="q-dialog-plugin">
-            <q-card-section>
-                <h2 class="text-h5 text-center">Добавить точку</h2>
-            </q-card-section>
-
-            <q-card-section>
-                <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
-                    <q-input
-                        v-model="add_warehouse_data.name"
-                        :rules="[v => v.length >= 2 || `Название точки должно иметь хотя бы 2 буквы`]"
-                        label="Warehouse name"
-                        placeholder="Enter warehouse name"
-                        required
-                    />
-
-                    <q-input
-                        v-model="add_warehouse_data.address"
-                        label="Warehouse Address"
-                        placeholder="Enter warehouse address"
-                    />
-
-                    <q-input
-                        v-model="add_warehouse_data.contact_info"
-                        label="Contact Information"
-                        placeholder="Enter contact information"
-                    />
-                </q-form>
-            </q-card-section>
-
-            <q-card-actions align="right">
-                <q-btn color="primary" label="Добавить" @click="fetchAddWarehouse"/>
-                <q-btn color="grey" label="Отмена" @click="show_add_warehouse_dialog=false"/>
-            </q-card-actions>
-        </q-card>
+    <q-dialog ref="dialogRef" v-model="showAddWarehouseModal" @hide="onDialogHide">
+        <AddWarehouseForm
+            @cancel="showAddWarehouseModal = false"
+            @submit="fetchAddWarehouse"
+        />
     </q-dialog>
 
-    <div>{{ all_inventories.data }}</div>
+    <div>вот здесь должен быть весь инвентарь</div>
+    <div>{{ inventories.data }}</div>
 </template>
-
-<style scoped>
-
-</style>

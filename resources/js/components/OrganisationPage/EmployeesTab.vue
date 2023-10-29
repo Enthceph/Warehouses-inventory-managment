@@ -103,6 +103,7 @@ const fetchAddEmployee = (employee) => {
 
     <q-dialog ref="dialogRef" v-model="showAddDialog" @hide="onDialogHide">
         <AddEmployeeForm
+            @cancel="showAddDialog = false"
             @submit="fetchAddEmployee"
         />
     </q-dialog>

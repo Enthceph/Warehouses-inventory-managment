@@ -59,7 +59,7 @@ const tab = ref('overview')
     </q-tabs>
 
     <div class="wrapper">
-        <router-view></router-view>
+        <router-view/>
     </div>
 </template>
 

@@ -30,7 +30,7 @@ const route = useRoute()
     </q-tabs>
 
     <div class="wrapper">
-        <router-view></router-view>
+        <router-view/>
     </div>
 </template>
 

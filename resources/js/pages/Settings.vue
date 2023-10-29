@@ -8,6 +8,7 @@ import {useDialogPluginComponent} from 'quasar'
 import ChangeNameForm from "@/js/components/Forms/ChangeNameForm.vue";
 import ChangePasswordForm from "@/js/components/Forms/ChangePasswordForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
+import LogoutForm from "@/js/components/Forms/LogoutForm.vue";
 
 defineEmits([
     ...useDialogPluginComponent.emits
@@ -61,13 +62,9 @@ const onLogoutModalOk = () => {
     <!--    MODALS      -->
 
     <q-dialog ref="dialogRef" v-model="logoutModal" @hide="onDialogHide">
-        <q-card>
-            <q-card-section>Вы действительно хотите выйти?</q-card-section>
-
-            <q-card-actions align="right">
-                <q-btn color="red" label="Выйти" @click="onLogoutModalOk"/>
-                <q-btn v-close-popup color="grey" label="Cancel"/>
-            </q-card-actions>
-        </q-card>
+        <LogoutForm
+            @cancel="logoutModal=false"
+            @submit="onLogoutModalOk"
+        />
     </q-dialog>
 </template>

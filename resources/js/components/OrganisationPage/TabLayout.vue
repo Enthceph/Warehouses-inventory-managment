@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-
+//TODO на разных разрешениях карточки оч плохо скейлятся
 </script>
 
 <template>
     <div class="tab-layout">
-        <slot></slot>
+        <slot/>
     </div>
 </template>
 
