@@ -20,9 +20,8 @@ class EmployeeController extends Controller
     {
         $service->store($request);
 
-        return response('Employee created', 200);
+        return response(['message' => 'Employee created'], 200);
     }
-
 
     /**
      * Display the specified resource.

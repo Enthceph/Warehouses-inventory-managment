@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-
-// const userStore = useUserStore()
-
 let layout = computed(() => {
     const {meta} = useRoute();
     const layoutName = meta.layout ?? 'DefaultLayout';
@@ -12,13 +9,6 @@ let layout = computed(() => {
         }
     );
 })
-
-// const {fetch: fetchUser} = useFetching(user)
-//
-// onMounted(async () => {
-//     const res = await fetchUser()
-//     userStore.setUser(res)
-// })
 </script>
 
 <template>

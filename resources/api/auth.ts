@@ -12,5 +12,4 @@ export const register = (data: Object) =>
         json: data,
     })
 
-
 export const checkAuth = () => apiRequest.get('checkAuth')

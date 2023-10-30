@@ -10,7 +10,7 @@ const props = defineProps({
 
 const submit = () => {
     const validated = form.value.validate()
-    
+
     if (!validated) return
 
     emit('submit')
@@ -43,7 +43,7 @@ const submit = () => {
         </q-form>
 
         <q-card-actions align="between">
-            <q-btn v-close-popup color="grey" label="Cancel"/>
+            <q-btn color="grey" label="Cancel"/>
             <q-btn color="orange" label="Edit" type="submit"/>
         </q-card-actions>
     </q-card>

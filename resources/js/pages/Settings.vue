@@ -10,10 +10,7 @@ import ChangePasswordForm from "@/js/components/Forms/ChangePasswordForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
 import LogoutForm from "@/js/components/Forms/LogoutForm.vue";
 
-defineEmits([
-    ...useDialogPluginComponent.emits
-])
-
+defineEmits([...useDialogPluginComponent.emits])
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
 
 const router = useRouter()
@@ -32,6 +29,7 @@ const onLogoutModalOk = () => {
     }).catch((err) => {
         console.log(err)
     })
+
     router.push('/login')
 }
 

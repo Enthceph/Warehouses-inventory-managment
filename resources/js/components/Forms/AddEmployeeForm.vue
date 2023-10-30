@@ -88,7 +88,7 @@ const submit = async () => {
             />
         </q-form>
         <q-card-actions align="between" class="buttons">
-            <q-btn v-close-popup color="grey" label="Cancel"/>
+            <q-btn color="grey" label="Cancel"/>
             <q-btn color="orange" label="Add" padding="6px 16px" @click="submit"/>
         </q-card-actions>
     </q-card>

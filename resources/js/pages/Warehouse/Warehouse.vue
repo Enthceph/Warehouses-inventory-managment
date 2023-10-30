@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 const router = useRouter()
 const route = useRoute()
-
-
 </script>
 
 <template>
@@ -33,7 +31,3 @@ const route = useRoute()
         <router-view/>
     </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -8,6 +8,8 @@ const outletStore = useOutletStore()
 const router = useRouter()
 const route = useRoute()
 
+const tab = ref('overview')
+
 const outlet = useApi('outlet/' + route.params.outlet).json()
 outlet.onFetchResponse(() => {
     outletStore.setOutlet(outlet.data.value)
@@ -24,9 +26,6 @@ outlet.onFetchError(() => {
 onUnmounted(() => {
     outletStore.clearOutlet()
 })
-
-const tab = ref('overview')
-
 </script>
 
 <template>
@@ -62,7 +61,3 @@ const tab = ref('overview')
         <router-view/>
     </div>
 </template>
-
-<style scoped>
-
-</style>

@@ -1,55 +1,49 @@
 <script lang="js" setup>
-import {useDialogPluginComponent, useQuasar} from 'quasar'
+import {useDialogPluginComponent} from 'quasar'
 import EditEmployeeForm from "@/js/components/Forms/EditEmployeeForm.vue";
 import AddEmployeeForm from "@/js/components/Forms/AddEmployeeForm.vue";
+import {useFetching} from "@/js/composables/useFetching";
+import {addEmployee, editEmployee, getEmployees} from "@/api/employee";
 
-defineEmits([
-    ...useDialogPluginComponent.emits
-])
+defineEmits([...useDialogPluginComponent.emits])
 
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
-const $q = useQuasar()
 
-//get-------------------------------------
 
-const employees = useApi('employee', {
-    immediate: false
-}).get().json()
-employees.execute()
+onMounted(() => {
+    fetchGetEmployees()
+})
 
-//edit-------------------------------------------
 
-const editDialogIsVisible = ref(false)
-const editableEmployee = ref({})
+const {fetch: fetchGetEmployees, data: employees} = useFetching(getEmployees)
+const {fetch: fetchEditEmployee} = useFetching(editEmployee)
+const {fetch: fetchAddEmployee} = useFetching(addEmployee)
 
-const showEditDialog = (employee) => {
-    editableEmployee.value = employee
-    editDialogIsVisible.value = true
+const showEditEmployeeModal = ref(false)
+const showAddEmployeeModal = ref(false)
+const selectedEmployee = ref({})
+
+const onEditEmployeeClicked = (employee) => {
+    selectedEmployee.value = employee
+    showEditEmployeeModal.value = true
 }
 
-const fetchEditEmployee = async () => {
+const onEditEmployeeFormSubmit = async () => {
+    await fetchEditEmployee(selectedEmployee.value.id, selectedEmployee)
 
-    const edit_employee = useApi(`employee/${editableEmployee.value.id}`, {
-        immediate: false
-    }).patch(editableEmployee).json()
+    await fetchGetEmployees()
 
-    edit_employee.execute()
-    employees.execute()
+    showEditEmployeeModal.value = false
 }
 
-// add-----------------------------------------
+const onAddEmployeeFormSubmit = async (employee) => {
+    await fetchAddEmployee(employee)
 
-const showAddDialog = ref(false)
+    await fetchGetEmployees()
 
-const fetchAddEmployee = (employee) => {
-    const add_employee = useApi(`employee`, {
-        immediate: false
-    }).post(employee).json()
-
-    add_employee.execute()
-    employees.execute()
-    showAddDialog.value = false
+    showAddEmployeeModal.value = false
 }
+
 
 </script>
 
@@ -66,7 +60,7 @@ const fetchAddEmployee = (employee) => {
         </q-tr>
         </thead>
         <tbody>
-        <q-tr v-for="employee of employees.data.value">
+        <q-tr v-for="employee of employees">
             <q-td>{{ employee.id }}</q-td>
             <q-td>{{ employee.first_name }}</q-td>
             <q-td>{{ employee.last_name }}</q-td>
@@ -78,7 +72,7 @@ const fetchAddEmployee = (employee) => {
                     icon="edit"
                     rounded
                     size="sm"
-                    @click="showEditDialog(employee)"
+                    @click="onEditEmployeeClicked(employee)"
                 />
                 <q-btn
                     color="red"
@@ -91,20 +85,19 @@ const fetchAddEmployee = (employee) => {
     </q-markup-table>
 
     <div class="w-full mt-4 flex justify-center">
-        <q-btn class="mx-auto" color="brown-6" icon="add" round @click="showAddDialog = true"/>
+        <q-btn class="mx-auto" color="brown-6" icon="add" round @click="showAddEmployeeModal = true"/>
     </div>
 
-    <q-dialog ref="dialogRef" v-model="editDialogIsVisible" @hide="onDialogHide">
+    <q-dialog ref="dialogRef" v-model="showEditEmployeeModal" @hide="onDialogHide">
         <EditEmployeeForm
-            :employee="editableEmployee"
-            @submit="fetchEditEmployee"
+            :employee="selectedEmployee"
+            @submit="onEditEmployeeFormSubmit"
         />
     </q-dialog>
 
-    <q-dialog ref="dialogRef" v-model="showAddDialog" @hide="onDialogHide">
+    <q-dialog ref="dialogRef" v-model="showAddEmployeeModal" @hide="onDialogHide">
         <AddEmployeeForm
-            @cancel="showAddDialog = false"
-            @submit="fetchAddEmployee"
+            @submit="onAddEmployeeFormSubmit"
         />
     </q-dialog>
 </template>

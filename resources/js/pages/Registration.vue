@@ -23,7 +23,7 @@ const submitUserForm = (data: UserData) => {
 }
 const submitOrganisationForm = async (data: OrganisationData) => {
     registrationData.organisation_data = data
-    
+
     await fetchRegistration(registrationData)
 
     router.push('/login')
@@ -33,7 +33,8 @@ const submitOrganisationForm = async (data: OrganisationData) => {
 </script>
 
 <template>
-    <h2>Форма регистрации</h2>
+    <h2>Регистрация</h2>
+
     <q-stepper
         ref="stepper"
         v-model="step"

@@ -9,8 +9,6 @@ const inventory = useApi(`inventory/${route.params.id}`).get().json()
     <div>inventory overview</div>
 
     <div>{{ inventory.data }}</div>
-
-
 </template>
 
 <style scoped>
