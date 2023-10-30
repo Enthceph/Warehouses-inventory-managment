@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<script lang="ts" setup>
+import apexchart from 'apexcharts'
+
 const options: ApexCharts.ApexOptions = {
     chart: {
         height: 350,
@@ -45,43 +47,37 @@ const series: ApexAxisChartSeries = [
                 <h3 class="text-h5">Profit and loss</h3>
             </q-card-section>
 
-            <q-card-section horizontal class="flex justify-around gap-6 p-8">
-                <q-card flat bordered class="flex-1 p-2">
+            <q-card-section class="flex justify-around gap-6 p-8" horizontal>
+                <q-card bordered class="flex-1 p-2" flat>
                     <q-card-section class="text-h5">Total Revenue</q-card-section>
                     <q-card-section class="text-h4">20222</q-card-section>
                 </q-card>
 
-                <q-card flat bordered class=" flex-1 p-2">
+                <q-card bordered class=" flex-1 p-2" flat>
                     <q-card-section class="text-h5">Total Expenses</q-card-section>
                     <q-card-section class="text-h4">20222</q-card-section>
                 </q-card>
 
-                <q-card flat bordered class="flex-1 p-2">
+                <q-card bordered class="flex-1 p-2" flat>
                     <q-card-section class="text-h5">Net profit</q-card-section>
                     <q-card-section class="text-h4">20222</q-card-section>
                 </q-card>
             </q-card-section>
 
-            <apexchart type="bar" :options="options" :series="series" />
+            <apexchart :options="options" :series="series" type="bar"/>
 
         </q-card>
 
         <q-card>
             <q-card-section class="bg-red-100" horizontal>
                 <h3 class="text-h5">Top expenses</h3>
-                <q-space />
+                <q-space/>
                 <span class="texth-6">21 sep 2023 - 21 oct 2023</span>
             </q-card-section>
         </q-card>
     </div>
 </template>
 
-<style scoped >
-.profitAndLossCard {
-    padding: 16px;
-}
+<style scoped>
 
-.w {
-    color: #808080;
-}
 </style>

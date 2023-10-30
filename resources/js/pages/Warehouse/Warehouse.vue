@@ -1,27 +1,29 @@
 <script lang="ts" setup>
 const router = useRouter()
 const route = useRoute()
+
+const routeId = route.params.id
 </script>
 
 <template>
     <q-tabs active-color="primary" class="text-grey" indicator-color="primary" narrow-indicator>
         <q-route-tab
-            :to="`/warehouse/${route.params.id}/overview`"
+            :to="`/warehouse/${routeId}/overview`"
             label="обзор"
             name="overview"
         />
         <q-route-tab
-            :to="`/warehouse/${route.params.id}/transactions`"
+            :to="`/warehouse/${routeId}/transactions`"
             label="транзакции"
             name="transactions"
         />
         <q-route-tab
-            :to="`/warehouse/${route.params.id}/reports`"
+            :to="`/warehouse/${routeId}/reports`"
             label="отчеты"
             name="reports"
         />
         <q-route-tab
-            :to="`/warehouse/${route.params.id}/settings`"
+            :to="`/warehouse/${routeId}/settings`"
             label="настройки"
             name="settings"
         />

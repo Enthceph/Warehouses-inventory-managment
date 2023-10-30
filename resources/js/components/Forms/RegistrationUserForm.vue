@@ -21,8 +21,8 @@ const emit = defineEmits<{
     (e: 'submit', data: UserData): void;
 }>();
 
-const submit = async () => {
-    const validated = await form.value.validate()
+const submit = () => {
+    const validated = form.value.validate()
 
     if (!validated) return;
 

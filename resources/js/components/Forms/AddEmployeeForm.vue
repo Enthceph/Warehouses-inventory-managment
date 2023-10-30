@@ -23,8 +23,8 @@ const employee = reactive({
     role: '',
 })
 
-const submit = async () => {
-    const validated = await form.value.validate()
+const submit = () => {
+    const validated = form.value.validate()
 
     if (!validated) return
 

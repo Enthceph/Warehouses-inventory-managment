@@ -13,7 +13,3 @@ const props = defineProps<{
         </q-card>
     </router-link>
 </template>
-
-<style scoped>
-
-</style>

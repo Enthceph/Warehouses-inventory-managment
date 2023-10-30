@@ -2,59 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: var(--bg-grey);
 }
 
-.container{
-    color: var(--main-black);
-    background-color: var(--main-white);
-    box-shadow: 2px 2px 3px 0px var(--main-black);
-    padding: 12px;
-}
-.text-red{
-    color: var(--va-danger);
-}
-.text-green{
-    color: var(--va-success);
-}
-
 .error-box {
-    color: Crimson;
+    color:     Crimson;
     font-size: 14px;
 }
+
 .dev {
-    position: fixed;
-    bottom: 50px;
-    left: 0;
     background-color: black;
-    color: white;
-    padding: 6px;
-    z-index: 9999;
+    bottom:           50px;
+    color:            white;
+    left:             0;
+    padding:          6px;
+    position:         fixed;
+    z-index:          9999;
 }
-.dev.top{
+
+.dev.top {
     bottom: auto;
-    top: 0;
+    top:    0;
 }
 
 @layer utilities {
-    .grid-center{
-        display: grid;
+    .grid-center {
+        display:     grid;
         place-items: center;
     }
-    .flex-center{
-        display:flex;
-        align-items: center;
+
+    .flex-center {
+        display:         flex;
+        align-items:     center;
         justify-content: center;
     }
-    .absolute-center{
-        position: absolute;
-        top:50%;
-        left: 50%;
+
+    .absolute-center {
+        position:  absolute;
+        top:       50%;
+        left:      50%;
         transform: translate(-50%, -50%);
     }
 }

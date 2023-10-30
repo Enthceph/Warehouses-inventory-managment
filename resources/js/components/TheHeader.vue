@@ -5,6 +5,8 @@ import {useOutletStore} from "@/js/stores/outlet";
 const route = useRoute()
 const outletStore = useOutletStore()
 
+const outletId = route.params.outlet
+
 const organisation = useApi('getUserOrganisation').get().json()
 organisation.onFetchResponse(() => {
     company_name.value = organisation.data.value.name
@@ -14,6 +16,7 @@ const company_name = ref('')
 
 // const {} => useFetching(getUser)
 
+
 </script>
 
 <template>
@@ -22,9 +25,9 @@ const company_name = ref('')
             <q-breadcrumbs-el :label="company_name" to="/organisation"/>
 
             <q-breadcrumbs-el
-                v-if="route.params.outlet"
+                v-if="outletId"
                 :label="outletStore.name"
-                :to="'/outlet/' + route.params.outlet"
+                :to="'/outlet/' + outletId"
             />
         </q-breadcrumbs>
 

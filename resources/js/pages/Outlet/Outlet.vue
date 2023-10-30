@@ -1,28 +1,34 @@
 <script lang="ts" setup>
-import useApi from "@/js/composables/useApi";
 import {useOutletStore} from "@/js/stores/outlet";
 import {useQuasar} from 'quasar'
+import {useFetching} from "@/js/composables/useFetching";
+import {getOutlet} from "@/api/outlet";
 
 const $q = useQuasar()
 const outletStore = useOutletStore()
 const router = useRouter()
 const route = useRoute()
 
+const outletId = route.params.outlet
+
 const tab = ref('overview')
 
-const outlet = useApi('outlet/' + route.params.outlet).json()
-outlet.onFetchResponse(() => {
-    outletStore.setOutlet(outlet.data.value)
-})
-outlet.onFetchError(() => {
-    $q.notify({
-        message: outlet.error.value,
-        type: 'negative',
-        position: 'top-right'
-    })
+const {fetch: fetchGetOutlet, data: outlet, error} = useFetching(getOutlet)
 
-    router.push('/organisation')
+onMounted(async () => {
+    await fetchGetOutlet(outletId).then(() => {
+        outletStore.setOutlet(outlet)
+    }).catch(() => {
+        $q.notify({
+            message: error.value,
+            type: 'negative',
+            position: 'top-right'
+        })
+
+        router.push('/organisation')
+    })
 })
+
 onUnmounted(() => {
     outletStore.clearOutlet()
 })
@@ -31,27 +37,27 @@ onUnmounted(() => {
 <template>
     <q-tabs v-model="tab" active-color="primary" class="text-grey" indicator-color="primary" narrow-indicator>
         <q-route-tab
-            :to="`/outlet/${route.params.outlet}/overview`"
+            :to="`/outlet/${outletId}/overview`"
             label="обзор"
             name="overview"
         />
         <q-route-tab
-            :to="`/outlet/${route.params.outlet}/transactions`"
+            :to="`/outlet/${outletId}/transactions`"
             label="транзакции"
             name="transactions"
         />
         <q-route-tab
-            :to="`/outlet/${route.params.outlet}/reports`"
+            :to="`/outlet/${outletId}/reports`"
             label="отчеты"
             name="reports"
         />
         <q-route-tab
-            :to="`/outlet/${route.params.outlet}/employees`"
+            :to="`/outlet/${outletId}/employees`"
             label="сотрудники"
             name="employees"
         />
         <q-route-tab
-            :to="`/outlet/${route.params.outlet}/settings`"
+            :to="`/outlet/${outletId}/settings`"
             label="настройки"
             name="settings"
         />

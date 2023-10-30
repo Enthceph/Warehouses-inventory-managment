@@ -19,8 +19,8 @@ const emit = defineEmits<{
     (e: 'stepBack'): void
 }>();
 
-const submit = async () => {
-    const validated = await form.value.validate()
+const submit = () => {
+    const validated = form.value.validate()
     console.log(validated)
     emit('submit', data)
 }

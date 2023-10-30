@@ -4,26 +4,32 @@ import TabLayout from "@/js/components/OrganisationPage/TabLayout.vue";
 import TabCard from '@/js/components/OrganisationPage/TabCard.vue'
 import TabAddCard from "@/js/components/OrganisationPage/TabAddCard.vue";
 import AddOutletForm, {Outlet} from "@/js/components/Forms/AddOutletForm.vue";
+import {useFetching} from "@/js/composables/useFetching";
+import {addOutlet, getOutlets} from "@/api/outlet";
 
 defineEmits([...useDialogPluginComponent.emits])
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
 
-const outlets = useApi('outlet').get().json()
-
 const showAddOutletModal = ref(false)
-const fetchAddOutlet = (data: Outlet) => {
-    const addOutletFetch = useApi('outlet', {immediate: false}).post(data).json()
 
-    addOutletFetch.execute().then(() => {
-        outlets.execute()
-    })
+const {fetch: fetchGetOutlets, data: outlets} = useFetching(getOutlets)
+const {fetch: fetchAddOutlet} = useFetching(addOutlet)
+
+const onAddOutletFormSubmit = async (data: Outlet) => {
+    await fetchAddOutlet(data)
+
+    await fetchGetOutlets()
 }
+
+onMounted(() => {
+    fetchGetOutlets()
+})
 </script>
 
 <template>
     <TabLayout>
         <TabCard
-            v-for="outlet of outlets.data.value"
+            v-for="outlet of outlets"
             :name="outlet.name"
             :to="`outlet/${outlet.id}/overview`"
         />
@@ -35,11 +41,7 @@ const fetchAddOutlet = (data: Outlet) => {
     <q-dialog ref="dialogRef" v-model="showAddOutletModal" @hide="onDialogHide">
         <AddOutletForm
             @cancel="showAddOutletModal = false"
-            @submit="fetchAddOutlet"
+            @submit="onAddOutletFormSubmit"
         />
     </q-dialog>
 </template>
-
-<style scoped>
-
-</style>

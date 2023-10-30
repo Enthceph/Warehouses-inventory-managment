@@ -19,7 +19,7 @@ const tab = ref('employees')
         <q-tab label="transactions" name="transactions"/>
     </q-tabs>
 
-    <q-tab-panels v-model="tab" animated class="">
+    <q-tab-panels v-model="tab" animated class="" keep-alive>
         <q-tab-panel name="outlets">
             <OutletsTab/>
         </q-tab-panel>
