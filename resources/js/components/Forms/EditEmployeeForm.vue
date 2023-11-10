@@ -2,6 +2,7 @@
 const form = ref()
 const emit = defineEmits<{
     (e: 'submit'): void
+    (e: 'cancel'): void
 }>()
 
 const props = defineProps({
@@ -15,6 +16,11 @@ const submit = () => {
 
     emit('submit')
 }
+
+const cancel = () => {
+    emit('cancel')
+}
+
 </script>
 
 <template>
@@ -43,7 +49,7 @@ const submit = () => {
         </q-form>
 
         <q-card-actions align="between">
-            <q-btn color="grey" label="Cancel"/>
+            <q-btn color="grey" label="Cancel" @click="cancel"/>
             <q-btn color="orange" label="Edit" type="submit"/>
         </q-card-actions>
     </q-card>

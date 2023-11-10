@@ -3,39 +3,19 @@ import {useDialogPluginComponent} from 'quasar'
 import EditEmployeeForm from "@/js/components/Forms/EditEmployeeForm.vue";
 import AddEmployeeForm from "@/js/components/Forms/AddEmployeeForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
-import {addEmployee, editEmployee, getEmployees} from "@/api/employee";
+import {addEmployee, deleteEmployee, editEmployee, getEmployees} from "@/api/employee";
 
 defineEmits([...useDialogPluginComponent.emits])
 
-const {dialogRef, onDialogHide} = useDialogPluginComponent()
-
+const {dialogRef} = useDialogPluginComponent()
 
 onMounted(() => {
     fetchGetEmployees()
 })
 
-
-const {fetch: fetchGetEmployees, data: employees} = useFetching(getEmployees)
-const {fetch: fetchEditEmployee} = useFetching(editEmployee)
-const {fetch: fetchAddEmployee} = useFetching(addEmployee)
-
-const showEditEmployeeModal = ref(false)
+// ADD
 const showAddEmployeeModal = ref(false)
-const selectedEmployee = ref({})
-
-const onEditEmployeeClicked = (employee) => {
-    selectedEmployee.value = employee
-    showEditEmployeeModal.value = true
-}
-
-const onEditEmployeeFormSubmit = async () => {
-    await fetchEditEmployee(selectedEmployee.value.id, selectedEmployee)
-
-    await fetchGetEmployees()
-
-    showEditEmployeeModal.value = false
-}
-
+const {fetch: fetchAddEmployee} = useFetching(addEmployee)
 const onAddEmployeeFormSubmit = async (employee) => {
     await fetchAddEmployee(employee)
 
@@ -44,10 +24,49 @@ const onAddEmployeeFormSubmit = async (employee) => {
     showAddEmployeeModal.value = false
 }
 
+// EDIT
+const showEditEmployeeModal = ref(false)
+const selectedEditEmployee = ref({})
+const {fetch: fetchEditEmployee} = useFetching(editEmployee)
+
+const onEditEmployeeClicked = (employee) => {
+    selectedEditEmployee.value = employee
+    showEditEmployeeModal.value = true
+}
+
+const onEditEmployeeFormSubmit = async () => {
+    await fetchEditEmployee(selectedEditEmployee.value.id, selectedEditEmployee)
+
+    await fetchGetEmployees()
+
+    showEditEmployeeModal.value = false
+}
+
+// GET
+const {fetch: fetchGetEmployees, data: employees} = useFetching(getEmployees)
+
+
+// DELETE
+const {fetch: fetchDeleteEmployees} = useFetching(deleteEmployee)
+const showDeleteEmployeeModal = ref(false)
+const selectedDeleteEmployee = ref({})
+
+const onDeleteEmployeeClicked = async (employee) => {
+    selectedDeleteEmployee.value = employee
+    showDeleteEmployeeModal.value = true
+}
+
+const onDeleteEmployeeFormSubmit = async () => {
+    await fetchDeleteEmployees(selectedDeleteEmployee.value.id)
+    await fetchGetEmployees()
+
+    showDeleteEmployeeModal.value = false
+}
 
 </script>
 
 <template>
+    {{ selectedDeleteEmployee }}
     <q-markup-table>
         <thead>
         <q-tr>
@@ -68,7 +87,7 @@ const onAddEmployeeFormSubmit = async (employee) => {
             <q-td>{{ employee.role }}</q-td>
             <q-td class="flex justify-around">
                 <q-btn
-                    color="orange"
+                    color="warning"
                     icon="edit"
                     rounded
                     size="sm"
@@ -78,6 +97,7 @@ const onAddEmployeeFormSubmit = async (employee) => {
                     color="red"
                     icon="delete"
                     size="sm"
+                    @click="onDeleteEmployeeClicked(employee)"
                 />
             </q-td>
         </q-tr>
@@ -85,19 +105,55 @@ const onAddEmployeeFormSubmit = async (employee) => {
     </q-markup-table>
 
     <div class="w-full mt-4 flex justify-center">
-        <q-btn class="mx-auto" color="brown-6" icon="add" round @click="showAddEmployeeModal = true"/>
+        <q-btn
+            class="mx-auto"
+            color="brown-6"
+            icon="add"
+            round
+            @click="showAddEmployeeModal = true"
+        />
     </div>
 
-    <q-dialog ref="dialogRef" v-model="showEditEmployeeModal" @hide="onDialogHide">
+    <!--    MODALS    -->
+
+    <q-dialog
+        ref="dialogRef"
+        v-model="showEditEmployeeModal"
+        @hide="showEditEmployeeModal = false"
+    >
         <EditEmployeeForm
-            :employee="selectedEmployee"
+            :employee="selectedEditEmployee"
+            @cancel="showEditEmployeeModal = false"
             @submit="onEditEmployeeFormSubmit"
         />
     </q-dialog>
 
-    <q-dialog ref="dialogRef" v-model="showAddEmployeeModal" @hide="onDialogHide">
+    <q-dialog
+        ref="dialogRef"
+        v-model="showAddEmployeeModal"
+        @hide="showAddEmployeeModal = false"
+    >
         <AddEmployeeForm
+            @cancel="showAddEmployeeModal = false"
             @submit="onAddEmployeeFormSubmit"
         />
+    </q-dialog>
+
+    <q-dialog
+        ref="dialogRef"
+        v-model="showDeleteEmployeeModal"
+        @hide="showDeleteEmployeeModal = false"
+    >
+        <q-card class="q-dialog-plugin">
+            <q-card-section>
+                Вы действительно хотите удалить пользователя {{ selectedDeleteEmployee.first_name }}
+                {{ selectedDeleteEmployee.last_name }}?
+            </q-card-section>
+
+            <q-card-actions align="right">
+                <q-btn color="grey" label="Отмена" @click="showDeleteEmployeeModal = false"/>
+                <q-btn color="red" label="Удалить" @click="onDeleteEmployeeFormSubmit"/>
+            </q-card-actions>
+        </q-card>
     </q-dialog>
 </template>
