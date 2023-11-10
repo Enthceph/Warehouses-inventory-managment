@@ -36,9 +36,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('getUserOrganisation', 'getUserOrganisation');
     });
 
-    Route::apiResource('warehouse', WarehouseController::class);
-    Route::apiResource('inventory', InventoryController::class);
-    Route::apiResource('outlet', OutletController::class);
-    Route::apiResource('employee', EmployeeController::class);
+    Route::resource('warehouse', WarehouseController::class);
+    Route::resource('inventory', InventoryController::class);
+    Route::resource('outlet', OutletController::class);
+    Route::resource('employee', EmployeeController::class);
 });
 //        Route::patch('changeName', 'changeName')->middleware('restrictRole:admin');

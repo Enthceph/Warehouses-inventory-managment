@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Hash;
 class EmployeeService
 {
 
-    public function getOrganisationEmployees()
+    public function get()
     {
         return Employee::where('organisation_id', Auth::user()->organisation->id)
             ->with('user')
             ->get()
+            ->filter(function ($employee) {
+                return $employee->user != null;
+            })
             ->map(function ($employee) {
                 return [
                     'id' => $employee->user->id,
@@ -60,7 +63,7 @@ class EmployeeService
     public function update(Request $request, $id)
     {
 
-//        TODO сервис, по идее, не должен возвращать
+//        TODO сервис, по идее, не должен возвращать response
         $user = User::find($id);
 
         if (!$user) return response('Cant find employee', 404);
@@ -76,5 +79,17 @@ class EmployeeService
         ]);
 
         return response('Employee changed successfully');
+    }
+
+    public function delete($id)
+    {
+
+        $user = User::find($id);
+
+        if (!$user) return response('Cant find employee', 404);
+
+        $user->delete();
+
+        return response('Employee was deleted');
     }
 }

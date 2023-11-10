@@ -13,7 +13,7 @@ class EmployeeController extends Controller
 
     public function index(EmployeeService $service)
     {
-        return $service->getOrganisationEmployees();
+        return $service->get();
     }
 
     public function store(StoreEmployeeRequest $request, EmployeeService $service)
@@ -47,10 +47,9 @@ class EmployeeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function update(Request $request, $id, EmployeeService $service)
+    public function update(Request $request, int $id, EmployeeService $service)
     {
         return $service->update($request, $id);
-
     }
 
     /**
@@ -59,8 +58,9 @@ class EmployeeController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, int $id, EmployeeService $service)
     {
-        //
+
+        return $service->delete($id);
     }
 }

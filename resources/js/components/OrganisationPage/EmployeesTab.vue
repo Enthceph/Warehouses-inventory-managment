@@ -66,7 +66,6 @@ const onDeleteEmployeeFormSubmit = async () => {
 </script>
 
 <template>
-    {{ selectedDeleteEmployee }}
     <q-markup-table>
         <thead>
         <q-tr>

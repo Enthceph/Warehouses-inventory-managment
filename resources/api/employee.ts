@@ -13,6 +13,4 @@ export const editEmployee = (id: Number, data: Object) => apiRequest.patch(`empl
     json: data,
 })
 
-export const deleteEmployee = (id: Number, data: Object) => apiRequest.delete('employee', {
-    json: data,
-})
+export const deleteEmployee = (id: Number) => apiRequest.delete(`employee/${id}`)
