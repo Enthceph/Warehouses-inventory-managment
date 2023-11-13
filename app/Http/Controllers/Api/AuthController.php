@@ -10,10 +10,6 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    /**
-     * Create User
-     * @param Request $request
-     */
     public function register(CreateUserAndOrganisationRequest $request, AuthService $service)
     {
         $service->register($request);
@@ -21,10 +17,6 @@ class AuthController extends Controller
         return response(['message' => 'User created'], 200);
     }
 
-    /**
-     * Login The User
-     * @param Request $request
-     */
     public function login(Request $request, AuthService $service)
     {
         $accessToken = $service->login($request);
@@ -38,13 +30,13 @@ class AuthController extends Controller
     {
         $service->changePassword($request);
 
-        return response("Пароль был обновлен");
+        return response(['message' => 'Пароль был обновлен']);
     }
 
     public function logout(Request $request, AuthService $service)
     {
         $service->logout();
-        return response('User logged out', 200);
+        return response(['message' => 'User logged out'], 200);
     }
 
     public function checkAuth(AuthService $service)

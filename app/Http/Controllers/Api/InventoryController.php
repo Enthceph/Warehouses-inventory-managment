@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Inventory;
 use App\Models\Warehouse;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class InventoryController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function store(CreateOutletRequest $request)
+    public function store(CreateInventoryRequest $request)
     {
 
 //        $orgId = Auth::user()->organisation->id;
@@ -48,15 +49,9 @@ class InventoryController extends Controller
 //        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $warehouse_id
-     * @return Response
-     */
-    public function show($warehouse_id)
+    public function show($id)
     {
-        $warehouse = Warehouse::find($warehouse_id);
+        $warehouse = Warehouse::find($id);
 
         Debugbar::log($warehouse->inventories);
 
@@ -68,34 +63,21 @@ class InventoryController extends Controller
         return $warehouse->inventories;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
     public function update(Request $request, $id)
     {
-        $outlet = Outlet::find($id);
+        $inventory = Inventory::find($id);
 
-        if (!$outlet) return response('Cant find outlet', 404);
+        if (!$inventory) return response(['message' => 'Cant find inventory'], 404);
 
-        $outlet->update([
+        $inventory->update([
             'name' => $request->name,
             'address' => $request->name,
             'contact_info' => $request->name,
         ]);
 
-        return response('Outlet changed successfully');
+        return response(['message' => 'Inventory changed successfully']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
     public function destroy(Request $request, int $id)
     {
         //

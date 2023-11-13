@@ -214,5 +214,5 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
 
     ])->toArray(),
-    'Debugbar' => Barryvdh\Debugbar\Facade::class,
+//    'Debugbar' => Barryvdh\Debugbar\Facade::class,
 ];

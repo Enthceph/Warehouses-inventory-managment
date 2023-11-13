@@ -21,14 +21,12 @@ class WarehouseService
     {
         $org_id = Auth::user()->organisation->id;
 
-        Warehouse::create([
+        return Warehouse::create([
             'name' => $request->name,
             'location' => $request->location,
             'contact_info' => $request->contact_info,
             'organisation_id' => $org_id,
         ]);
-
-        //TODO сделать транзакцию, добавляя инвентарь
     }
 
     public function show($id)

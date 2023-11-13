@@ -66,11 +66,11 @@ class EmployeeService
 //        TODO сервис, по идее, не должен возвращать response
         $user = User::find($id);
 
-        if (!$user) return response('Cant find employee', 404);
+        if (!$user) return response(['message' => 'Cant find employee'], 404);
 
         $role = Role::getRoleByName($request->role);
 
-        if ($role === 'Owner') return response('Cant set role to owner', 401);
+        if ($role === 'Owner') return response(['message' => 'Cant set role to owner'], 401);
 
         $user->update([
             'first_name' => $request->first_name,
@@ -78,17 +78,17 @@ class EmployeeService
             'role_id' => $role,
         ]);
 
-        return response('Employee changed successfully');
+        return response(['message' => 'Employee changed successfully']);
     }
 
     public function delete($id)
     {
         $user = User::find($id);
 
-        if (!$user) return response('Cant find employee', 404);
+        if (!$user) return response(['message' => 'Cant find employee'], 404);
 
         $user->delete();
 
-        return response('Employee was deleted');
+        return response(['message' => 'Employee was deleted']);
     }
 }
