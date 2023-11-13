@@ -60,7 +60,6 @@ class EmployeeController extends Controller
      */
     public function destroy(Request $request, int $id, EmployeeService $service)
     {
-
         return $service->delete($id);
     }
 }

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import apexchart from 'apexcharts'
 
 const options: ApexCharts.ApexOptions = {
     chart: {
@@ -64,7 +63,7 @@ const series: ApexAxisChartSeries = [
                 </q-card>
             </q-card-section>
 
-            <apexchart :options="options" :series="series" type="bar"/>
+            <!--            <apexchart :options="options" :series="series" type="bar"/>-->
 
         </q-card>
 

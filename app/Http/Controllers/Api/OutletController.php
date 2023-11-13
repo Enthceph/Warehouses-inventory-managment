@@ -6,39 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOutletRequest;
 use App\Services\OutletService;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class OutletController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
     public function index(OutletService $service)
     {
-        return $service->getOutlets();
+        return $service->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
     public function store(CreateOutletRequest $request, OutletService $service)
     {
         $service->store($request);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
     public function update(Request $request, int $id, OutletService $service)
     {
         $outlet = $service->show($id);
@@ -50,15 +31,8 @@ class OutletController extends Controller
         return response('Outlet changed successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
     public function show($id, OutletService $service)
     {
-
         $userId = Auth::id();
         $orgId = Auth::user()->organisation->id;
 
@@ -75,14 +49,8 @@ class OutletController extends Controller
         return $outlet;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function destroy($id)
+    public function destroy(Request $request, int $id, OutletService $service)
     {
-        //
+        return $service->delete($id);
     }
 }

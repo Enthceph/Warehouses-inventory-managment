@@ -83,7 +83,6 @@ class EmployeeService
 
     public function delete($id)
     {
-
         $user = User::find($id);
 
         if (!$user) return response('Cant find employee', 404);

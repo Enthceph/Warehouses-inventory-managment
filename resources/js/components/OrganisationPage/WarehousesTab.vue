@@ -43,6 +43,6 @@ const inventories = useApi('inventory').get().json()
         />
     </q-dialog>
 
-    <div>вот здесь должен быть весь инвентарь</div>
+    <div>вот здесь должены быть все инвентари</div>
     <div>{{ inventories.data }}</div>
 </template>

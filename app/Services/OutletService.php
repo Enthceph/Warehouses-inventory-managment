@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OutletService
 {
-    public function getOutlets()
+    public function get()
     {
         return Auth::user()->organisation->outlets;
     }
@@ -38,5 +38,16 @@ class OutletService
             'address' => $request->name,
             'contact_info' => $request->name,
         ]);
+    }
+
+    public function delete($id)
+    {
+        $outlet = Outlet::find($id);
+
+        if (!$outlet) return response(['message' => 'Cant find outlet'], 404);
+
+        $outlet->delete();
+
+        return response(['message' => 'Outlet was deleted']);
     }
 }

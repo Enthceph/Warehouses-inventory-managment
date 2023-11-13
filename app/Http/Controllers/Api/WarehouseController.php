@@ -5,63 +5,33 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateWarehouseRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
-use App\Models\Warehouse;
-use Illuminate\Support\Facades\Auth;
+use App\Services\WarehouseService;
+use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    public function index()
+    public function index(WarehouseService $service)
     {
-        $warehouses = Auth::user()->organisation->warehouses;
-
-
-        return $warehouses;
+        return $service->get();
     }
 
-    public function store(CreateWarehouseRequest $request)
+    public function store(CreateWarehouseRequest $request, WarehouseService $service)
     {
-        $org_id = Auth::user()->organisation->id;
-
-        Warehouse::create([
-            'name' => $request->name,
-            'location' => $request->location,
-            'contact_info' => $request->contact_info,
-            'organisation_id' => $org_id,
-        ]);
-        //TODO сделать транзакцию, добавляя инвентарь
+        return $service->store($request);
     }
 
-    public function show($id)
+    public function update(UpdateWarehouseRequest $request, $id, WarehouseService $service)
     {
-        $userId = Auth::id();
-        $orgId = Auth::user()->organisation->id;
-        $warehouse = Warehouse::find($id);
-
-        if (!$warehouse) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
-        if (!$userId || $warehouse->organisation_id !== $orgId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-
-        return $warehouse;
+        return $service->show($request, $id);
     }
 
-    public function update(UpdateWarehouseRequest $request, $id)
+    public function show($id, WarehouseService $service)
     {
-        $warehouse = Warehouse::find($id);
-
-        if (!$warehouse) return response('Cant find outlet', 404);
-
-        $warehouse->update([
-            'name' => $request->name,
-            'address' => $request->name,
-            'contact_info' => $request->name,
-        ]);
-
-        return response('Outlet changed successfully');
+        return $service->show($id);
     }
 
+    public function destroy(Request $request, int $id, WarehouseService $service)
+    {
+        return $service->delete($id);
+    }
 }

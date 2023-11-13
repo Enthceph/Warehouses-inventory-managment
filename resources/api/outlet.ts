@@ -13,6 +13,4 @@ export const editOutlet = (id: Number, data: Object) => apiRequest.patch(`outlet
     json: data,
 })
 
-export const deleteOutlet = (id: Number, data: Object) => apiRequest.delete('outlet', {
-    json: data,
-})
+export const deleteOutlet = (id: Number) => apiRequest.delete(`outlet/${id}`)
