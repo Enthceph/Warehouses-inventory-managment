@@ -51,6 +51,6 @@ class OutletController extends Controller
 
     public function destroy(Request $request, int $id, OutletService $service)
     {
-        return $service->delete($id);
+        return $service->destroy($id);
     }
 }

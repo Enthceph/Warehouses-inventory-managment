@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeeService
 {
-
     public function get()
     {
         return Employee::where('organisation_id', Auth::user()->organisation->id)
@@ -81,7 +80,7 @@ class EmployeeService
         return response(['message' => 'Employee changed successfully']);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $user = User::find($id);
 

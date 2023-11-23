@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InventoryController;
+use App\Http\Controllers\Api\OrganisationController;
 use App\Http\Controllers\Api\OutletController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WarehouseController;
@@ -29,6 +30,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('changePassword', 'changePassword');
         Route::get('checkAuth', 'checkAuth');
     });
+    Route::controller(OrganisationController::class)->group(function () {
+        Route::get('getDataForTransactionForm', 'getDataForTransactionForm');
+    });
+
 
     Route::controller(UserController::class)->group(function () {
         Route::get('user', 'user');

@@ -14,7 +14,6 @@ class Outlet extends Model
         'organisation_id',
         'name',
         'address',
-
     ];
 
     public function organization()

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class WarehouseService
 {
-
     public function get()
     {
         $warehouses = Auth::user()->organisation->warehouses;
@@ -62,7 +61,7 @@ class WarehouseService
         return response(['message' => 'Warehouse changed successfully']);
     }
 
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         $warehouse = Warehouse::find($id);
 
@@ -72,6 +71,4 @@ class WarehouseService
 
         return response(['message' => 'Warehouse was deleted']);
     }
-
-
 }

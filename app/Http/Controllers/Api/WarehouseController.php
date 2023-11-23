@@ -32,6 +32,6 @@ class WarehouseController extends Controller
 
     public function destroy(Request $request, int $id, WarehouseService $service)
     {
-        return $service->delete($id);
+        return $service->destroy($id);
     }
 }

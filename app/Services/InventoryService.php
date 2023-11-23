@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class InventoryService
 {
-
     public function get()
     {
         $org = Auth::user()->organisation;

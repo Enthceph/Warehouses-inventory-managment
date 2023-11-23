@@ -2,8 +2,9 @@
 import OutletsTab from "@/js/components/OrganisationPage/OutletsTab.vue";
 import WarehousesTab from "@/js/components/OrganisationPage/WarehousesTab.vue";
 import EmployeesTab from "@/js/components/OrganisationPage/EmployeesTab.vue";
+import TransactionsTab from "@/js/components/OrganisationPage/TransactionsTab.vue";
 
-const tab = ref('employees')
+const tab = ref('transactions')
 </script>
 
 <template>
@@ -33,7 +34,7 @@ const tab = ref('employees')
         </q-tab-panel>
 
         <q-tab-panel name="transactions">
-
+            <TransactionsTab/>
         </q-tab-panel>
     </q-tab-panels>
 </template>

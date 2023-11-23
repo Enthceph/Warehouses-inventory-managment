@@ -32,6 +32,7 @@ const cancel = () => {
                 <h2 class="text-h5 text-center">Добавить точку</h2>
             </q-card-section>
 
+
             <q-card-section>
                 <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
                     <q-input

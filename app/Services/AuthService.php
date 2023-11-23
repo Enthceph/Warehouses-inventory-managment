@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-
     public function register(CreateUserAndOrganisationRequest $request)
     {
         DB::transaction(function () use ($request) {

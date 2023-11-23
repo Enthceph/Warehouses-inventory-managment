@@ -40,7 +40,7 @@ class OutletService
         ]);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $outlet = Outlet::find($id);
 
