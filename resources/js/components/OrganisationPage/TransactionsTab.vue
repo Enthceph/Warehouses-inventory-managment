@@ -2,16 +2,13 @@
 import {useDialogPluginComponent} from 'quasar'
 import TabAddButton from "@/js/components/OrganisationPage/TabAddButton.vue";
 import {useFetching} from "@/js/composables/useFetching";
-import {addTransaction, getTransactions} from "@/api/transaction";
+import {getTransactions} from "@/api/transaction";
 import AddTransactionForm from "@/js/components/Forms/AddTransactionForm.vue";
-
-const {fetch: fetchAddTransaction} = useFetching(addTransaction)
 
 defineEmits([...useDialogPluginComponent.emits])
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
 
 const showAddTransactionModal = ref(false)
-
 
 const {fetch: fetchGetTransactions, data: transactions} = useFetching(getTransactions)
 
@@ -21,7 +18,6 @@ onMounted(async () => {
 </script>
 
 <template>
-    {{ transactions }}
     <q-markup-table>
         <thead>
         <q-tr>

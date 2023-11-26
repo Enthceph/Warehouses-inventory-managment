@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {getDataForTransactionForm} from "@/api/organisation";
 import {useFetching} from "@/js/composables/useFetching";
+import {addTransaction} from "@/api/transaction";
 
 const emit = defineEmits(['submit', 'cancel'])
 const form = ref()
@@ -24,7 +25,7 @@ const data = reactive<Transaction>({
     'warehouse_id': 0,
     'date': null,
 })
-
+const {fetch: fetchAddTransaction} = useFetching(addTransaction)
 const {fetch: fetchGetDataForTransactionForm, data: dataForForm} = useFetching(getDataForTransactionForm)
 
 onMounted(async () => {

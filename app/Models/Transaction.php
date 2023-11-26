@@ -11,12 +11,30 @@ class Transaction extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'outlet_id',
         'date',
-        'type',
         'amount',
         'description',
-        'inventory_id',
-        'product_name',
     ];
+
+
+    public function type()
+    {
+        return $this->belongsTo(TransactionCategory::class, 'type_id');
+    }
+
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class, 'outlet_id');
+    }
+
+//    public function inventory()
+//    {
+//        return $this->belongsTo(Inventory::class, 'inventory_id');
+//    }
+
+    public function product()
+    {
+        return $this->belongsTo(Inventory::class, 'product_id',);
+    }
+
 }

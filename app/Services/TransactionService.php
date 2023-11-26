@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\CreateTransactionRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
@@ -10,9 +11,8 @@ class TransactionService
 {
     public function get()
     {
-        $transactinos = Transaction::get(['id', 'amount', 'type', 'outlet_id', 'created_at']);
-
-        return $transactinos;
+        $transactions = Transaction::with(['product', 'type', 'outlet'])->get();
+        return TransactionResource::collection($transactions);
     }
 
     public function store(CreateTransactionRequest $request)
