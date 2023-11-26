@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\OrganisationController;
 use App\Http\Controllers\Api\OutletController;
+use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WarehouseController;
 use Illuminate\Support\Facades\Route;
@@ -45,5 +46,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('inventory', InventoryController::class);
     Route::resource('outlet', OutletController::class);
     Route::resource('employee', EmployeeController::class);
+    Route::resource('transaction', TransactionController::class);
 });
 //        Route::patch('changeName', 'changeName')->middleware('restrictRole:admin');

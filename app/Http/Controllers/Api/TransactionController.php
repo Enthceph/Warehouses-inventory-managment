@@ -10,7 +10,7 @@ class TransactionController extends Controller
 {
     public function index(TransactionService $service)
     {
-
+        return $service->get();
     }
 
     public function store(CreateTransactionRequest $request, TransactionService $service)
