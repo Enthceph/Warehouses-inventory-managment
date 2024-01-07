@@ -7,7 +7,7 @@ const emit = defineEmits(['submit', 'cancel'])
 const form = ref()
 
 export interface Transaction {
-    'product': string
+    'product_id': number | null
     'type_id': string
     'amount': number
     'description'?: string
@@ -17,7 +17,7 @@ export interface Transaction {
 }
 
 const data = reactive<Transaction>({
-    'product': '',
+    'product_id': null,
     'type_id': '',
     'amount': 0,
     'description': '',
@@ -49,16 +49,16 @@ const cancel = () => {
 <template>
     <q-card class="q-pa-md">
         <q-form v-if="dataForForm" ref="form" @submit.prevent="submit">
-            <q-input
-                v-model="data.product"
+            <q-select
+                v-model="data.product_id"
+                :options="dataForForm.products"
+                emit-value
                 label="Product"
-                list="products"
+                map-options
+                option-label="name"
+                option-value="id"
                 required
-            >
-                <datalist id="products">
-                    <option v-for="product of dataForForm.products" :value="product.product_name"/>
-                </datalist>
-            </q-input>
+            />
 
             <q-select
                 v-model="data.type_id"
@@ -127,11 +127,13 @@ const cancel = () => {
                     </q-icon>
                 </template>
             </q-input>
+
+            <q-card-actions align="between">
+                <q-btn color="grey" label="Cancel" @click="cancel"/>
+                <q-btn color="primary" label="Add" padding="" type="submit"/>
+            </q-card-actions>
         </q-form>
 
-        <q-card-actions align="between">
-            <q-btn color="grey" label="Cancel" @click="cancel"/>
-            <q-btn color="primary" label="Add" type="submit"/>
-        </q-card-actions>
+
     </q-card>
 </template>

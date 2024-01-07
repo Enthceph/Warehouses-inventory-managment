@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\Inventory;
 use App\Models\Organisation;
+use App\Models\Product;
 use App\Models\TransactionCategory;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,15 +22,7 @@ class OrganisationService
             ];
         });
 
-        $warehouses_id = $org->warehouses->pluck('id');
-        $products = Inventory::whereIn('warehouse_id', $warehouses_id)
-            ->get()
-            ->map(function (object $warehouse) {
-                return [
-                    'id' => $warehouse->id,
-                    'product_name' => $warehouse->product_name,
-                ];
-            });
+        $products = Product::where('organisation_id', $org->id)->get();
 
         $warehouses = collect($org->warehouses)->map(function (object $warehouse) {
             return [

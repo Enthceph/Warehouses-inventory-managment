@@ -6,6 +6,7 @@ use App\Http\Requests\CreateTransactionRequest;
 use App\Http\Resources\TransactionResource;
 use App\Models\Transaction;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Support\Facades\DB;
 
 class TransactionService
 {
@@ -18,15 +19,20 @@ class TransactionService
     public function store(CreateTransactionRequest $request)
     {
         Debugbar::log($request);
-//        Transaction::create([
-//            'outlet_id' => '',
-//            'date' => Carbon::now(),
-//            'type' => '',
-//            'amount' => '',
-//            'description' => '',
-//            'inventory_id' => '',
-//            'product_name' => '',
-//        ]);
+
+        DB::transaction(function () use ($request) {
+            Transaction::create([
+                'amount' => $request->amount,
+                'description' => $request->description,
+                'type_id' => $request->type_id,
+                'outlet_id' => $request->outlet_id,
+                'product_id' => $request->product_id,
+            ]);
+
+
+        });
+
+        return $request;
     }
 
     public function show()

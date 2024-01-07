@@ -27,4 +27,9 @@ class TransactionResource extends JsonResource
             'product' => $this->product->product_name,
         ];
     }
+
+    public function store($request)
+    {
+        
+    }
 }

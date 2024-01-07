@@ -12,15 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('company_employees', function (Blueprint $table) {
             $table->id();
-            $table->decimal('amount');
-            $table->string('description')->nullable();
-            $table->foreignId('type')->constrained('transaction_categories');
-            $table->foreignId('outlet_id')->constrained('outlets');
-
-            $table->foreignId('product_id')->constrained('products');
-
+            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('employee_id')->constrained('users');
+            $table->foreignId('outlet_id')->nullable()->constrained('outlets');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('company_employees');
     }
 };
