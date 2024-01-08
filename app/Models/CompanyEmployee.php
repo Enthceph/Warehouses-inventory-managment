@@ -6,20 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrganisationEmployee extends Model
+class CompanyEmployee extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'organisation_employee';
+    protected $table = 'company_employees';
 
-//    protected $fillable = [
-//        'organisation_id',
-//        'employee_id'
-//    ];
-
-    public function organisation()
+//    TODO проверить правильно ли сделаны отношения
+    public function company()
     {
-        return $this->hasOne(Organisation::class, 'id', 'organisation_id');
+        return $this->hasOne(Company::class, 'id', 'company_id');
     }
 
     public function empolyees()

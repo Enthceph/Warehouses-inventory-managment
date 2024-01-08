@@ -14,10 +14,10 @@ return new class extends Migration {
     {
         Schema::create('warehouses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('company_id')->constrained('companies');
             $table->string('name');
             $table->string('location')->nullable();
             $table->string('contact_info')->nullable();
+            $table->foreignId('company_id')->constrained('companies');
             $table->timestamps();
             $table->softDeletes();
         });

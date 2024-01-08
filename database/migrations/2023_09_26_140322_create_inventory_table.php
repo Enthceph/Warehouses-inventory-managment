@@ -14,13 +14,13 @@ return new class extends Migration {
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
             $table->integer('quantity');
             $table->decimal('unit_price');
             $table->decimal('total_value');
+            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('warehouse_id')->constrained('warehouses');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

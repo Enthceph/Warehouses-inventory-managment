@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Organisation extends Model
+class Company extends Model
 {
     use HasFactory;
 
@@ -14,7 +13,6 @@ class Organisation extends Model
         'name',
         'address',
         'contact_info',
-        'employees',
         'owner_id'
     ];
 
@@ -22,9 +20,12 @@ class Organisation extends Model
 //    {
 //        return $this->hasMany(OrganisationEmployee::class)->where('id', );
 //    }
+    public function owner()
+    {
+        return $this->hasOne(User::class, 'id', 'owner_id');
+    }
 
-
-    public function outlets(): HasMany
+    public function outlets()
     {
         return $this->hasMany(Outlet::class, 'organisation_id');
     }
