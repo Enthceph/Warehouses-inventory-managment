@@ -17,7 +17,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'Home',
         redirect: {
-            path: '/organisation',
+            path: '/company',
         },
     },
     {
@@ -70,6 +70,17 @@ const routes: Array<RouteRecordRaw> = [
     },
 
     {
+        path: '/company',
+        name: 'Company',
+        component: () => import('../pages/Company.vue'),
+        meta: {
+            middleware: [auth],
+            description: 'Company',
+            icon: 'outlets',
+        },
+    },
+
+    {
         path: '/Outlet/:outlet',
         name: 'Outlet',
         component: () => import('../pages/Outlet/Outlet.vue'),
@@ -78,6 +89,7 @@ const routes: Array<RouteRecordRaw> = [
             description: 'Outlet Detail',
             icon: 'outlet',
         },
+
         children: [
             {
                 path: 'overview',
