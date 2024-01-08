@@ -14,7 +14,7 @@ const onFormSubmit = async (formData: { email: string, password: string }) => {
     setToken(res.access_token as string)
 
     router.push({
-        path: '/organisation'
+        path: '/company'
     })
 }
 

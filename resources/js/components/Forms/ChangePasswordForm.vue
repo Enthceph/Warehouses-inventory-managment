@@ -22,15 +22,8 @@ const formIsValid = computed(() => {
 </script>
 
 <template>
-    <q-form class="grid grid-cols-4 gap-4 items-center" @submit="fetchPassword(passwordForm)">
-        <q-btn
-            :disabled="!formIsValid"
-            color="primary"
-            type="submit"
-        >
-            Сменить пароль
-        </q-btn>
-
+    <q-form class="flex flex-col" @submit="fetchPassword(passwordForm)">
+        <h2 class="font-bold">Пароль</h2>
         <q-input
             v-model="passwordForm.new_password"
             :rules="[v => v.length >= 6 || `Длина пароля должна иметь хотя бы 6`]"
@@ -51,5 +44,13 @@ const formIsValid = computed(() => {
             placeholder="Повторите старый пароль"
             required
         />
+        <q-btn
+            :disabled="!formIsValid"
+            class="w-48"
+            color="primary"
+            type="submit"
+        >
+            Сменить пароль
+        </q-btn>
     </q-form>
 </template>

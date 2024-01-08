@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import useApi from "@/js/composables/useApi";
 import {useOutletStore} from "@/js/stores/outlet";
+import {useUserStore} from "@/js/stores/user";
+import TheUserBadge from "@/js/components/TheUserBadge.vue";
 
 const route = useRoute()
 const outletStore = useOutletStore()
@@ -13,23 +15,27 @@ organisation.onFetchResponse(() => {
 })
 const company_name = ref('')
 
+const userStore = useUserStore()
 
-// const {} => useFetching(getUser)
-
+onMounted(() => {
+    userStore.fetchUser()
+})
 
 </script>
 
 <template>
-    <header class="bg-brown-6">
-        <q-breadcrumbs>
-            <q-breadcrumbs-el :label="company_name" to="/organisation"/>
+    <header class="bg-green-700">
+        <!--        {{ userStore.full_name }}-->
+        <TheUserBadge/>
+        <!--        <q-breadcrumbs>-->
+        <!--            <q-breadcrumbs-el :label="company_name" to="/organisation"/>-->
 
-            <q-breadcrumbs-el
-                v-if="outletId"
-                :label="outletStore.name"
-                :to="'/outlet/' + outletId"
-            />
-        </q-breadcrumbs>
+        <!--            <q-breadcrumbs-el-->
+        <!--                v-if="outletId"-->
+        <!--                :label="outletStore.name"-->
+        <!--                :to="'/outlet/' + outletId"-->
+        <!--            />-->
+        <!--        </q-breadcrumbs>-->
 
         <router-link to="/settings">
             <q-icon name="settings"/>
@@ -43,6 +49,6 @@ header {
     color:           var(--va-text-primary);
     display:         flex;
     justify-content: space-between;
-    padding:         16px;
+    padding:         16px 16px 16px 0;
 }
 </style>

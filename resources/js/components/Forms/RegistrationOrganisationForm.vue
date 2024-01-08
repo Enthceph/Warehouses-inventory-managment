@@ -1,21 +1,21 @@
 <script lang="ts" setup>
 const form = ref()
 
-export interface OrganisationData {
+export interface CompanyData {
     name: string
     address?: string
     contact_info?: string
 
 }
 
-const data = reactive<OrganisationData>({
+const data = reactive<CompanyData>({
     name: 'test org name',
     address: '',
     contact_info: '',
 })
 
 const emit = defineEmits<{
-    (e: 'submit', data: OrganisationData): void;
+    (e: 'submit', data: CompanyData): void;
     (e: 'stepBack'): void
 }>();
 
@@ -32,7 +32,7 @@ const submit = () => {
             <q-input
                 v-model="data.name"
                 hide-bottom-space
-                label="Title"
+                label="Name"
                 required
             />
 

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 export interface UserData {
-    first_name: string
-    last_name: string
+    full_name: string
     email: string
     password: string
     password_confirmation: string
@@ -10,8 +9,7 @@ export interface UserData {
 const form = ref()
 
 const formData = reactive<UserData>({
-    first_name: 'test',
-    last_name: 'testovich',
+    full_name: 'test testovich',
     email: 'test@test.com',
     password: 'qwertyui',
     password_confirmation: 'qwertyui',
@@ -34,19 +32,13 @@ const submit = () => {
     <q-form ref="form" autocomplete="off" class="form" @submit.prevent="submit">
         <div class="form-inputs">
             <q-input
-                v-model="formData.first_name"
+                v-model="formData.full_name"
                 :rules="[v => v.length >= 2 || `Имя должно иметь хотя бы 2 буквы`]"
                 hide-bottom-space
                 label="First name"
                 required
             />
-            <q-input
-                v-model="formData.last_name"
-                :rules="[v => v.length >= 2 || `Фамилия должна иметь хотя бы 2 буквы`]"
-                hide-bottom-space
-                label="Last name"
-                required
-            />
+
             <q-input
                 v-model="formData.email"
                 autocomplete="off"
