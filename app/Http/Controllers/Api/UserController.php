@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Organisation;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,7 +24,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         if ($user) {
-            $userPublic = $user->only(['first_name', 'last_name', 'email']);
+            $userPublic = $user->only(['full_name', 'email']);
             $userPublic['role'] = $user->role->role;
 
             return response()->json($userPublic);
@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function getUserOrganisation()
     {
-        return response(Organisation::where('owner_id', Auth::id())->first());
+        return response(Company::where('owner_id', Auth::id())->first());
     }
 
 }
