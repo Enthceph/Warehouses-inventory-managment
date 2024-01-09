@@ -25,7 +25,7 @@ class UpdateWarehouseRequest extends FormRequest
     {
         return [
             'name' => 'string|max:255',
-            'address' => 'string|max:255',
+            'location' => 'string|max:255',
             'contact_info' => 'string|max:255',
         ];
     }
@@ -34,7 +34,7 @@ class UpdateWarehouseRequest extends FormRequest
     {
         return [
             'name.max' => 'The name field may not be greater than 255 characters.',
-            'address.max' => 'The address field may not be greater than 255 characters.',
+            'location.max' => 'The address field may not be greater than 255 characters.',
             'contact_info.max' => 'The contact info field may not be greater than 255 characters.',
         ];
     }
