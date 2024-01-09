@@ -15,7 +15,7 @@ let imgPath = computed(
         <div class="text">
             <span>
                 404 | NotFound <br><br>
-                <router-link to="/organisation">
+                <router-link to="/company">
                     go back?
                 </router-link>
             </span>

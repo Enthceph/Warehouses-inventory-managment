@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 export interface Employee {
     first_name: String
     last_name: String

@@ -1,19 +1,8 @@
 <script lang="ts" setup>
-import useApi from "@/js/composables/useApi";
-import {useOutletStore} from "@/js/stores/outlet";
 import {useUserStore} from "@/js/stores/user";
 import TheUserBadge from "@/js/components/TheUserBadge.vue";
 
 const route = useRoute()
-const outletStore = useOutletStore()
-
-const outletId = route.params.outlet
-
-const organisation = useApi('getUserOrganisation').get().json()
-organisation.onFetchResponse(() => {
-    company_name.value = organisation.data.value.name
-})
-const company_name = ref('')
 
 const userStore = useUserStore()
 
@@ -24,20 +13,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <header class="bg-green-700">
-        <!--        {{ userStore.full_name }}-->
+    <header class="bg-green-700 ">
         <TheUserBadge/>
-        <!--        <q-breadcrumbs>-->
-        <!--            <q-breadcrumbs-el :label="company_name" to="/organisation"/>-->
 
-        <!--            <q-breadcrumbs-el-->
-        <!--                v-if="outletId"-->
-        <!--                :label="outletStore.name"-->
-        <!--                :to="'/outlet/' + outletId"-->
-        <!--            />-->
-        <!--        </q-breadcrumbs>-->
+        <h2 class="text-h6 font-bold">{{ route.meta.description }}</h2>
 
-        <router-link to="/settings">
+        <router-link class="ml-auto" to="/settings">
             <q-icon name="settings"/>
         </router-link>
     </header>
@@ -48,7 +29,8 @@ header {
     align-items:     center;
     color:           var(--va-text-primary);
     display:         flex;
-    justify-content: space-between;
+    gap:             12px;
+    justify-content: flex-start;
     padding:         16px 16px 16px 0;
 }
 </style>

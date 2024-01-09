@@ -59,17 +59,6 @@ const routes: Array<RouteRecordRaw> = [
     },
 
     {
-        path: '/organisation',
-        name: 'Organisation',
-        component: () => import('../pages/Organisation.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Organisation',
-            icon: 'outlets',
-        },
-    },
-
-    {
         path: '/company',
         name: 'Company',
         component: () => import('../pages/Company.vue'),
@@ -77,6 +66,16 @@ const routes: Array<RouteRecordRaw> = [
             middleware: [auth],
             description: 'Company',
             icon: 'outlets',
+        },
+    },
+    {
+        path: '/warehouses',
+        name: 'Warehouses',
+        component: () => import('../pages/Warehouse/Warehouse.vue'),
+        meta: {
+            middleware: [auth],
+            description: 'Warehouses',
+            icon: 'warehouse-detail',
         },
     },
 
@@ -144,58 +143,6 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
     },
-    {
-        path: '/warehouse/:id',
-        name: 'Warehouse',
-        component: () => import('../pages/Warehouse/Warehouse.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Warehouse Detail',
-            icon: 'warehouse-detail',
-        },
-        children: [
-            {
-                path: 'overview',
-                name: 'WarehouseOverview',
-                component: () => import('../pages/Warehouse/WarehouseOverview.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Warehouse Overview',
-                    icon: 'overview',
-                },
-            },
-            {
-                path: 'transactions',
-                name: 'WarehouseTransactions',
-                component: () => import('../pages/Warehouse/WarehouseTransactions.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Warehouse Transactions',
-                    icon: 'transactions',
-                },
-            },
-            {
-                path: 'reports',
-                name: 'WarehouseReports',
-                component: () => import('../pages/Warehouse/WarehouseReports.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Warehouse Reports',
-                    icon: 'reports',
-                },
-            },
-            {
-                path: 'settings',
-                name: 'WarehouseSettings',
-                component: () => import('../pages/Warehouse/WarehouseSettings.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Warehouse Settings',
-                    icon: 'settings',
-                },
-            },
-        ]
-    }
 ]
 
 const router = createRouter({

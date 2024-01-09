@@ -27,11 +27,11 @@ class Company extends Model
 
     public function outlets()
     {
-        return $this->hasMany(Outlet::class, 'organisation_id');
+        return $this->hasMany(Outlet::class, 'company_id');
     }
 
     public function warehouses()
     {
-        return $this->hasMany(Warehouse::class, 'organisation_id');
+        return $this->hasMany(Warehouse::class, 'company_id');
     }
 }

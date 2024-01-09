@@ -27,7 +27,7 @@
         </q-item>
         <q-item clickable>
             <q-item-section>
-                <router-link to="/warehouses">Warehouses или объекты???</router-link>
+                <router-link to="/warehouses">Warehouses</router-link>
             </q-item-section>
         </q-item>
     </q-list>
