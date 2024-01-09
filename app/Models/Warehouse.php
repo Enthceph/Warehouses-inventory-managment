@@ -16,6 +16,7 @@ class Warehouse extends Model
         'name',
         'location',
         'contact_info',
+        'company_id'
     ];
 
     public function inventories()

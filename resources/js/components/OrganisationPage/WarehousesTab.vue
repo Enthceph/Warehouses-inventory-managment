@@ -4,7 +4,7 @@ import TabCard from "@/js/components/OrganisationPage/TabCard.vue";
 import TabLayout from "@/js/components/OrganisationPage/TabLayout.vue";
 import TabAddCard from "@/js/components/OrganisationPage/TabAddCard.vue";
 import useApi from "@/js/composables/useApi";
-import AddWarehouseForm, {Warehouse} from "@/js/components/Forms/AddWarehouseForm.vue";
+import AddWarehouseForm, {Warehouse} from "@/js/components/Forms/Warehouse/AddWarehouseForm.vue";
 
 defineEmits([...useDialogPluginComponent.emits])
 const {dialogRef, onDialogHide} = useDialogPluginComponent()

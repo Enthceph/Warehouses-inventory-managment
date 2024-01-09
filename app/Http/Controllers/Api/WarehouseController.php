@@ -22,7 +22,7 @@ class WarehouseController extends Controller
 
     public function update(UpdateWarehouseRequest $request, $id, WarehouseService $service)
     {
-        return $service->show($request, $id);
+        return $service->update($request, $id);
     }
 
     public function show($id, WarehouseService $service)

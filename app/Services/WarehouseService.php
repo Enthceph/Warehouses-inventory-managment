@@ -11,61 +11,59 @@ class WarehouseService
 {
     public function get()
     {
-        $warehouses = Auth::user()->organisation->warehouses;
+        $warehouses = Auth::user()->company->warehouses;
+        $warehouses->transform(function ($item) {
+            return $item->only(['id', 'name', 'location', 'contact_info']);
+        });
 
         return $warehouses;
     }
 
     public function store(CreateWarehouseRequest $request)
     {
-        $org_id = Auth::user()->organisation->id;
+        $company_id = Auth::user()->company->id;
 
         return Warehouse::create([
             'name' => $request->name,
             'location' => $request->location,
             'contact_info' => $request->contact_info,
-            'organisation_id' => $org_id,
+            'company_id' => $company_id,
         ]);
+    }
+
+    public function update(UpdateWarehouseRequest $request, $id)
+    {
+        $warehouse = $this->show($id);
+
+        $warehouse->update([
+            'name' => $request->name,
+            'location' => $request->location,
+            'contact_info' => $request->contact_info,
+        ]);
+
+        return response(['message' => 'Warehouse changed successfully']);
     }
 
     public function show($id)
     {
         $userId = Auth::id();
-        $orgId = Auth::user()->organisation->id;
+        $companyId = Auth::user()->company->id;
         $warehouse = Warehouse::find($id);
 
         if (!$warehouse) {
             return response(['message' => 'Not Found'], 404);
         }
 
-        if (!$userId || $warehouse->organisation_id !== $orgId) {
+        if (!$userId || $warehouse->company_id !== $companyId) {
             return response(['message' => 'Unauthorized'], 401);
         }
-
 
         return $warehouse;
     }
 
-    public function update(UpdateWarehouseRequest $request, $id)
-    {
-        $warehouse = Warehouse::find($id);
-
-        if (!$warehouse) return response('Cant find warehouse', 404);
-
-        $warehouse->update([
-            'name' => $request->name,
-            'address' => $request->name,
-            'contact_info' => $request->name,
-        ]);
-
-        return response(['message' => 'Warehouse changed successfully']);
-    }
-
     public function destroy(int $id)
     {
-        $warehouse = Warehouse::find($id);
-
-        if (!$warehouse) return response('Cant find warehouse', 404);
+        $warehouse = $this->show($id);
 
         $warehouse->delete();
 

@@ -1,15 +1,17 @@
 <script lang="ts" setup>
-export interface Warehouse {
-    name: string
-    address?: string
-    contact_info?: string
-}
+import {Warehouse} from "@/js/stores/warehouses";
+
+const props = defineProps<{
+    warehouse: Warehouse
+}>()
 
 const emit = defineEmits(['submit', 'cancel'])
 const form = ref()
+
 const data = reactive<Warehouse>({
+    id: 0,
     name: '',
-    address: '',
+    location: '',
     contact_info: '',
 })
 
@@ -23,21 +25,24 @@ const submit = () => {
 const cancel = () => {
     emit('cancel')
 }
+
+onMounted(() => {
+    Object.assign(data, props.warehouse)
+})
 </script>
 
 <template>
     <q-card class="q-dialog-plugin">
         <q-form ref="form" @submit.prevent="submit">
             <q-card-section>
-                <h2 class="text-h5 text-center">Добавить точку</h2>
+                <h2 class="text-h5 text-center">Изменить склад</h2>
             </q-card-section>
-
 
             <q-card-section>
                 <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
                     <q-input
                         v-model="data.name"
-                        :rules="[v => v.length >= 2 || `Название точки должно иметь хотя бы 2 буквы`]"
+                        :rules="[v => v.length >= 2 || `Название склада должно иметь хотя бы 2 буквы`]"
                         hide-bottom-space
                         label="Warehouse name"
                         placeholder="Enter warehouse name"
@@ -45,9 +50,9 @@ const cancel = () => {
                     />
 
                     <q-input
-                        v-model="data.address"
-                        label="Warehouse Address"
-                        placeholder="Enter warehouse address"
+                        v-model="data.location"
+                        label="Warehouse Location"
+                        placeholder="Enter warehouse location"
                     />
 
                     <q-input
@@ -60,7 +65,7 @@ const cancel = () => {
 
             <q-card-actions align="right">
                 <q-btn color="grey" label="Отмена" @click="cancel"/>
-                <q-btn color="primary" label="Добавить" type="submit"/>
+                <q-btn color="primary" label="Изменить" type="submit"/>
             </q-card-actions>
         </q-form>
     </q-card>
