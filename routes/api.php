@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::resource('warehouse', WarehouseController::class);
+    Route::post('getWarehouseInventory', [WarehouseController::class, 'getWarehouseInventory']);
     Route::resource('inventory', InventoryController::class);
     Route::resource('outlet', OutletController::class);
     Route::resource('employee', EmployeeController::class);
