@@ -19,13 +19,13 @@ class Warehouse extends Model
         'company_id'
     ];
 
-    public function inventories()
+    public function inventory()
     {
-        return $this->hasMany(Inventory::class, 'warehouse_id');
+        return $this->hasMany(Inventory::class, 'warehouse_id', 'id');
     }
 
     public function company()
     {
-        return $this->belongsTo(Company::class, 'id', 'company_id');
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

@@ -13,7 +13,7 @@ class WarehouseService
     {
         $warehouses = Auth::user()->company->warehouses;
         $warehouses->transform(function ($item) {
-            return $item->only(['id', 'name', 'location', 'contact_info']);
+            return $item->only(['id', 'name', 'location', 'contact_info', 'created_at']);
         });
 
         return $warehouses;
@@ -33,7 +33,17 @@ class WarehouseService
 
     public function update(UpdateWarehouseRequest $request, $id)
     {
-        $warehouse = $this->show($id);
+        $userId = Auth::id();
+        $companyId = Auth::user()->company->id;
+        $warehouse = Warehouse::find($id);
+
+        if (!$warehouse) {
+            return response(['message' => 'Not Found'], 404);
+        }
+
+        if (!$userId || $warehouse->company_id !== $companyId) {
+            return response(['message' => 'Unauthorized'], 401);
+        }
 
         $warehouse->update([
             'name' => $request->name,
@@ -41,7 +51,7 @@ class WarehouseService
             'contact_info' => $request->contact_info,
         ]);
 
-        return response(['message' => 'Warehouse changed successfully']);
+        return response(['message' => 'Warehouses changed successfully']);
     }
 
     public function show($id)
@@ -58,15 +68,48 @@ class WarehouseService
             return response(['message' => 'Unauthorized'], 401);
         }
 
+        $warehouse = $warehouse->only(['id', 'name', 'location', 'contact_info', 'created_at']);
+
         return $warehouse;
+    }
+
+    public function getInventory($request)
+    {
+        $userId = Auth::id();
+        $companyId = Auth::user()->company->id;
+        $warehouse = Warehouse::find($request['id']);
+
+        if (!$warehouse) {
+            return response(['message' => 'Not Found'], 404);
+        }
+
+        if (!$userId || $warehouse->company_id !== $companyId) {
+            return response(['message' => 'Unauthorized'], 401);
+        }
+
+        $inventory = $warehouse->inventory;
+
+        return $inventory;
     }
 
     public function destroy(int $id)
     {
-        $warehouse = $this->show($id);
+        $userId = Auth::id();
+        $companyId = Auth::user()->company->id;
+        $warehouse = Warehouse::find($id);
+
+        if (!$warehouse) {
+            return response(['message' => 'Not Found'], 404);
+        }
+
+        if (!$userId || $warehouse->company_id !== $companyId) {
+            return response(['message' => 'Unauthorized'], 401);
+        }
 
         $warehouse->delete();
 
-        return response(['message' => 'Warehouse was deleted']);
+        return response(['message' => 'Warehouses was deleted']);
     }
+
+
 }

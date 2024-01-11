@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateWarehouseRequest extends FormRequest
+class GetWarehouseInventoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +24,16 @@ class UpdateWarehouseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|max:255',
-            'location' => 'string|max:255|nullable',
-            'contact_info' => 'string|max:255|nullable',
+            'id' => 'integer|required|exists:warehouses,id',
         ];
     }
 
     public function messages()
     {
         return [
-            'name.max' => 'The name field may not be greater than 255 characters.',
-            'location.max' => 'The address field may not be greater than 255 characters.',
-            'contact_info.max' => 'The contact info field may not be greater than 255 characters.',
+            'id.integer' => 'The ID must be a numeric value.',
+            'id.required' => 'Please provide the ID.',
+            'id.exists' => 'The selected warehouse ID does not exist.',
         ];
     }
 }

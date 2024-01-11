@@ -1,72 +1,90 @@
 <script lang="ts" setup>
-import {Warehouse} from "@/js/stores/warehouses";
+import {useWarehouseStore, Warehouse} from "@/js/stores/warehouses";
 
-const props = defineProps<{
-    warehouse: Warehouse
-}>()
+const emit = defineEmits(['submitted', 'cancel'])
 
-const emit = defineEmits(['submit', 'cancel'])
 const form = ref()
-
-const data = reactive<Warehouse>({
+const warehouse = reactive<Warehouse>({
     id: 0,
     name: '',
     location: '',
     contact_info: '',
 })
+const loading = ref(false)
+const warehouseStore = useWarehouseStore()
 
-const submit = () => {
+onMounted(() => {
+    Object.assign(warehouse, warehouseStore.selectedWarehouse)
+})
+
+const submit = async () => {
     const validated = form.value.validate()
-
     if (!validated) return
 
-    emit('submit', data)
+    loading.value = true
+    try {
+        await warehouseStore.fetchEditWarehouse(warehouse.id, warehouse)
+    } catch (err) {
+        console.log('Edit Warehouse Form Error', err)
+        return
+    } finally {
+        loading.value = false
+    }
+
+    emit('submitted', warehouse)
+
+    await warehouseStore.fetchGetWarehouses()
 }
+
 const cancel = () => {
     emit('cancel')
 }
-
-onMounted(() => {
-    Object.assign(data, props.warehouse)
-})
 </script>
 
 <template>
+
     <q-card class="q-dialog-plugin">
-        <q-form ref="form" @submit.prevent="submit">
-            <q-card-section>
-                <h2 class="text-h5 text-center">Изменить склад</h2>
-            </q-card-section>
+        <transition
+            appear
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+        >
+            <q-form ref="form" @submit.prevent="submit">
+                <q-card-section>
+                    <h2 class="text-h5 text-center">Изменить склад</h2>
+                </q-card-section>
 
-            <q-card-section>
-                <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
-                    <q-input
-                        v-model="data.name"
-                        :rules="[v => v.length >= 2 || `Название склада должно иметь хотя бы 2 буквы`]"
-                        hide-bottom-space
-                        label="Warehouse name"
-                        placeholder="Enter warehouse name"
-                        required
-                    />
+                <q-card-section>
+                    <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
+                        <q-input
+                            v-model="warehouse.name"
+                            :rules="[v => v.length >= 2 || `Название склада должно иметь хотя бы 2 буквы`]"
+                            hide-bottom-space
+                            label="Warehouse name"
+                            placeholder="Enter warehouse name"
+                            required
+                        />
 
-                    <q-input
-                        v-model="data.location"
-                        label="Warehouse Location"
-                        placeholder="Enter warehouse location"
-                    />
+                        <q-input
+                            v-model="warehouse.location"
+                            label="Warehouse Location"
+                            placeholder="Enter warehouse location"
+                        />
 
-                    <q-input
-                        v-model="data.contact_info"
-                        label="Contact Information"
-                        placeholder="Enter contact information"
-                    />
-                </q-form>
-            </q-card-section>
+                        <q-input
+                            v-model="warehouse.contact_info"
+                            label="Contact Information"
+                            placeholder="Enter contact information"
+                        />
+                    </q-form>
+                </q-card-section>
 
-            <q-card-actions align="right">
-                <q-btn color="grey" label="Отмена" @click="cancel"/>
-                <q-btn color="primary" label="Изменить" type="submit"/>
-            </q-card-actions>
-        </q-form>
+                <q-card-actions align="right">
+                    <q-btn color="grey" label="Отмена" @click="cancel"/>
+                    <q-btn color="primary" label="Изменить" type="submit"/>
+                </q-card-actions>
+            </q-form>
+        </transition>
+        <q-inner-loading :showing="loading"/>
     </q-card>
 </template>

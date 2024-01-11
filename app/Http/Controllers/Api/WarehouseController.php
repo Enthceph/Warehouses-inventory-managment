@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateWarehouseRequest;
+use App\Http\Requests\GetWarehouseInventoryRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
 use App\Services\WarehouseService;
 use Illuminate\Http\Request;
@@ -28,6 +29,11 @@ class WarehouseController extends Controller
     public function show($id, WarehouseService $service)
     {
         return $service->show($id);
+    }
+
+    public function getWarehouseInventory(GetWarehouseInventoryRequest $request, WarehouseService $service)
+    {
+        return $service->getInventory($request);
     }
 
     public function destroy(Request $request, int $id, WarehouseService $service)

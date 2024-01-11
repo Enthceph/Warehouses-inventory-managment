@@ -1,6 +1,6 @@
 import apiRequest from '../js/utils/request'
 
-// TODO проверить на работоспособность
+// TODO добавить return types
 export const getWarehouses = () => apiRequest.get('warehouse')
 
 export const getWarehouse = (id: Number) => apiRequest.get(`warehouse/${id}`)
@@ -10,6 +10,9 @@ export const addWarehouse = (data: Object) => apiRequest.post(`warehouse`, {
 })
 
 export const editWarehouse = (id: Number, data: Object) => apiRequest.patch(`warehouse/${id}`, {
+    json: data,
+})
+export const getWarehouseInventory = (data: Object) => apiRequest.post(`getWarehouseInventory`, {
     json: data,
 })
 

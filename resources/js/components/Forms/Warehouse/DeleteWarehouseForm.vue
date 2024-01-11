@@ -1,14 +1,27 @@
 <script lang="ts" setup>
-import {Warehouse} from "@/js/stores/warehouses";
+import {useWarehouseStore} from "@/js/stores/warehouses";
 
-const props = defineProps<{
-    warehouse: Warehouse
-}>()
+const emit = defineEmits(['submitted', 'cancel'])
+const warehouseStore = useWarehouseStore()
+const loading = ref(false)
 
-const emit = defineEmits(['submit', 'cancel'])
+const submit = async () => {
+    loading.value = true
 
-const submit = () => {
-    emit('submit', props.warehouse)
+    try {
+        if (warehouseStore.selectedWarehouse) {
+            await warehouseStore.fetchDeleteWarehouse(warehouseStore.selectedWarehouse.id)
+        }
+    } catch (err) {
+        console.log('Delete Warehouse Form Error', err)
+        return
+    } finally {
+        loading.value = false
+    }
+
+    emit('submitted')
+
+    await warehouseStore.fetchGetWarehouses()
 }
 
 const cancel = () => {
@@ -17,23 +30,33 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card>
-        <q-card-section>
-            Вы действительно хотите удалить {{ props.warehouse.name }}?
-        </q-card-section>
 
-        <q-card-actions align="right">
-            <q-btn
-                color="grey"
-                label="Отмена"
-                @click="cancel"
-            />
-            <q-btn
-                color="red"
-                label="Удалить"
-                type="submit"
-                @click="submit"
-            />
-        </q-card-actions>
+    <q-card>
+        <transition
+            appear
+            enter-active-class="animated fadeIn"
+            leave-active-class="animated fadeOut"
+        >
+            <div>
+                <q-card-section>
+                    Вы действительно хотите удалить склад {{ warehouseStore.selectedWarehouse.name }}?
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn
+                        color="grey"
+                        label="Отмена"
+                        @click="cancel"
+                    />
+                    <q-btn
+                        color="red"
+                        label="Удалить"
+                        type="submit"
+                        @click="submit"
+                    />
+                </q-card-actions>
+            </div>
+        </transition>
+        <q-inner-loading :showing="loading"/>
     </q-card>
 </template>

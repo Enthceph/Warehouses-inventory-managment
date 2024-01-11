@@ -1,5 +1,12 @@
 import {defineStore} from 'pinia';
-import {addWarehouse, deleteWarehouse, editWarehouse, getWarehouse, getWarehouses} from "@/api/warehouse";
+import {
+    addWarehouse,
+    deleteWarehouse,
+    editWarehouse,
+    getWarehouse,
+    getWarehouseInventory,
+    getWarehouses
+} from "@/api/warehouse";
 
 export interface Warehouse {
     id: number;
@@ -8,32 +15,50 @@ export interface Warehouse {
     contact_info: string | null;
 }
 
+// TODO перенести этот интерфейс в подходящее место
+
+
+export interface Inventory {
+    id: number;
+    quantity: number;
+    unit_price: number;
+    total_value: number;
+    product_id: number;
+    warehouse_id: number;
+    created_at: Date;
+    updated_at: Date;
+}
+
+export type WarehouseWithoutId = Omit<Warehouse, 'id'>;
+
 export const useWarehouseStore = defineStore({
     id: 'warehouseStore',
-    state: (): { warehouses: Warehouse[] } => ({
-        warehouses: []
+    state: (): { warehouses: Warehouse[], selectedWarehouse: Warehouse | null } => ({
+        warehouses: [],
+        selectedWarehouse: null
     }),
     actions: {
-        async fetchGetWarehouses() {
+        async fetchGetWarehouses(): Promise<Warehouse[]> {
             let res = await getWarehouses()
             this.warehouses = await res.json()
+            return this.warehouses
         },
-        async fetchGetWarehouse(id: number) {
+        async fetchGetWarehouse(id: number): Promise<Warehouse> {
             let res = await getWarehouse(id)
-            console.log(res)
+            return await res.json()
         },
-        async fetchAddWarehouse(warehouse: Warehouse) {
-            let res = await addWarehouse(warehouse)
-            console.log(res)
+        async fetchAddWarehouse(warehouse: WarehouseWithoutId) {
+            await addWarehouse(warehouse)
         },
         async fetchEditWarehouse(id: number, warehouse: Warehouse) {
-            let res = await editWarehouse(id, warehouse)
-            console.log(res)
+            await editWarehouse(id, warehouse)
+        },
+        async fetchGetWarehouseInventory(id: number): Promise<Inventory[]> {
+            let res = await getWarehouseInventory({id: id})
+            return await res.json()
         },
         async fetchDeleteWarehouse(id: number) {
-            let res = await deleteWarehouse(id)
-            console.log(res)
+            await deleteWarehouse(id)
         },
     },
-
 });

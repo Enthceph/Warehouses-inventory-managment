@@ -9,87 +9,67 @@ import DeleteWarehouseForm from "@/js/components/Forms/Warehouse/DeleteWarehouse
 defineEmits([...useDialogPluginComponent.emits]);
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
 
+const router = useRouter()
+const route = useRoute()
 const warehouseStore = useWarehouseStore()
-const selectedRow = ref({})
+
+const showAddWarehouseModal = ref(false)
+const showEditWarehouseModal = ref(false)
+const showDeleteWarehouseModal = ref(false)
 
 onMounted(() => {
     warehouseStore.fetchGetWarehouses()
 })
 
-
-// Get Warehouse
-
-// Add Warehouse
-const showAddWarehouseModal = ref(false)
-const fetchAddWarehouse = async (warehouses: Warehouse) => {
-    await warehouseStore.fetchAddWarehouse(warehouses)
-    await warehouseStore.fetchGetWarehouses()
-    showAddWarehouseModal.value = false
-}
-
-// Edit Warehouse
-const showEditWarehouseModal = ref(false)
-const fetchEditWarehouse = async (warehouse: Warehouse) => {
-    await warehouseStore.fetchEditWarehouse(warehouse.id, warehouse)
-    await warehouseStore.fetchGetWarehouses()
-    showEditWarehouseModal.value = false
-}
-
-// Delete Warehouse
-const showDeleteWarehouseModal = ref(false)
-const fetchDeleteWarehouse = async (warehouse: Warehouse) => {
-    await warehouseStore.fetchDeleteWarehouse(warehouse.id)
-    await warehouseStore.fetchGetWarehouses()
-    showDeleteWarehouseModal.value = false
-}
-
 // TABLE EMITS
+const onRowAdd = () => {
+    showAddWarehouseModal.value = true
+}
+
 const onRowEdit = (row: Warehouse) => {
-    selectedRow.value = row
+    warehouseStore.selectedWarehouse = row
     showEditWarehouseModal.value = true
 }
 
 const onRowDelete = (row: Warehouse) => {
-    selectedRow.value = row
+    warehouseStore.selectedWarehouse = row
     showDeleteWarehouseModal.value = true
+}
+
+const onRowClicked = (row: Warehouse) => {
+    router.push(`/warehouses/${row.id}`)
 }
 </script>
 
 <template>
     <Table
         :rows="warehouseStore.warehouses"
-        @row-delete="onRowDelete"
-        @row-edit="onRowEdit"
+        @rowAdd="onRowAdd"
+        @rowClicked="onRowClicked"
+        @rowDelete="onRowDelete"
+        @rowEdit="onRowEdit"
     />
-
-    <q-btn color="brown-6" icon="add" round @click="showAddWarehouseModal = true"/>
 
     <!--    MODALS    -->
 
     <q-dialog ref="dialogRef" v-model="showAddWarehouseModal" @hide="onDialogHide">
         <AddWarehouseForm
             @cancel="showAddWarehouseModal = false"
-            @submit="fetchAddWarehouse"
+            @submitted="showAddWarehouseModal = false"
         />
     </q-dialog>
 
-
     <q-dialog ref="dialogRef" v-model="showEditWarehouseModal" @hide="onDialogHide">
         <EditWarehouseForm
-            :warehouse="selectedRow"
             @cancel="showEditWarehouseModal = false"
-            @submit="fetchEditWarehouse"
+            @submitted="showEditWarehouseModal = false"
         />
     </q-dialog>
 
     <q-dialog ref="dialogRef" v-model="showDeleteWarehouseModal" @hide="onDialogHide">
         <DeleteWarehouseForm
-            :warehouse="selectedRow"
             @cancel="showDeleteWarehouseModal = false"
-            @submit="fetchDeleteWarehouse"
+            @submitted="showDeleteWarehouseModal = false"
         />
     </q-dialog>
-    <!--    <div class="wrapper">-->
-    <!--        <router-view/>-->
-    <!--    </div>-->
 </template>
