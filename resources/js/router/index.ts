@@ -1,14 +1,12 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import auth from './middleware/auth.js'
-import middlewarePipeline from './middleware/middlewarePipeline.js'
-import {Context} from '../types/router'
+import {Context} from "@/js/types/router";
+import middlewarePipeline from "@/js/router/middleware/middlewarePipeline";
 
 declare module 'vue-router' {
     interface RouteMeta {
         layout?: string
         middleware?: Function[]
-        description?: string
-        icon?: string
     }
 }
 
@@ -28,7 +26,6 @@ const routes: Array<RouteRecordRaw> = [
             layout: 'CenterLayout',
         },
     },
-
     {
         path: '/registration',
         name: 'Registration',
@@ -37,7 +34,6 @@ const routes: Array<RouteRecordRaw> = [
             layout: 'CenterLayout',
         },
     },
-
     {
         path: '/settings',
         name: 'Settings',
@@ -45,10 +41,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             middleware: [auth],
             description: 'Настройки',
-            icon: 'settings',
         },
     },
-
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
@@ -57,26 +51,55 @@ const routes: Array<RouteRecordRaw> = [
             layout: 'NoLayout',
         },
     },
-
     {
         path: '/company',
         name: 'Company',
         component: () => import('../pages/Company.vue'),
         meta: {
             middleware: [auth],
-            description: 'Company',
-            icon: 'outlets',
         },
     },
     {
         path: '/warehouses',
-        name: 'Warehouses',
-        component: () => import('../pages/Warehouse/Warehouse.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Warehouses',
-            icon: 'warehouse-detail',
-        },
+        children: [
+            {
+                path: '',
+                name: 'Warehouses',
+                component: () => import('../pages/Warehouses/Warehouses.vue'),
+                meta: {
+                    middleware: [auth],
+                },
+            },
+            {
+                path: ':warehouse',
+                name: 'Warehouse',
+                component: () => import('../pages/Warehouses/Warehouse.vue'),
+                meta: {
+                    middleware: [auth],
+                },
+            },
+        ],
+    },
+    {
+        path: '/inventories',
+        children: [
+            {
+                path: '',
+                name: 'Inventories',
+                component: () => import('../pages/Inventories/Inventories.vue'),
+                meta: {
+                    middleware: [auth],
+                },
+            },
+            {
+                path: ':inventory',
+                name: 'Inventory',
+                component: () => import('../pages/Inventories/Inventory.vue'),
+                meta: {
+                    middleware: [auth],
+                },
+            },
+        ],
     },
 
     {
@@ -86,7 +109,6 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             middleware: [auth],
             description: 'Outlet Detail',
-            icon: 'outlet',
         },
 
         children: [
@@ -164,8 +186,8 @@ router.beforeEach((to, from, next) => {
     })
 })
 
-router.afterEach((to, from, next) => {
-    document.title = (to.name as string) || 'Bookkeeping'
+router.afterEach((to) => {
+    document.title = (to.name as string) || 'Inventory managment'
 })
 
 export default router
