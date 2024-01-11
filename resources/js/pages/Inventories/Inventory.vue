@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    warehouse settings
+    Inventory page
 </template>
 
 <style scoped>

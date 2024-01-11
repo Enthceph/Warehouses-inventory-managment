@@ -10,7 +10,7 @@ class Inventory extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'inventory';
+    protected $table = 'inventories';
 
     protected $fillable = [
         "quantity",
