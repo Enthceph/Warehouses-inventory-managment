@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import {useUserStore} from "@/js/stores/user";
 import TheUserBadge from "@/js/components/TheUserBadge.vue";
+import {useWarehouseStore} from "@/js/stores/warehouses";
 
 const route = useRoute()
-
+const warehouseStore = useWarehouseStore()
 const userStore = useUserStore()
 
 onMounted(() => {
@@ -13,10 +14,16 @@ onMounted(() => {
 </script>
 
 <template>
-    <header class="bg-green-700 ">
+    <header class="bg-green-700">
         <TheUserBadge/>
 
-        <h2 class="text-h6 font-bold">{{ route.meta.description }}</h2>
+        <h2 class="text-h6 font-bold">
+            <span>{{ route.name }}</span>
+            <span v-if="route.name === 'Warehouse' && warehouseStore.selectedWarehouse">: {{
+                    warehouseStore.selectedWarehouse.name
+                }}</span>
+        </h2>
+
 
         <router-link class="ml-auto" to="/settings">
             <q-icon name="settings"/>
