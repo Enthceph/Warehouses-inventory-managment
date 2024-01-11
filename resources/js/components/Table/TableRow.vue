@@ -3,11 +3,8 @@
 </script>
 
 <template>
-    <tr class="hover:bg-gray-50">
+    <tr class="hover:bg-gray-50 cursor-pointer">
         <slot/>
     </tr>
 </template>
 
-<style scoped>
-
-</style>
