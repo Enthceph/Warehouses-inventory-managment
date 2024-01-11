@@ -22,12 +22,17 @@
 
         <q-item clickable>
             <q-item-section>
-                <router-link to="/inventory">Inventory</router-link>
+                <router-link to="/inventories">Inventories</router-link>
             </q-item-section>
         </q-item>
         <q-item clickable>
             <q-item-section>
                 <router-link to="/warehouses">Warehouses</router-link>
+            </q-item-section>
+        </q-item>
+        <q-item clickable>
+            <q-item-section>
+                <router-link to="/outles">Outlets(Точки)</router-link>
             </q-item-section>
         </q-item>
     </q-list>
