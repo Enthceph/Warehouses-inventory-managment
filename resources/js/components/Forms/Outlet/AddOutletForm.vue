@@ -1,27 +1,39 @@
 <script lang="ts" setup>
-export interface Outlet {
-    name: string
-    address?: string
-    contact_info?: string
-}
+import {useOutletsStore} from "@/js/stores/outlets";
+import {OutletFormData} from "@/js/types/outlet.types";
 
-const emit = defineEmits(['submit', 'cancel'])
+const emit = defineEmits(['submitted', 'cancel'])
 
 const form = ref()
-const data = reactive<Outlet>({
+const outlet = reactive<OutletFormData>({
     name: '',
     address: '',
     contact_info: '',
+    outlet_name: ''
 })
 
-const submit = () => {
-    const validated = form.value.validate()
+const loading = ref(false)
+const outletStore = useOutletsStore()
 
+const submit = async () => {
+    const validated = form.value.validate()
     if (!validated) return
 
-    emit('submit', data)
-}
+    loading.value = true
 
+    try {
+        await outletStore.fetchAddOutlet(outlet)
+    } catch (err) {
+        console.log('AddOutletForm Error', err)
+        return
+    } finally {
+        loading.value = false
+    }
+
+    emit('submitted', outlet)
+
+    await outletStore.fetchGetOutlets()
+}
 const cancel = () => {
     emit('cancel')
 }
@@ -37,7 +49,7 @@ const cancel = () => {
             <q-card-section>
                 <q-form ref="add_outlet_form" autocomplete="off" @submit.prevent="">
                     <q-input
-                        v-model="data.name"
+                        v-model="outlet.name"
                         :rules="[v => v.length >= 2 || `Название точки должно иметь хотя бы 2 буквы`]"
                         hide-bottom-space
                         label="Outlet Name"
@@ -46,15 +58,21 @@ const cancel = () => {
                     />
 
                     <q-input
-                        v-model="data.address"
+                        v-model="outlet.address"
                         label="Outlet Address"
                         placeholder="Enter outlet address"
                     />
 
                     <q-input
-                        v-model="data.contact_info"
+                        v-model="outlet.contact_info"
                         label="Contact Information"
                         placeholder="Enter contact information"
+                    />
+
+                    <q-input
+                        v-model="outlet.outlet_name"
+                        :placeholder="outlet.name + 'outlet'"
+                        label="Warehouse name(not required)"
                     />
                 </q-form>
             </q-card-section>

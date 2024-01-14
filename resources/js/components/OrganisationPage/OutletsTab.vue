@@ -3,7 +3,7 @@ import {useDialogPluginComponent} from 'quasar'
 import TabLayout from "@/js/components/OrganisationPage/TabLayout.vue";
 import TabCard from '@/js/components/OrganisationPage/TabCard.vue'
 import TabAddCard from "@/js/components/OrganisationPage/TabAddCard.vue";
-import AddOutletForm, {Outlet} from "@/js/components/Forms/AddOutletForm.vue";
+import AddOutletForm, {Outlet} from "@/js/components/Forms/Outlet/AddOutletForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
 import {addOutlet, getOutlets} from "@/api/outlet";
 

@@ -13,7 +13,9 @@ class Outlet extends Model
     protected $fillable = [
         'name',
         'address',
-        'contact_info'
+        'contact_info',
+        'company_id',
+        'warehouse_id'
     ];
 
     public function company()
