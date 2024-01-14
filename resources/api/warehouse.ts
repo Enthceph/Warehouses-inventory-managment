@@ -9,7 +9,7 @@ export const addWarehouse = (data: Object) => apiRequest.post(`warehouse`, {
     json: data,
 })
 
-export const editWarehouse = (id: Number, data: Object) => apiRequest.patch(`warehouse/${id}`, {
+export const updateWarehouse = (id: Number, data: Object) => apiRequest.patch(`warehouse/${id}`, {
     json: data,
 })
 export const getWarehouseInventory = (data: Object) => apiRequest.post(`getWarehouseInventory`, {

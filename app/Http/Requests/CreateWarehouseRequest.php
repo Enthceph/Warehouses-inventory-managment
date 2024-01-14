@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateWarehouseRequest extends FormRequest
 {
+    public mixed $name;
+
     /**
      * Determine if the user is authorized to make this request.
      *

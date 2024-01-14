@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import {useWarehouseStore, Warehouse} from "@/js/stores/warehouses";
+import {useWarehousesStore} from "@/js/stores/warehouses";
+import {Warehouse} from "@/js/types/warehouse.types";
 
 const emit = defineEmits(['submitted', 'cancel'])
 
@@ -11,7 +12,7 @@ const warehouse = reactive<Warehouse>({
     contact_info: '',
 })
 const loading = ref(false)
-const warehouseStore = useWarehouseStore()
+const warehouseStore = useWarehousesStore()
 
 onMounted(() => {
     Object.assign(warehouse, warehouseStore.selectedWarehouse)
@@ -25,7 +26,7 @@ const submit = async () => {
     try {
         await warehouseStore.fetchEditWarehouse(warehouse.id, warehouse)
     } catch (err) {
-        console.log('Edit Warehouse Form Error', err)
+        console.log('EditWarehouseForm Error', err)
         return
     } finally {
         loading.value = false
@@ -42,7 +43,6 @@ const cancel = () => {
 </script>
 
 <template>
-
     <q-card class="q-dialog-plugin">
         <transition
             appear

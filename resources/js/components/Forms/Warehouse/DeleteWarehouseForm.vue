@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import {useWarehouseStore} from "@/js/stores/warehouses";
+import {useWarehousesStore} from "@/js/stores/warehouses";
 
 const emit = defineEmits(['submitted', 'cancel'])
-const warehouseStore = useWarehouseStore()
+const warehouseStore = useWarehousesStore()
 const loading = ref(false)
 
 const submit = async () => {
@@ -13,7 +13,7 @@ const submit = async () => {
             await warehouseStore.fetchDeleteWarehouse(warehouseStore.selectedWarehouse.id)
         }
     } catch (err) {
-        console.log('Delete Warehouse Form Error', err)
+        console.log('DeleteWarehouseForm Error', err)
         return
     } finally {
         loading.value = false
@@ -30,7 +30,6 @@ const cancel = () => {
 </script>
 
 <template>
-
     <q-card>
         <transition
             appear

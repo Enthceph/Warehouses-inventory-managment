@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {useWarehouseStore, WarehouseWithoutId} from "@/js/stores/warehouses";
+import {useWarehousesStore, WarehouseWithoutId} from "@/js/stores/warehouses";
 
 const emit = defineEmits(['submitted', 'cancel'])
 
@@ -10,7 +10,7 @@ const warehouse = reactive<WarehouseWithoutId>({
     contact_info: '',
 })
 const loading = ref(false)
-const warehouseStore = useWarehouseStore()
+const warehouseStore = useWarehousesStore()
 
 const submit = async () => {
     const validated = form.value.validate()
@@ -21,7 +21,7 @@ const submit = async () => {
     try {
         await warehouseStore.fetchAddWarehouse(warehouse)
     } catch (err) {
-        console.log('Add Warehouse Form Error', err)
+        console.log('AddWarehouseForm Error', err)
         return
     } finally {
         loading.value = false

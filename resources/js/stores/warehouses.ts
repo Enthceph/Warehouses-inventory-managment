@@ -1,38 +1,18 @@
 import {defineStore} from 'pinia';
+import {Warehouse, WarehouseWithoutId} from "@/js/types/warehouse.types";
 import {
     addWarehouse,
     deleteWarehouse,
-    editWarehouse,
     getWarehouse,
     getWarehouseInventory,
-    getWarehouses
+    getWarehouses,
+    updateWarehouse
 } from "@/api/warehouse";
-
-export interface Warehouse {
-    id: number;
-    name: string;
-    location: string | null;
-    contact_info: string | null;
-}
-
-// TODO перенести этот интерфейс в подходящее место
+import {Inventory} from "@/js/types/inventory.types";
 
 
-export interface Inventory {
-    id: number;
-    quantity: number;
-    unit_price: number;
-    total_value: number;
-    product_id: number;
-    warehouse_id: number;
-    created_at: Date;
-    updated_at: Date;
-}
-
-export type WarehouseWithoutId = Omit<Warehouse, 'id'>;
-
-export const useWarehouseStore = defineStore({
-    id: 'warehouseStore',
+export const useWarehousesStore = defineStore({
+    id: 'warehousesStore',
     state: (): { warehouses: Warehouse[], selectedWarehouse: Warehouse | null } => ({
         warehouses: [],
         selectedWarehouse: null
@@ -51,7 +31,7 @@ export const useWarehouseStore = defineStore({
             await addWarehouse(warehouse)
         },
         async fetchEditWarehouse(id: number, warehouse: Warehouse) {
-            await editWarehouse(id, warehouse)
+            await updateWarehouse(id, warehouse)
         },
         async fetchGetWarehouseInventory(id: number): Promise<Inventory[]> {
             let res = await getWarehouseInventory({id: id})

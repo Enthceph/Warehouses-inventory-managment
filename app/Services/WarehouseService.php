@@ -24,9 +24,9 @@ class WarehouseService
         $company_id = Auth::user()->company->id;
 
         return Warehouse::create([
-            'name' => $request->name,
-            'location' => $request->location,
-            'contact_info' => $request->contact_info,
+            'name' => $request['name'],
+            'location' => $request['location'],
+            'contact_info' => $request['contact_info'],
             'company_id' => $company_id,
         ]);
     }
@@ -51,7 +51,7 @@ class WarehouseService
             'contact_info' => $request->contact_info,
         ]);
 
-        return response(['message' => 'Warehouses changed successfully']);
+        return response(['message' => 'Warehouse changed successfully']);
     }
 
     public function show($id)

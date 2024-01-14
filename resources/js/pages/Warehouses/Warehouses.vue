@@ -1,17 +1,18 @@
 <script lang="ts" setup>
 import {useDialogPluginComponent} from 'quasar'
-import {useWarehouseStore, Warehouse} from "@/js/stores/warehouses";
+import {useWarehousesStore} from "@/js/stores/warehouses";
 import AddWarehouseForm from "@/js/components/Forms/Warehouse/AddWarehouseForm.vue";
 import Table from "@/js/components/Table/Table.vue";
 import EditWarehouseForm from "@/js/components/Forms/Warehouse/EditWarehouseForm.vue";
 import DeleteWarehouseForm from "@/js/components/Forms/Warehouse/DeleteWarehouseForm.vue";
+import {Warehouse} from "@/js/types/warehouse.types";
 
 defineEmits([...useDialogPluginComponent.emits]);
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
 
 const router = useRouter()
 const route = useRoute()
-const warehouseStore = useWarehouseStore()
+const warehouseStore = useWarehousesStore()
 
 const showAddWarehouseModal = ref(false)
 const showEditWarehouseModal = ref(false)
