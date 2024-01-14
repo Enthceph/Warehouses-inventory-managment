@@ -101,66 +101,23 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
     },
-
     {
-        path: '/Outlet/:outlet',
-        name: 'Outlet',
-        component: () => import('../pages/Outlet/Outlet.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Outlet Detail',
-        },
-
+        path: '/outlets',
         children: [
             {
-                path: 'overview',
-                name: 'OutletOverview',
-                component: () => import('../pages/Outlet/OutletOverview.vue'),
+                path: '',
+                name: 'Outlets',
+                component: () => import('../pages/Outlets/Outlets.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Outlet Overview',
-                    icon: 'taxes',
                 },
             },
             {
-                path: 'transactions',
-                name: 'OutletTransactions',
-                component: () =>
-                    import('../pages/Outlet/OutletTransactions.vue'),
+                path: ':outlet',
+                name: 'Outlet',
+                component: () => import('../pages/Outlets/Outlet.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Outlet Transactions',
-                    icon: 'transactions',
-                },
-            },
-            {
-                path: 'reports',
-                name: 'OutletReports',
-                component: () => import('../pages/Outlet/OutletReports.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Reports',
-                    icon: 'reports',
-                },
-            },
-            {
-                path: 'employees',
-                name: 'OutletEmployees',
-                component: () => import('../pages/Outlet/OutletEmployees.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Employees',
-                    icon: 'customers',
-                },
-            },
-            {
-                path: 'settings',
-                name: 'OutletSettings',
-                component: () => import('../pages/Outlet/OutletSettings.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Settings',
-                    icon: 'settings',
                 },
             },
         ],
@@ -187,7 +144,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to) => {
-    document.title = (to.name as string) || 'Inventory managment'
+    document.title = (to.name as string) || 'Inventory management'
 })
 
 export default router

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 
-import RegistrationUserForm, {UserData} from "@/js/components/Forms/RegistrationUserForm.vue";
-import RegistrationCompanyForm, {CompanyData} from "@/js/components/Forms/RegistrationOrganisationForm.vue";
+import RegistrationUserForm, {UserData} from "@/js/components/Forms/Registration/RegistrationUserForm.vue";
+import RegistrationCompanyForm, {
+    CompanyData
+} from "@/js/components/Forms/Registration/RegistrationOrganisationForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
 import {register} from "@/api/auth";
 
@@ -72,7 +74,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
 
 <style scoped>
 h2 {
-    font-size:   26px;
+    font-size: 26px;
     font-weight: bold;
 }
 </style>

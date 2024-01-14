@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {useFetching} from "@/js/composables/useFetching";
 import {login} from "@/api/auth";
-import LoginForm from "@/js/components/Forms/LoginForm.vue";
+import LoginForm from "@/js/components/Forms/Login/LoginForm.vue";
 import {setToken} from "@/js/utils/token";
 
 const router = useRouter()

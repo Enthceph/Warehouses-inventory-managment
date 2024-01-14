@@ -1,12 +1,8 @@
 import {defineStore} from 'pinia';
 import {useFetching} from "@/js/composables/useFetching";
 import {user} from "@/api/user";
+import {User} from "@/js/types/user.types";
 
-interface User {
-    full_name: string
-    email: string
-    role: string
-}
 
 export const useUserStore = defineStore({
     id: 'userStore',

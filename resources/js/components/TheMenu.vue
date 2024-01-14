@@ -32,12 +32,8 @@
         </q-item>
         <q-item clickable>
             <q-item-section>
-                <router-link to="/outles">Outlets(Точки)</router-link>
+                <router-link to="/outlets">Outlets</router-link>
             </q-item-section>
         </q-item>
     </q-list>
 </template>
-
-<style scoped>
-
-</style>
