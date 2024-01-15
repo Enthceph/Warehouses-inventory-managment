@@ -1,9 +1,9 @@
 <script lang="js" setup>
 import {useDialogPluginComponent} from 'quasar'
-import EditEmployeeForm from "@/js/components/Forms/EditEmployeeForm.vue";
-import AddEmployeeForm from "@/js/components/Forms/AddEmployeeForm.vue";
+import EditEmployeeForm from "@/js/components/Forms/Employee/EditEmployeeForm.vue";
+import AddEmployeeForm from "@/js/components/Forms/Employee/AddEmployeeForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
-import {addEmployee, deleteEmployee, editEmployee, getEmployees} from "@/api/employee";
+import {addEmployee, deleteEmployee, getEmployees, updateEmployee} from "@/api/employee";
 
 defineEmits([...useDialogPluginComponent.emits])
 
@@ -27,7 +27,7 @@ const onAddEmployeeFormSubmit = async (employee) => {
 // EDIT
 const showEditEmployeeModal = ref(false)
 const selectedEditEmployee = ref({})
-const {fetch: fetchEditEmployee} = useFetching(editEmployee)
+const {fetch: fetchEditEmployee} = useFetching(updateEmployee)
 
 const onEditEmployeeClicked = (employee) => {
     selectedEditEmployee.value = employee

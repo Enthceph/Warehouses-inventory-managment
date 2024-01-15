@@ -10,14 +10,18 @@ class Inventory extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'inventory';
+    protected $table = 'inventories';
 
     protected $fillable = [
         "quantity",
         "unit_price",
         "total_value",
-        //warehouse id
     ];
+
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
 
     public function warehouse()
     {

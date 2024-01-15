@@ -11,13 +11,20 @@ class Outlet extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'organisation_id',
         'name',
         'address',
+        'contact_info',
+        'company_id',
+        'warehouse_id'
     ];
 
-    public function organization()
+    public function company()
     {
-        return $this->belongsTo(Organisation::class, 'id', 'organisation_id');
+        return $this->belongsTo(Company::class, 'id', 'company_id');
+    }
+
+    public function warehouse()
+    {
+        return $this->hasOne(Warehouse::class, 'id', 'warehouse_id');
     }
 }

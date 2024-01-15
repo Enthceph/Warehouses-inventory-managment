@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\CreateUserAndOrganisationRequest;
+use App\Http\Requests\CreateUserAndCompanyRequest;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
-    public function register(CreateUserAndOrganisationRequest $request, AuthService $service)
+    public function register(CreateUserAndCompanyRequest $request, AuthService $service)
     {
         $service->register($request);
 

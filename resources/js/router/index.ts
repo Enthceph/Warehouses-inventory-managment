@@ -1,14 +1,12 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import auth from './middleware/auth.js'
-import middlewarePipeline from './middleware/middlewarePipeline.js'
-import {Context} from '../types/router'
+import {Context} from "@/js/types/router";
+import middlewarePipeline from "@/js/router/middleware/middlewarePipeline";
 
 declare module 'vue-router' {
     interface RouteMeta {
         layout?: string
         middleware?: Function[]
-        description?: string
-        icon?: string
     }
 }
 
@@ -17,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
         path: '/',
         name: 'Home',
         redirect: {
-            path: '/organisation',
+            path: '/company',
         },
     },
     {
@@ -28,7 +26,6 @@ const routes: Array<RouteRecordRaw> = [
             layout: 'CenterLayout',
         },
     },
-
     {
         path: '/registration',
         name: 'Registration',
@@ -37,7 +34,6 @@ const routes: Array<RouteRecordRaw> = [
             layout: 'CenterLayout',
         },
     },
-
     {
         path: '/settings',
         name: 'Settings',
@@ -45,10 +41,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             middleware: [auth],
             description: 'Настройки',
-            icon: 'settings',
         },
     },
-
     {
         path: '/:pathMatch(.*)*',
         name: 'NotFound',
@@ -57,133 +51,77 @@ const routes: Array<RouteRecordRaw> = [
             layout: 'NoLayout',
         },
     },
-
     {
-        path: '/organisation',
-        name: 'Organisation',
-        component: () => import('../pages/Organisation.vue'),
+        path: '/company',
+        name: 'Company',
+        component: () => import('../pages/Company.vue'),
         meta: {
             middleware: [auth],
-            description: 'Organisation',
-            icon: 'outlets',
         },
     },
-
     {
-        path: '/Outlet/:outlet',
-        name: 'Outlet',
-        component: () => import('../pages/Outlet/Outlet.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Outlet Detail',
-            icon: 'outlet',
-        },
+        path: '/warehouses',
         children: [
             {
-                path: 'overview',
-                name: 'OutletOverview',
-                component: () => import('../pages/Outlet/OutletOverview.vue'),
+                path: '',
+                name: 'Warehouses',
+                component: () => import('../pages/Warehouses/Warehouses.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Outlet Overview',
-                    icon: 'taxes',
                 },
             },
             {
-                path: 'transactions',
-                name: 'OutletTransactions',
-                component: () =>
-                    import('../pages/Outlet/OutletTransactions.vue'),
+                path: ':warehouse',
+                name: 'Warehouse',
+                component: () => import('../pages/Warehouses/Warehouse.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Outlet Transactions',
-                    icon: 'transactions',
-                },
-            },
-            {
-                path: 'reports',
-                name: 'OutletReports',
-                component: () => import('../pages/Outlet/OutletReports.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Reports',
-                    icon: 'reports',
-                },
-            },
-            {
-                path: 'employees',
-                name: 'OutletEmployees',
-                component: () => import('../pages/Outlet/OutletEmployees.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Employees',
-                    icon: 'customers',
-                },
-            },
-            {
-                path: 'settings',
-                name: 'OutletSettings',
-                component: () => import('../pages/Outlet/OutletSettings.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Outlet Settings',
-                    icon: 'settings',
                 },
             },
         ],
     },
     {
-        path: '/warehouse/:id',
-        name: 'Warehouse',
-        component: () => import('../pages/Warehouse/Warehouse.vue'),
-        meta: {
-            middleware: [auth],
-            description: 'Warehouse Detail',
-            icon: 'warehouse-detail',
-        },
+        path: '/inventories',
         children: [
             {
-                path: 'overview',
-                name: 'WarehouseOverview',
-                component: () => import('../pages/Warehouse/WarehouseOverview.vue'),
+                path: '',
+                name: 'Inventories',
+                component: () => import('../pages/Inventories/Inventories.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Warehouse Overview',
-                    icon: 'overview',
                 },
             },
             {
-                path: 'transactions',
-                name: 'WarehouseTransactions',
-                component: () => import('../pages/Warehouse/WarehouseTransactions.vue'),
+                path: ':inventory',
+                name: 'Inventory',
+                component: () => import('../pages/Inventories/Inventory.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Warehouse Transactions',
-                    icon: 'transactions',
+                },
+            },
+        ],
+    },
+    {
+        path: '/outlets',
+        children: [
+            {
+                path: '',
+                name: 'Outlets',
+                component: () => import('../pages/Outlets/Outlets.vue'),
+                meta: {
+                    middleware: [auth],
                 },
             },
             {
-                path: 'reports',
-                name: 'WarehouseReports',
-                component: () => import('../pages/Warehouse/WarehouseReports.vue'),
+                path: ':outlet',
+                name: 'Outlet',
+                component: () => import('../pages/Outlets/Outlet.vue'),
                 meta: {
                     middleware: [auth],
-                    description: 'Warehouse Reports',
-                    icon: 'reports',
                 },
             },
-            {
-                path: 'settings',
-                name: 'WarehouseSettings',
-                component: () => import('../pages/Warehouse/WarehouseSettings.vue'),
-                meta: {
-                    middleware: [auth],
-                    description: 'Warehouse Settings',
-                    icon: 'settings',
-                },
-            },
-        ]
-    }
+        ],
+    },
 ]
 
 const router = createRouter({
@@ -205,8 +143,8 @@ router.beforeEach((to, from, next) => {
     })
 })
 
-router.afterEach((to, from, next) => {
-    document.title = (to.name as string) || 'Bookkeeping'
+router.afterEach((to) => {
+    document.title = (to.name as string) || 'Inventory management'
 })
 
 export default router

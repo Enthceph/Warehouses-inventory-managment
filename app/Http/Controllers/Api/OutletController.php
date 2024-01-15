@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOutletRequest;
+use App\Http\Requests\UpdateOutletRequest;
 use App\Services\OutletService;
+use App\Services\WarehouseService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OutletController extends Controller
 {
@@ -15,38 +16,19 @@ class OutletController extends Controller
         return $service->get();
     }
 
-    public function store(CreateOutletRequest $request, OutletService $service)
+    public function store(CreateOutletRequest $request, OutletService $service, WarehouseService $warehouseService)
     {
-        $service->store($request);
+        $service->store($request, $warehouseService);
     }
 
-    public function update(Request $request, int $id, OutletService $service)
+    public function update(UpdateOutletRequest $request, int $id, OutletService $service)
     {
-        $outlet = $service->show($id);
-
-        if (!$outlet) return response('Cant find outlet', 404);
-
-        $service->update($request, $outlet);
-
-        return response('Outlet changed successfully');
+        return $service->update($request, $id);
     }
 
     public function show($id, OutletService $service)
     {
-        $userId = Auth::id();
-        $orgId = Auth::user()->organisation->id;
-
-        $outlet = $service->show($id);
-
-        if (!$userId || $outlet->organisation_id !== $orgId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-        if (!$outlet) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
-        return $outlet;
+        return $service->show($id);
     }
 
     public function destroy(Request $request, int $id, OutletService $service)

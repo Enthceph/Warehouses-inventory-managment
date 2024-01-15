@@ -14,11 +14,14 @@ return new class extends Migration {
     {
         Schema::create('outlets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('organisation_id')->constrained('organisations');
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('contact_info')->nullable();
+            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('warehouse_id')->constrained('warehouses');
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

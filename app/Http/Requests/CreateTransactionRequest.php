@@ -24,14 +24,13 @@ class CreateTransactionRequest extends FormRequest
     public function rules()
     {
         return [
-            'outlet_id' => 'required|exists:outlets,id',
-            'type' => 'required|exists:transaction_categories,category',
             'amount' => 'required|numeric',
-            'inventory_id' => 'required|exists:Inventory,id',
-            'product_name' => 'required|exists:Inventory,product_name',
-
-            'description' => 'string|nullable',
             'date' => 'date',
+            'description' => 'string|nullable',
+            'outlet_id' => 'required|exists:outlets,id',
+            'product_id' => 'required|exists:Products,id',
+            'type_id' => 'required|exists:transaction_categories,id',
+            'warehouse_id' => 'required|exists:Warehouses,id',
         ];
     }
 }

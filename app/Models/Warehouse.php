@@ -11,16 +11,21 @@ class Warehouse extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = "warehouses";
-    
+
     protected $fillable = [
         'name',
         'location',
         'contact_info',
-        'organisation_id'
+        'company_id'
     ];
 
-    public function inventories()
+    public function inventory()
     {
-        return $this->hasMany(Inventory::class, 'warehouse_id');
+        return $this->hasMany(Inventory::class, 'warehouse_id', 'id');
+    }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

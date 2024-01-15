@@ -1,37 +1,31 @@
 <script lang="ts" setup>
-import useApi from "@/js/composables/useApi";
-import {useOutletStore} from "@/js/stores/outlet";
+import {useUserStore} from "@/js/stores/user";
+import TheUserBadge from "@/js/components/TheUserBadge.vue";
+import {useWarehousesStore} from "@/js/stores/warehouses";
 
 const route = useRoute()
-const outletStore = useOutletStore()
+const warehouseStore = useWarehousesStore()
+const userStore = useUserStore()
 
-const outletId = route.params.outlet
-
-const organisation = useApi('getUserOrganisation').get().json()
-organisation.onFetchResponse(() => {
-    company_name.value = organisation.data.value.name
+onMounted(() => {
+    userStore.fetchUser()
 })
-const company_name = ref('')
-
-
-// const {} => useFetching(getUser)
-
 
 </script>
 
 <template>
-    <header class="bg-brown-6">
-        <q-breadcrumbs>
-            <q-breadcrumbs-el :label="company_name" to="/organisation"/>
+    <header class="bg-green-700">
+        <TheUserBadge/>
 
-            <q-breadcrumbs-el
-                v-if="outletId"
-                :label="outletStore.name"
-                :to="'/outlet/' + outletId"
-            />
-        </q-breadcrumbs>
+        <h2 class="text-h6 font-bold">
+            <span>{{ route.name }}</span>
+            <span v-if="route.name === 'Warehouse' && warehouseStore.selectedWarehouse">: {{
+                    warehouseStore.selectedWarehouse.name
+                }}</span>
+        </h2>
 
-        <router-link to="/settings">
+
+        <router-link class="ml-auto" to="/settings">
             <q-icon name="settings"/>
         </router-link>
     </header>
@@ -42,7 +36,8 @@ header {
     align-items:     center;
     color:           var(--va-text-primary);
     display:         flex;
-    justify-content: space-between;
-    padding:         16px;
+    gap:             12px;
+    justify-content: flex-start;
+    padding:         16px 16px 16px 0;
 }
 </style>

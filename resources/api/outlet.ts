@@ -9,7 +9,7 @@ export const addOutlet = (data: Object) => apiRequest.post(`outlet`, {
     json: data,
 })
 
-export const editOutlet = (id: Number, data: Object) => apiRequest.patch(`outlet/${id}`, {
+export const updateOutlet = (id: Number, data: Object) => apiRequest.patch(`outlet/${id}`, {
     json: data,
 })
 

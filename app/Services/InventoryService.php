@@ -11,12 +11,13 @@ class InventoryService
 {
     public function get()
     {
-        $org = Auth::user()->organisation;
+        $company = Auth::user()->company;
 
-        $warehouses = $org->warehouses;
+        $warehouses = $company->warehouses;
 
         $inventories = $warehouses->map(function ($warehouse) {
-            return $warehouse->inventories;
+            $warehouse['inventory'] = $warehouse->inventory;
+            return $warehouse;
         });
 
         return $inventories;
@@ -59,6 +60,25 @@ class InventoryService
         ]);
 
         return response(['message' => 'Inventory changed successfully']);
+    }
+
+    public function getInventory($id)
+    {
+        $userId = Auth::id();
+        $companyId = Auth::user()->company->id;
+        $warehouse = Warehouse::find($id);
+
+        if (!$warehouse) {
+            return response(['message' => 'Not Found'], 404);
+        }
+
+        if (!$userId || $warehouse->company_id !== $companyId) {
+            return response(['message' => 'Unauthorized'], 401);
+        }
+
+        $inventory = $warehouse->inventory;
+
+        return $inventory;
     }
 
     public function destroy(Request $request, int $id)

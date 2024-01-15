@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 
-import RegistrationUserForm, {UserData} from "@/js/components/Forms/RegistrationUserForm.vue";
-import RegistrationOrganisationForm, {OrganisationData} from "@/js/components/Forms/RegistrationOrganisationForm.vue";
+import RegistrationUserForm, {UserData} from "@/js/components/Forms/Registration/RegistrationUserForm.vue";
+import RegistrationCompanyForm, {
+    CompanyData
+} from "@/js/components/Forms/Registration/RegistrationOrganisationForm.vue";
 import {useFetching} from "@/js/composables/useFetching";
 import {register} from "@/api/auth";
 
@@ -9,7 +11,7 @@ const router = useRouter();
 
 const registrationData = reactive({
     user_data: {},
-    organisation_data: {}
+    company_data: {}
 })
 
 const step = ref(1)
@@ -21,15 +23,13 @@ const submitUserForm = (data: UserData) => {
     registrationData.user_data = data
 
 }
-const submitOrganisationForm = async (data: OrganisationData) => {
-    registrationData.organisation_data = data
+const submitOrganisationForm = async (data: CompanyData) => {
+    registrationData.company_data = data
 
     await fetchRegistration(registrationData)
 
     router.push('/login')
 }
-
-
 </script>
 
 <template>
@@ -57,9 +57,9 @@ const submitOrganisationForm = async (data: OrganisationData) => {
             :done="step > 2"
             :name="2"
             icon="corporate_fare"
-            title="Организация"
+            title="Компания"
         >
-            <RegistrationOrganisationForm
+            <RegistrationCompanyForm
                 :user="registrationData.user_data"
                 @stepBack="step -= 1"
                 @submit="submitOrganisationForm"
@@ -74,7 +74,7 @@ const submitOrganisationForm = async (data: OrganisationData) => {
 
 <style scoped>
 h2 {
-    font-size:   26px;
+    font-size: 26px;
     font-weight: bold;
 }
 </style>

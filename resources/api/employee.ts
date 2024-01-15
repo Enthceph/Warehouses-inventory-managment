@@ -9,7 +9,7 @@ export const addEmployee = (data: Object) => apiRequest.post(`employee`, {
     json: data,
 })
 
-export const editEmployee = (id: Number, data: Object) => apiRequest.patch(`employee/${id}`, {
+export const updateEmployee = (id: Number, data: Object) => apiRequest.patch(`employee/${id}`, {
     json: data,
 })
 

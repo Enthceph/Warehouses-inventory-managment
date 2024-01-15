@@ -25,8 +25,9 @@ class UpdateOutletRequest extends FormRequest
     {
         return [
             'name' => 'string|max:255',
-            'address' => 'string|max:255',
-            'contact_info' => 'string|max:255',
+            'address' => 'string|max:255|nullable',
+            'contact_info' => 'string|max:255|nullable',
+            'warehouse_id' => 'integer'
         ];
     }
 

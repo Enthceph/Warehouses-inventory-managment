@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateWarehouseRequest extends FormRequest
 {
+    public mixed $name;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,7 +27,7 @@ class CreateWarehouseRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'address' => 'string|max:255|nullable',
+            'location' => 'string|max:255|nullable',
             'contact_info' => 'string|max:255|nullable',
         ];
     }
@@ -35,7 +37,7 @@ class CreateWarehouseRequest extends FormRequest
         return [
             'name.required' => 'The name field is required.',
             'name.max' => 'The name field may not be greater than 255 characters.',
-            'address.max' => 'The address field may not be greater than 255 characters.',
+            'location.max' => 'The address field may not be greater than 255 characters.',
             'contact_info.max' => 'The contact info field may not be greater than 255 characters.',
         ];
     }

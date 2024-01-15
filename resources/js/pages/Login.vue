@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {useFetching} from "@/js/composables/useFetching";
 import {login} from "@/api/auth";
-import LoginForm from "@/js/components/Forms/LoginForm.vue";
+import LoginForm from "@/js/components/Forms/Login/LoginForm.vue";
 import {setToken} from "@/js/utils/token";
 
 const router = useRouter()
@@ -14,7 +14,7 @@ const onFormSubmit = async (formData: { email: string, password: string }) => {
     setToken(res.access_token as string)
 
     router.push({
-        path: '/organisation'
+        path: '/company'
     })
 }
 

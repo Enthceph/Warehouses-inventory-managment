@@ -4,8 +4,8 @@ namespace App\Services;
 
 
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\CreateUserAndOrganisationRequest;
-use App\Models\Organisation;
+use App\Http\Requests\CreateUserAndCompanyRequest;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,26 +14,26 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    public function register(CreateUserAndOrganisationRequest $request)
+    public function register(CreateUserAndCompanyRequest $request)
     {
         DB::transaction(function () use ($request) {
             $user_data = $request->user_data;
-            $organisation_data = $request->organisation_data;
+            $company_data = $request->company_data;
 
             $user = User::create([
-                'first_name' => $user_data['first_name'],
-                'last_name' => $user_data['last_name'],
+                'full_name' => $user_data['full_name'],
                 'email' => $user_data['email'],
                 'role_id' => 2,
                 'password' => Hash::make($user_data['password']),
             ]);
+
             $user->createToken("API TOKEN")->plainTextToken;
 
-            $organisation = Organisation::create([
-                'name' => $organisation_data['name'],
-                'address' => $organisation_data['address'],
-                'contact_info' => $organisation_data['contact_info'],
-                'owner_id' => $user->id
+            $company = Company::create([
+                'name' => $company_data['name'],
+                'address' => $company_data['address'],
+                'contact_info' => $company_data['contact_info'],
+                'owner_id' => $user['id']
             ]);
         });
     }
@@ -47,7 +47,6 @@ class AuthService
 
         $user = User::where('email', $request->email)->first();
         $accessToken = $user->createToken("API TOKEN")->plainTextToken;
-
 
         return $accessToken;
     }
