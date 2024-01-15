@@ -87,9 +87,11 @@ const cancel = () => {
                         <q-select
                             v-model="outlet.warehouse_id"
                             :options="warehousesStore.warehouses"
+                            emit-value
                             label="Warehouse"
+                            map-options
                             option-label="name"
-                            option-value="item.id"
+                            option-value="id"
                             options-dense
                         />
                     </q-form>
