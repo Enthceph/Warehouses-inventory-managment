@@ -9,8 +9,6 @@ export interface Outlet {
     updated_at: string | null;
 }
 
-export type OutletWithoutId = Omit<Outlet, 'id'>;
-
 export interface OutletFormData {
     name: string
     address?: string
