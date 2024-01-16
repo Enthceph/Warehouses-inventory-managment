@@ -110,6 +110,4 @@ class WarehouseService
 
         return response(['message' => 'Warehouses was deleted']);
     }
-
-
 }
