@@ -10,12 +10,12 @@ class Role extends Model
     use HasFactory;
 
     protected $fillable = [
-        'role'
+        'name'
     ];
 
     static public function getRoleId($name)
     {
-        $role = self::where('role', $name)->first();
+        $role = self::where('name', $name)->first();
 
         if ($role) {
             return $role->id;
@@ -26,6 +26,6 @@ class Role extends Model
 
     static public function getRoleByName($name)
     {
-        return Role::where('role', $name)->first();
+        return Role::where('name', $name)->first();
     }
 }

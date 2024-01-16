@@ -20,8 +20,7 @@ class RolesSeeder extends Seeder
             ['role' => 'Auditor'],
             ['role' => 'Accountant'],
             ['role' => 'Manager'],
-            ['role' => 'OrganisationEmployee'],
-
+            ['role' => 'Seller'],
         ]);
     }
 }
