@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import {useWarehousesStore, WarehouseWithoutId} from "@/js/stores/warehouses";
+import {useWarehousesStore} from "@/js/stores/warehouses";
+import {Warehouse} from "@/js/types/warehouse.types";
 
 const emit = defineEmits(['submitted', 'cancel'])
 
 const form = ref()
-const warehouse = reactive<WarehouseWithoutId>({
+const warehouse = reactive<Omit<Warehouse, 'id'>>({
     name: '',
     location: '',
     contact_info: '',

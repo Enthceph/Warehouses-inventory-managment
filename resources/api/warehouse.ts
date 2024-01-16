@@ -1,6 +1,6 @@
 import apiRequest from '../js/utils/request'
 
-// TODO добавить return types
+// TODO добавить return types и соответсвующий тип вместо data:Object
 export const getWarehouses = () => apiRequest.get('warehouse')
 
 export const getWarehouse = (id: Number) => apiRequest.get(`warehouse/${id}`)

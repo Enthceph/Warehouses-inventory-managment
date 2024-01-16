@@ -24,17 +24,9 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
+            'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'role' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if ($value === 'Owner' || $value === 'Admin') {
-                        $fail("The $attribute field cannot be 'Owner' or 'Admin'.");
-                    }
-                },
-            ],
+            'role_id' => 'required|numeric|not_in:1,2|exists:roles,id',
             'password' => 'required|string|min:8|confirmed',
         ];
     }

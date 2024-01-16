@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Company;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
 {
+    public function index(UserService $service)
+    {
+        return $service->get();
+    }
+
+
+//    TODO эту хуйню просто заменить на update и на фронте просто отправлять объект с 1 полем
     public function changeName(Request $request)
     {
-//        TODO этот return возвращает 1 или 0
         return Auth::user()->update([
             'first_name' => $request['first_name'],
             'last_name' => $request['last_name']
@@ -31,11 +37,6 @@ class UserController extends Controller
         }
 
         return response()->json(['message' => 'User not found'], 404);
-    }
-
-    public function getUserOrganisation()
-    {
-        return response(Company::where('owner_id', Auth::id())->first());
     }
 
 }

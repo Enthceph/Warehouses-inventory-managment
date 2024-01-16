@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
 import auth from './middleware/auth.js'
-import {Context} from "@/js/types/router";
+import {Context} from "@/js/types/router.types";
 import middlewarePipeline from "@/js/router/middleware/middlewarePipeline";
 
 declare module 'vue-router' {
@@ -116,6 +116,28 @@ const routes: Array<RouteRecordRaw> = [
                 path: ':outlet',
                 name: 'Outlet',
                 component: () => import('../pages/Outlets/Outlet.vue'),
+                meta: {
+                    middleware: [auth],
+                },
+            },
+        ],
+    },
+
+    {
+        path: '/employees',
+        children: [
+            {
+                path: '',
+                name: 'Employees',
+                component: () => import('../pages/Employees/Employees.vue'),
+                meta: {
+                    middleware: [auth],
+                },
+            },
+            {
+                path: ':Employee',
+                name: 'Employee',
+                component: () => import('../pages/Employees/Employee.vue'),
                 meta: {
                     middleware: [auth],
                 },

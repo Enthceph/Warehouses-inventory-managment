@@ -13,7 +13,6 @@ class Company extends Model
         'name',
         'address',
         'contact_info',
-        'owner_id'
     ];
 
 //    public function employees()

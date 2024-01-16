@@ -20,21 +20,21 @@ class AuthService
             $user_data = $request->user_data;
             $company_data = $request->company_data;
 
-            $user = User::create([
-                'full_name' => $user_data['full_name'],
-                'email' => $user_data['email'],
-                'role_id' => 2,
-                'password' => Hash::make($user_data['password']),
-            ]);
-
-            $user->createToken("API TOKEN")->plainTextToken;
-
             $company = Company::create([
                 'name' => $company_data['name'],
                 'address' => $company_data['address'],
                 'contact_info' => $company_data['contact_info'],
-                'owner_id' => $user['id']
             ]);
+
+            $user = User::create([
+                'full_name' => $user_data['full_name'],
+                'email' => $user_data['email'],
+                'role_id' => 2,
+                'company_id' => $company->id,
+                'password' => Hash::make($user_data['password']),
+            ]);
+
+            $user->createToken("API TOKEN")->plainTextToken;
         });
     }
 

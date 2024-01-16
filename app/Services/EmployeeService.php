@@ -4,11 +4,9 @@ namespace App\Services;
 
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Models\Employee;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeService
@@ -34,24 +32,13 @@ class EmployeeService
 
     public function store(StoreEmployeeRequest $request)
     {
-        DB::transaction(function () use ($request) {
-            $role_id = Role::getRoleId($request->role);
-
-            $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'email' => $request->email,
-                'role_id' => $role_id,
-                'password' => Hash::make($request->password),
-            ]);
-
-            $orgId = Auth::user()->organisation->id;
-
-            Employee::create([
-                'organisation_id' => $orgId,
-                'employee_id' => $user->id,
-            ]);
-        });
+        return User::create([
+            'full_name' => $request->full_name,
+            'email' => $request->email,
+            'role_id' => $request->role_id,
+            'password' => Hash::make($request->password),
+            'company_id' => Auth::user()->company->id
+        ]);
     }
 
     public function show($id)
@@ -61,23 +48,33 @@ class EmployeeService
 
     public function update(Request $request, $id)
     {
+        $authRole = Auth::user()->role->name;
 
-//        TODO сервис, по идее, не должен возвращать response
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
-        if (!$user) return response(['message' => 'Cant find employee'], 404);
+        if ($authRole == 'Admin') {
+            $user->update($request);
+            return response(['message' => 'Employee updated successfully']);
+        }
 
-        $role = Role::getRoleByName($request->role);
+        if ($authRole == 'Owner') {
+            if (!$request->has('role_id')) {
+                return response(['message' => 'You can only change employee\'s role'], 401);
+            }
 
-        if ($role === 'Owner') return response(['message' => 'Cant set role to owner'], 401);
+            if ($request->role_id == 1 || $request->role_id == 2) {
+                return response(['message' => 'You are unauthorized to set a role to owner or admin'], 401);
+            }
 
-        $user->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'role_id' => $role,
-        ]);
+            $user->update([
+                'role_id' => $request['role_id']
+            ]);
 
-        return response(['message' => 'Employee changed successfully']);
+            return response(['message' => 'Employee updated successfully']);
+        }
+
+
+        return response(['message' => 'You are unauthorized to change employees'], 401);
     }
 
     public function destroy($id)

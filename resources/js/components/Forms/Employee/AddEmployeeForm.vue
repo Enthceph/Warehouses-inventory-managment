@@ -1,99 +1,121 @@
 <script lang="ts" setup>
-export interface Employee {
-    first_name: String
-    last_name: String
-    email: String
-    password: String
-    password_confirmation: String
-    role: String
-}
+import {useEmployeesStore} from "@/js/stores/employees";
+import {AddEmployeeForm} from "@/js/types/employee.types";
+import {useRolesStore} from "@/js/stores/roles";
+
+const emit = defineEmits(['submitted', 'cancel'])
+
+const rolesStore = useRolesStore()
+const employeeStore = useEmployeesStore()
 
 const form = ref()
-const emit = defineEmits<{
-    (e: 'submit', {}: Employee): void
-}>()
-
-const employee = reactive({
-    first_name: '',
-    last_name: '',
+const loading = ref(false)
+const employee = reactive<AddEmployeeForm>({
+    full_name: '',
     email: '',
     password: '',
-    password_confirmation: '',
-    role: '',
+    password_conformation: '',
+    role_id: 6
 })
 
-const submit = () => {
-    const validated = form.value.validate()
+const rolesForEmployee = computed(() => {
+    if (!rolesStore.roles) return []
 
+    return rolesStore.roles.filter((role) => {
+        return role.name != 'Admin' && role.name != 'Owner'
+    })
+})
+
+onMounted(() => {
+    rolesStore.fetchGetRoles()
+})
+
+const submit = async () => {
+    const validated = form.value.validate()
     if (!validated) return
 
-    emit('submit', employee)
+    loading.value = true
+
+    try {
+        await employeeStore.fetchAddEmployee(employee)
+    } catch (err) {
+        console.log('AddEmployeeForm Error', err)
+        return
+    } finally {
+        loading.value = false
+    }
+
+    emit('submitted', employee)
+
+    await employeeStore.fetchGetEmployees()
+}
+const cancel = () => {
+    emit('cancel')
 }
 </script>
 
 <template>
-    <q-card class="q-pa-md">
+    <q-card class="q-dialog-plugin">
         <q-form ref="form" @submit.prevent="submit">
-            <q-input
-                v-model="employee.first_name"
-                :rules="[v => v.length >= 2 || `Имя должно иметь хотя бы 2 буквы`]"
-                hide-bottom-space
-                label="first_name"
-                required
-            />
-            <q-input
-                v-model="employee.last_name"
-                :rules="[v => v.length >= 2 || `Фамилия должна иметь хотя бы 2 буквы`]"
-                hide-bottom-space
-                label="last_name"
-                required
-            />
-            <q-input
-                v-model="employee.email"
-                :rules="[v => v.length >= 1 || `Введите email`]"
-                hide-bottom-space
-                label="email"
-                required
-                type="email"
-            />
-            <q-input
-                v-model="employee.password"
-                autocomplete="off"
-                label="Password"
-                required
-                type="password"
-            />
-            <q-input
-                v-model="employee.password_confirmation"
-                :rules="[v => v === employee.password || `Пароли не равны`]"
-                hide-bottom-space
-                label="Repeat password"
-                required
-                type="password"
+            <q-card-section>
+                <h2 class="text-h5 text-center">Добавить работника</h2>
+            </q-card-section>
 
-            />
-            <q-select
-                v-model="employee.role"
-                :options="[
-                        'Administrator',
-                        'Auditor',
-                        'Accountant',
-                        'Manager',
-                        'Employee'
-                    ]"
-                :rules="[v => !!v || `Роль должна быть выбрана`]"
-                label="role"
-                required
-            />
+            <q-card-section>
+                <q-form ref="add_employee_form" autocomplete="off" @submit.prevent="">
+                    <q-input
+                        v-model="employee.full_name"
+                        :rules="[v => v.length >= 2 || `Имя работника должно иметь хотя бы 2 буквы`]"
+                        hide-bottom-space
+                        label="Employee Name"
+                        placeholder="Enter employee name"
+                        required
+                    />
+
+                    <q-input
+                        v-model="employee.email"
+                        :rules="[val => !!val || 'Field is required']"
+                        hide-bottom-space
+                        label="Employee email"
+                        placeholder="Enter employee email"
+                        type="email"
+                    />
+
+                    <q-input
+                        v-model="employee.password"
+                        :rules="[val => !!val || 'Field is required']"
+                        autocomplete="off"
+                        hide-bottom-space
+                        label="Password"
+                        type="password"
+                    />
+                    <q-input
+                        v-model="employee.password_confirmation"
+                        :rules="[v => v === employee.password || `Пароли не равны`]"
+                        hide-bottom-space
+                        label="Repeat password"
+                        type="password"
+                    />
+
+                    <q-select
+                        v-model="employee.role_id"
+                        :options="rolesForEmployee"
+                        emit-value
+                        hide-bottom-space
+                        label="role"
+                        map-options
+                        option-label="name"
+                        option-value="id"
+                        options-dense
+                        required
+                    />
+                </q-form>
+            </q-card-section>
+
+            <q-card-actions align="right">
+                <q-btn color="grey" label="Отмена" @click="cancel"/>
+                <q-btn color="primary" label="Добавить" type="submit"/>
+            </q-card-actions>
         </q-form>
-        <q-card-actions align="between" class="buttons">
-            <q-btn color="grey" label="Cancel"/>
-            <q-btn color="orange" label="Add" padding="6px 16px" @click="submit"/>
-        </q-card-actions>
     </q-card>
-
 </template>
-<style scoped>
-
-
-</style>

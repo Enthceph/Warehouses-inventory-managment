@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,7 @@ class EmployeeController extends Controller
 
     public function store(StoreEmployeeRequest $request, EmployeeService $service)
     {
-        $service->store($request);
-
-        return response(['message' => 'Employee created'], 200);
+        return $service->store($request);
     }
 
     public function show($id, EmployeeService $service)
@@ -33,7 +32,7 @@ class EmployeeController extends Controller
         return $user;
     }
 
-    public function update(Request $request, int $id, EmployeeService $service)
+    public function update(UpdateEmployeeRequest $request, int $id, EmployeeService $service)
     {
         return $service->update($request, $id);
     }

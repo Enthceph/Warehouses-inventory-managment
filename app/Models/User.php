@@ -13,7 +13,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
-//    protected $Table = 'Users';
     /**
      * The attributes that are mass assignable.
      *
@@ -23,7 +22,8 @@ class User extends Authenticatable
         'full_name',
         'email',
         'password',
-        'role_id'
+        'role_id',
+        'company_id'
     ];
 
     /**
@@ -44,10 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
     public function company()
     {
-        return $this->hasOne(Company::class, 'owner_id', 'id');
+        return $this->hasOne(Company::class, 'id', 'company_id');
     }
 
     public function role()

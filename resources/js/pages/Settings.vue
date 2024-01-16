@@ -32,7 +32,7 @@ const onLogoutModalOk = () => {
 
     router.push('/login')
 }
-// TODO сделать смену имени компании
+// TODO сделать смену имени компании и смену email
 </script>
 <template>
     <q-card>
