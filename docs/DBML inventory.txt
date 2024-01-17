@@ -1,0 +1,69 @@
+https://dbdiagram.io/d
+
+
+
+Table Users {
+  id pk
+  fullname varchar 
+  email varchar [not null, unique]
+  password varchar [not null]
+  role_id int [ref: - Roles.id, not null]
+}
+
+Table Companies {
+  id int [pk]
+  title varchar [not null]
+  address varchar
+  contact_info varchar
+  owner_id int [ref: > Users.id, not null]
+}
+
+Table Company_employees{
+  id int [pk]
+  company_id int [ref: > Companies.id, not null]
+  employee_id int [ref: > Users.id, not null]
+}
+
+Table Roles{
+  id pk
+  name string
+}
+
+Table Outlets {
+  id int [pk]
+  company_id int [ref: > Companies.id]
+  name varchar
+  address varchar
+  contact_info varchar
+  warehouse_id int [ref: - Warehouses.id]
+}
+
+Table Warehouses {
+  id int [pk]
+  company_id int [ref: > Companies.id]
+  warehouse_name varchar
+  location varchar
+  contact_info varchar
+}
+
+Table Inventory {
+  id int [pk]
+  warehouse_id int [ref: - Warehouses.id]
+  product_id int [ref: > Products.id] 
+  quantity int
+  unit_price decimal
+  total_value decimal
+}
+
+Table Products {
+  id int [pk]
+  name varchar [not null]
+  description varchar
+  category int [ref: > Product_categories.id] 
+  company_id int [ref: > Companies.id, not null]
+}
+
+Table Product_categories {
+  id pk
+  name varchar [not null, unique]
+}

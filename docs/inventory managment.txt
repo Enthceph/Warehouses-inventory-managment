@@ -1,0 +1,32 @@
+https://en.wikipedia.org/wiki/Inventory_management_software
+
+https://admin.eqman.co/analytics
+
+adithi01@fdollsy.com
+-J]?$.QC.BY6_uL
+
+
+https://demo.openboxes.com/openboxes/
+
+
+https://demo.inventree.org/index/#
+
+
+
+
+Товар:
+Описание товара
+Кол-во на складе
+Статус
+expiration date
+расположение(outlet)
+закупочная цена
+цена на продажу
+
+
+Что-то типа event log понадобится(допустим отслеживать когда товар был продан)
+
+
+
+Че-то про типы предприятий:
+https://studfile.net/preview/7007630/page:6/
