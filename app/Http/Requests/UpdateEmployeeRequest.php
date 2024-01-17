@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class UpdateEmployeeRequest extends FormRequest
 {
@@ -14,17 +13,9 @@ class UpdateEmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        $authUser = Auth::user();
-        if ($authUser->role->name == "Admin") return true;
 
-        if ($authUser->role->name == "Owner") {
-            if ($this->input('company_id') !== $authUser['company_id']) {
-                return false;
-            }
-            return true;
-        }
 
-        return false;
+        return true;
     }
 
     /**
