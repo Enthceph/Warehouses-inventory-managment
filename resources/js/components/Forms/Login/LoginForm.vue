@@ -11,7 +11,7 @@ const form = ref(null)
 
 const formData = reactive({
     email: 'test@test.com',
-    password: ''
+    password: 'qwertyui'
 })
 
 const onSubmit = () => {

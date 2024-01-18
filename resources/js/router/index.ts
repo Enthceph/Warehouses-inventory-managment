@@ -144,6 +144,16 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
     },
+
+    {
+        path: '/analytics',
+        component: () => import('../pages/Analytics.vue'),
+        name: 'Analytics',
+        meta: {
+            middleware: [auth],
+        },
+
+    }
 ]
 
 const router = createRouter({

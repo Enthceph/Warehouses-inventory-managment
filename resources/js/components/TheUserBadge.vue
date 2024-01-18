@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-import {useUserStore} from "@/js/stores/user";
+import {useAuthStore} from "@/js/stores/auth";
 
-const userStore = useUserStore()
+const authStore = useAuthStore()
 
-
+onMounted(() => {
+    authStore.getAuthenticatedUser()
+})
 </script>
 
 <template>
@@ -11,8 +13,8 @@ const userStore = useUserStore()
         <router-link class="badge-items" to="/settings">
             <q-avatar color="orange" size="42px">u</q-avatar>
             <div class="user-info">
-                <div>{{ userStore.full_name }}</div>
-                <div>{{ userStore.email }}</div>
+                <div>{{ authStore.full_name }}</div>
+                <div>{{ authStore.email }}</div>
             </div>
         </router-link>
     </div>

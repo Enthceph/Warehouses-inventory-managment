@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('logout', 'logout');
         Route::patch('changePassword', 'changePassword');
         Route::get('checkAuth', 'checkAuth');
+        Route::get('getAuthenticatedUser', 'getAuthenticatedUser');
     });
 
     Route::controller(UserController::class)->group(function () {

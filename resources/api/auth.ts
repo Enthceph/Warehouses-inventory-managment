@@ -13,3 +13,4 @@ export const register = (data: Object) =>
     })
 
 export const checkAuth = () => apiRequest.get('checkAuth')
+export const getAuthenticatedUser = () => apiRequest.get('getAuthenticatedUser')

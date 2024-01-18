@@ -1,16 +1,9 @@
 <script lang="ts" setup>
-import {useUserStore} from "@/js/stores/user";
 import TheUserBadge from "@/js/components/TheUserBadge.vue";
 import {useWarehousesStore} from "@/js/stores/warehouses";
 
 const route = useRoute()
 const warehouseStore = useWarehousesStore()
-const userStore = useUserStore()
-
-onMounted(() => {
-    userStore.fetchUser()
-})
-
 </script>
 
 <template>

@@ -16,6 +16,7 @@ class Inventory extends Model
         "quantity",
         "unit_price",
         "total_value",
+        "expires_at"
     ];
 
     public function product()
