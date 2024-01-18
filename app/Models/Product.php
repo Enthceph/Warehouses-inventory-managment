@@ -13,6 +13,9 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'additional_info',
+        'company_id',
+        'category_id'
     ];
 
     public function company()

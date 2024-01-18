@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 /**
  * @extends Factory<User>
  */
-class UserFactory extends Factory
+class EmployeeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -28,13 +28,7 @@ class UserFactory extends Factory
             'role_id' => fake()->numberBetween(3, 6),
             'company_id' => $company->id,
             'created_at' => $company->created_at,
+            'deleted_at' => fake()->dateTimeBetween('-3 years', "-1 year"),
         ];
-    }
-
-    public function configure()
-    {
-        return $this->afterCreating(function (User $user) {
-            $user->createToken("API TOKEN")->plainTextToken;
-        });
     }
 }

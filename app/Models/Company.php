@@ -33,4 +33,9 @@ class Company extends Model
     {
         return $this->hasMany(Warehouse::class, 'company_id');
     }
+
+    public function categories()
+    {
+        return $this->hasMany(ProductCategory::class, 'company_id', 'id');
+    }
 }
