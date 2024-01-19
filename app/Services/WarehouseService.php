@@ -4,21 +4,12 @@ namespace App\Services;
 
 use App\Http\Requests\CreateWarehouseRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
+use App\Models\Inventory;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 
 class WarehouseService
 {
-    public function get()
-    {
-        $warehouses = Auth::user()->company->warehouses;
-        $warehouses->transform(function ($item) {
-            return $item->only(['id', 'name', 'location', 'contact_info', 'created_at']);
-        });
-
-        return $warehouses;
-    }
-
     public function store(CreateWarehouseRequest $request)
     {
         $company_id = Auth::user()->company->id;
@@ -56,21 +47,45 @@ class WarehouseService
 
     public function show($id)
     {
-        $userId = Auth::id();
-        $companyId = Auth::user()->company->id;
         $warehouse = Warehouse::find($id);
 
         if (!$warehouse) {
             return response(['message' => 'Not Found'], 404);
         }
 
-        if (!$userId || $warehouse->company_id !== $companyId) {
+        if ($warehouse->company_id !== Auth::user()->company_id) {
             return response(['message' => 'Unauthorized'], 401);
         }
 
-        $warehouse = $warehouse->only(['id', 'name', 'location', 'contact_info', 'created_at']);
+
+        $warehouse['inventory'] = Inventory::where('warehouse_id', $id)->get();
+
+        $warehouse = $warehouse->only(['id', 'name', 'location', 'contact_info', 'created_at', 'inventory']);
 
         return $warehouse;
+    }
+
+    public function get()
+    {
+//        $warehouses = Auth::user()->company->warehouses;
+//        $warehouses->transform(function ($item) {
+//            return $item->only(['id', 'name', 'location', 'contact_info', 'created_at']);
+//        });
+//
+
+//        return $warehouses;
+
+        $company = Auth::user()->company;
+
+        $warehouses = $company->warehouses;
+
+        $warehousesWithInventories = $warehouses->map(function ($warehouse) {
+            $warehouse['inventory'] = $warehouse->inventory;
+
+            return $warehouse;
+        });
+
+        return $warehousesWithInventories;
     }
 
     public function getInventory($request)

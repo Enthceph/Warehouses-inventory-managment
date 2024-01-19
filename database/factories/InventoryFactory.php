@@ -20,7 +20,7 @@ class InventoryFactory extends Factory
     public function definition()
     {
         $quantity = fake()->numberBetween(1, 50);
-        $unit_price = fake()->numberBetween(1, 400);
+        $unit_price = fake()->numberBetween(1, 200);
         $total_value = $quantity * $unit_price;
 
         $warehouse = Warehouse::inRandomOrder()->first();
@@ -42,8 +42,8 @@ class InventoryFactory extends Factory
             'product_id' => $product->id,
             'warehouse_id' => $warehouse->id,
             'created_at' => fake()->dateTimeBetween('-1 year', "-2 months"),
-            'deleted_at' => fake()->dateTimeBetween('-8 months', "-3 months"),
-            'expires_at' => fake()->dateTimeBetween('now', "3 weeks")
+            'deleted_at' => fake()->optional(0.05)->dateTimeBetween('-8 months', "-3 months"),
+            'expires_at' => fake()->optional(0.05)->dateTimeBetween('now', "3 weeks")
         ];
     }
 }

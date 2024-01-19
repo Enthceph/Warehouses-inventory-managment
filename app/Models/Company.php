@@ -15,10 +15,6 @@ class Company extends Model
         'contact_info',
     ];
 
-//    public function employees()
-//    {
-//        return $this->hasMany(OrganisationEmployee::class)->where('id', );
-//    }
     public function owner()
     {
         return $this->hasOne(User::class, 'id', 'owner_id');
