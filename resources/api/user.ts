@@ -1,6 +1,7 @@
 import apiRequest from "../js/utils/request";
 
 export const getUsers = () => apiRequest.get('user')
+export const getUser = (id: Number) => apiRequest.get(`user/${id}`)
 
 export const user = () => apiRequest.get('user')
 

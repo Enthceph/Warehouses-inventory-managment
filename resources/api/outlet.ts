@@ -1,6 +1,5 @@
 import apiRequest from '../js/utils/request'
 
-// TODO проверить на работоспособность
 export const getOutlets = () => apiRequest.get('outlet')
 
 export const getOutlet = (id: Number) => apiRequest.get(`outlet/${id}`)
@@ -14,3 +13,4 @@ export const updateOutlet = (id: Number, data: Object) => apiRequest.patch(`outl
 })
 
 export const deleteOutlet = (id: Number) => apiRequest.delete(`outlet/${id}`)
+

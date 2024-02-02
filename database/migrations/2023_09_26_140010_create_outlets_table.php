@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->foreignId('warehouse_id')->constrained('warehouses');
             $table->timestamps();
             $table->softDeletes();
-
         });
     }
 

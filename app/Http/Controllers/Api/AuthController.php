@@ -7,6 +7,7 @@ use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\CreateUserAndCompanyRequest;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -43,4 +44,19 @@ class AuthController extends Controller
     {
         return $service->checkAuth();
     }
+
+    public function getAuthenticatedUser()
+    {
+        $user = Auth::user()->load('role', 'company');
+
+        return [
+            'id' => $user->id,
+            'full_name' => $user->full_name,
+            'email' => $user->email,
+            'role' => $user->role->name,
+            'company' => $user->company->name,
+            'created_at' => $user->created_at
+        ];
+    }
+
 }

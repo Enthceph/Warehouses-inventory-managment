@@ -3,26 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\UserService;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
 
 class UserController extends Controller
 {
-    public function index(UserService $service)
+    public function index()
     {
-        return $service->get();
-    }
-
-
-//    TODO эту хуйню просто заменить на update и на фронте просто отправлять объект с 1 полем
-    public function changeName(Request $request)
-    {
-        return Auth::user()->update([
-            'first_name' => $request['first_name'],
-            'last_name' => $request['last_name']
-        ]);
+        return User::where('company_id', Auth::user()->company->id)->with(['role', 'company'])->get();
     }
 
     public function user()
@@ -39,4 +29,27 @@ class UserController extends Controller
         return response()->json(['message' => 'User not found'], 404);
     }
 
+    public function store(StoreUserRequest $request)
+    {
+        return User::create($request->validated());
+    }
+
+    public function show(int $id)
+    {
+        return User::findOrFail($id);
+    }
+
+    public function update(UpdateUserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->fill($request->except(['id']));
+        $user->save();
+        return response()->json($user);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->delete()) return response(null, 204);
+    }
 }

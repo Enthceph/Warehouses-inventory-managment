@@ -66,45 +66,43 @@ const cancel = () => {
         >
             <q-form ref="form" @submit.prevent="submit">
                 <q-card-section>
-                    <h2 class="text-h5 text-center">Изменить информацию о работнике</h2>
+                    <h2 class="text-h5 text-center">Змінити інформацію про працівника</h2>
                 </q-card-section>
 
                 <q-card-section>
                     <q-form ref="add_employee_form" autocomplete="off" @submit.prevent="">
                         <q-input
                             v-model="employee.full_name"
-                            disable
+
                             hide-bottom-space
-                            label="Employee name"
-                            placeholder="Enter employee name"
+                            label="Ім'я працівника"
+                            placeholder="Введіть ім'я співробітника"
                         />
 
                         <q-input
                             v-model="employee.email"
-                            disable
-                            label="Employee email"
+
+                            label="Електронна адреса співробітника"
                             placeholder="Edit employee email"
                         />
-
-
-                        <q-select
-                            v-model="employee.role_id"
-                            :options="rolesForEmployee"
-                            emit-value
-                            hide-bottom-space
-                            label="role"
-                            map-options
-                            option-label="name"
-                            option-value="id"
-                            options-dense
-                            required
-                        />
+                        <!--                        <q-select-->
+                        <!--                            v-model="employee.role_id"-->
+                        <!--                            :options="rolesForEmployee"-->
+                        <!--                            emit-value-->
+                        <!--                            hide-bottom-space-->
+                        <!--                            label="role"-->
+                        <!--                            map-options-->
+                        <!--                            option-label="name"-->
+                        <!--                            option-value="id"-->
+                        <!--                            options-dense-->
+                        <!--                            required-->
+                        <!--                        />-->
                     </q-form>
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn color="grey" label="Отмена" @click="cancel"/>
-                    <q-btn color="primary" label="Изменить" type="submit"/>
+                    <q-btn color="grey" label="Відміна" @click="cancel"/>
+                    <q-btn color="primary" label="Змінити" type="submit"/>
                 </q-card-actions>
             </q-form>
         </transition>

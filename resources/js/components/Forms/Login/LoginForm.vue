@@ -11,7 +11,7 @@ const form = ref(null)
 
 const formData = reactive({
     email: 'test@test.com',
-    password: ''
+    password: 'qwertyui'
 })
 
 const onSubmit = () => {
@@ -20,41 +20,43 @@ const onSubmit = () => {
 </script>
 
 <template>
-    <q-form ref="form" autocomplete="off" class="form" @submit.prevent="onSubmit">
+    <q-card>
+        <q-form ref="form" autocomplete="off" class="form" @submit.prevent="onSubmit">
 
-        <h2 class="text-h5 font-bold">Вход</h2>
+            <h2 class="text-h5 font-bold">Авторизація</h2>
 
-        <div class="form-inputs">
-            <q-input
-                v-model="formData.email"
-                autocomplete="off"
-                label="Email"
-                required
-                type="email"
-            />
-            <q-input
-                v-model="formData.password"
-                autocomplete="off"
-                label="Password"
-                required
-                type="password"
-            />
-        </div>
+            <div class="form-inputs">
+                <q-input
+                    v-model="formData.email"
+                    autocomplete="off"
+                    label="Email"
+                    required
+                    type="email"
+                />
+                <q-input
+                    v-model="formData.password"
+                    autocomplete="off"
+                    label="Пароль"
+                    required
+                    type="password"
+                />
+            </div>
 
-        <div v-if="props.error" class="error-box">
-            {{ props.error }}
-        </div>
+            <div v-if="props.error" class="error-box">
+                {{ props.error }}
+            </div>
 
-        <div class="buttons-group">
-            <q-btn class="w-full" color="info" type="submit">
-                Войти
-            </q-btn>
-        </div>
+            <div class="buttons-group">
+                <q-btn class="w-full" color="info" type="submit">
+                    Увійти
+                </q-btn>
+            </div>
 
-        <div class="to-registration-form">
-            <router-link to="/registration">Еще не зарегистрированы?</router-link>
-        </div>
-    </q-form>
+            <div class="to-registration-form">
+                <router-link to="/registration">Ще не зареєстровані?</router-link>
+            </div>
+        </q-form>
+    </q-card>
 </template>
 
 <style scoped>

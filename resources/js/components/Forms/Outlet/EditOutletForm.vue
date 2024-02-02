@@ -57,31 +57,30 @@ const cancel = () => {
         >
             <q-form ref="form" @submit.prevent="submit">
                 <q-card-section>
-                    <h2 class="text-h5 text-center">Изменить точку</h2>
-                    {{ outlet }}
+                    <h2 class="text-h5 text-center">Змінити точку</h2>
                 </q-card-section>
 
                 <q-card-section>
                     <q-form ref="add_outlet_form" autocomplete="off" @submit.prevent="">
                         <q-input
                             v-model="outlet.name"
-                            :rules="[v => v.length >= 2 || `Название точки должно иметь хотя бы 2 буквы`]"
+                            :rules="[v => v.length >= 2 || `Назва точки повинна мати хоча б 2 літери`]"
                             hide-bottom-space
-                            label="Outlet name"
-                            placeholder="Enter outlet name"
+                            label="Назва точки"
+                            placeholder="Введіть назву точки"
                             required
                         />
 
                         <q-input
                             v-model="outlet.location"
-                            label="Outlet Location"
-                            placeholder="Enter outlet location"
+                            label="Розташування точки"
+                            placeholder="Введіть місце розташування точки"
                         />
 
                         <q-input
                             v-model="outlet.contact_info"
-                            label="Contact Information"
-                            placeholder="Enter contact information"
+                            label="Контактна інформація"
+                            placeholder="Введіть контактну інформацію"
                         />
 
                         <q-select
@@ -98,8 +97,8 @@ const cancel = () => {
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn color="grey" label="Отмена" @click="cancel"/>
-                    <q-btn color="primary" label="Изменить" type="submit"/>
+                    <q-btn color="grey" label="Відміна" @click="cancel"/>
+                    <q-btn color="primary" label="Змінити" type="submit"/>
                 </q-card-actions>
             </q-form>
         </transition>

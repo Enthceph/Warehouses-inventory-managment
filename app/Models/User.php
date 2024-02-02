@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,7 +24,6 @@ class User extends Authenticatable
         'role_id',
         'company_id'
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -34,7 +32,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -53,4 +50,38 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+
+    public function isAdmin()
+    {
+        return $this->role->name == 'Admin';
+    }
+
+    public function isOwner()
+    {
+        return $this->role->name == 'Owner';
+    }
+
+    public function isAuditor()
+    {
+        return $this->role->name == 'Auditor';
+    }
+
+    public function isAccountant()
+    {
+        return $this->role->name == 'Accountant';
+    }
+
+    public function isManager()
+    {
+        return $this->role->name == 'Manager';
+    }
+
+    public function isSeller()
+    {
+        return $this->role->name == 'Seller';
+    }
 }
+
+
+

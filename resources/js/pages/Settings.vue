@@ -37,7 +37,7 @@ const onLogoutModalOk = () => {
 <template>
     <q-card>
         <q-card-section class="flex justify-space-between">
-            <h1 class="text-h6">Настройки</h1>
+            <h1 class="text-h6">Налаштування</h1>
         </q-card-section>
 
         <q-separator inset/>

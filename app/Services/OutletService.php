@@ -14,11 +14,19 @@ class OutletService
     public function get()
     {
         $outlets = Auth::user()->company->outlets;
-        $outlets->transform(function ($item) {
-            return $item->only(['id', 'name', 'address', 'contact_info', 'warehouse_id', 'created_at']);
-        });
 
-        return $outlets;
+        $outlets->load('warehouse');
+
+        return $outlets->map(function ($outlet) {
+            return [
+                'id' => $outlet->id,
+                'name' => $outlet->name,
+                'address' => $outlet->address,
+                'contact_info' => $outlet->contact_info,
+                'warehouse' => $outlet->warehouse, // Include the warehouse data
+                'created_at' => $outlet->created_at
+            ];
+        });
     }
 
     public function store(CreateOutletRequest $request, WarehouseService $warehouseService)

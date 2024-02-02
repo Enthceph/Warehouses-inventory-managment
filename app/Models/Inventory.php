@@ -16,16 +16,19 @@ class Inventory extends Model
         "quantity",
         "unit_price",
         "total_value",
+        "expires_at",
+        "warehouse_id",
+        "product_id"
     ];
 
     public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->hasOne(Product::class, "id", "product_id");
     }
 
     public function warehouse()
     {
-        return $this->belongsTo(Warehouse::class);
+        return $this->belongsTo(Warehouse::class, "warehouse_id", "id");
     }
 }
 

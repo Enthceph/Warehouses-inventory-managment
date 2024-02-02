@@ -32,20 +32,20 @@ const submit = () => {
             <q-input
                 v-model="data.name"
                 hide-bottom-space
-                label="Name"
+                label="Назва компанії"
                 required
             />
 
             <q-input
                 v-model="data.address"
                 hide-bottom-space
-                label="address"
+                label="Адреса"
             />
 
             <q-input
                 v-model="data.contact_info"
                 autocomplete="off"
-                label="Contact info"
+                label="Контактна інформація"
             />
         </div>
         <div class="buttons">
@@ -59,7 +59,7 @@ const submit = () => {
 
             <q-btn
                 color="primary"
-                label="Регистрация"
+                label="Реєстрація"
                 type="submit"
             />
         </div>

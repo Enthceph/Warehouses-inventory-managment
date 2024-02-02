@@ -40,11 +40,35 @@ const onRowDelete = (row: Outlet) => {
 const onRowClicked = (row: Outlet) => {
     router.push(`/outlets/${row.id}`)
 }
+
+const columnNames = [
+    'id',
+    'Назва',
+    'Місцезнаходження',
+    'Контактна інформація',
+    'Склад',
+    'Був створений'
+]
+
+"2024-01-21T13:29:17.000000Z"
+const tableData = computed(() => {
+    return outletStore.outlets.map((outlet) => {
+        return {
+            id: outlet.id,
+            name: outlet.name,
+            address: outlet.address,
+            contact_info: outlet.contact_info,
+            warehouse: outlet.warehouse.name,
+            created_at: new Date(outlet.created_at).toLocaleDateString('ru-RU'),
+        }
+    })
+})
 </script>
 
 <template>
     <Table
-        :rows="outletStore.outlets"
+        :column-names="columnNames"
+        :data="tableData"
         @rowAdd="onRowAdd"
         @rowClicked="onRowClicked"
         @rowDelete="onRowDelete"

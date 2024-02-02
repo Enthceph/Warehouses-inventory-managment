@@ -12,11 +12,11 @@ const {fetch} = useFetching(changeName)
 
 <template>
     <q-form class="flex flex-col">
-        <h2 class="font-bold">Имя</h2>
+        <h2 class="font-bold">Ім'я</h2>
 
         <q-input
             v-model="name.full_name"
-            :rules="[v => v.length >= 2 || `Имя должно иметь хотя бы 2 буквы`]"
+            :rules="[v => v.length >= 2 || `Ім'я повинно мати хоча б 2 літери`]"
             placeholder="Имя"
         />
         <q-btn
@@ -25,7 +25,7 @@ const {fetch} = useFetching(changeName)
             color="primary"
             @click="fetch(name)"
         >
-            Сменить имя
+            Змінити ім'я
         </q-btn>
 
     </q-form>

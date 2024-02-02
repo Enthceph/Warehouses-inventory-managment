@@ -13,14 +13,14 @@ declare module 'vue-router' {
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        name: 'Home',
+        name: 'Index',
         redirect: {
-            path: '/company',
+            path: '/dashboard',
         },
     },
     {
         path: '/login',
-        name: 'Login',
+        name: 'Логін',
         component: () => import('../pages/Login.vue'),
         meta: {
             layout: 'CenterLayout',
@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/registration',
-        name: 'Registration',
+        name: 'Реєстрація',
         component: () => import('../pages/Registration.vue'),
         meta: {
             layout: 'CenterLayout',
@@ -36,7 +36,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/settings',
-        name: 'Settings',
+        name: 'Налаштування',
         component: () => import('../pages/Settings.vue'),
         meta: {
             middleware: [auth],
@@ -52,19 +52,11 @@ const routes: Array<RouteRecordRaw> = [
         },
     },
     {
-        path: '/company',
-        name: 'Company',
-        component: () => import('../pages/Company.vue'),
-        meta: {
-            middleware: [auth],
-        },
-    },
-    {
         path: '/warehouses',
         children: [
             {
                 path: '',
-                name: 'Warehouses',
+                name: 'Склади',
                 component: () => import('../pages/Warehouses/Warehouses.vue'),
                 meta: {
                     middleware: [auth],
@@ -72,7 +64,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':warehouse',
-                name: 'Warehouse',
+                name: 'Склад',
                 component: () => import('../pages/Warehouses/Warehouse.vue'),
                 meta: {
                     middleware: [auth],
@@ -85,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Inventories',
+                name: 'Товарні запаси',
                 component: () => import('../pages/Inventories/Inventories.vue'),
                 meta: {
                     middleware: [auth],
@@ -93,7 +85,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':inventory',
-                name: 'Inventory',
+                name: 'Інвентар',
                 component: () => import('../pages/Inventories/Inventory.vue'),
                 meta: {
                     middleware: [auth],
@@ -106,7 +98,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Outlets',
+                name: 'Точки',
                 component: () => import('../pages/Outlets/Outlets.vue'),
                 meta: {
                     middleware: [auth],
@@ -114,7 +106,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':outlet',
-                name: 'Outlet',
+                name: 'Точка',
                 component: () => import('../pages/Outlets/Outlet.vue'),
                 meta: {
                     middleware: [auth],
@@ -128,7 +120,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Employees',
+                name: 'Співробітники',
                 component: () => import('../pages/Employees/Employees.vue'),
                 meta: {
                     middleware: [auth],
@@ -136,7 +128,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':Employee',
-                name: 'Employee',
+                name: 'Співробітник',
                 component: () => import('../pages/Employees/Employee.vue'),
                 meta: {
                     middleware: [auth],
@@ -144,6 +136,23 @@ const routes: Array<RouteRecordRaw> = [
             },
         ],
     },
+
+    {
+        path: '/analytics',
+        component: () => import('../pages/Analytics.vue'),
+        name: 'Аналітика',
+        meta: {
+            middleware: [auth],
+        },
+    },
+    {
+        path: '/Dashboard',
+        component: () => import('../pages/Dashboard.vue'),
+        name: 'Дашбоард',
+        meta: {
+            middleware: [auth],
+        },
+    }
 ]
 
 const router = createRouter({

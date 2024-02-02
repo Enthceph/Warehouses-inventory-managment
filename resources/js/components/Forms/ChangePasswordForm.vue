@@ -26,22 +26,22 @@ const formIsValid = computed(() => {
         <h2 class="font-bold">Пароль</h2>
         <q-input
             v-model="passwordForm.new_password"
-            :rules="[v => v.length >= 6 || `Длина пароля должна иметь хотя бы 6`]"
-            placeholder="Новый пароль"
+            :rules="[v => v.length >= 6 || `Довжина пароля повинна мати хоча б 6 букв`]"
+            placeholder="Новий пароль"
             required
         />
 
         <q-input
             v-model="passwordForm.old_password"
-            :rules="[v => v.length >= 6 || `Длина пароля должна иметь хотя бы 6`]"
-            placeholder="Старый пароль"
+            :rules="[v => v.length >= 6 || `Довжина пароля повинна мати хоча б 6 букв`]"
+            placeholder="Старий пароль"
             required
         />
 
         <q-input
             v-model="passwordForm.password_conformation"
-            :rules="[v => v === passwordForm.old_password || `Пароли не равны`]"
-            placeholder="Повторите старый пароль"
+            :rules="[v => v === passwordForm.old_password || `Паролі не рівні`]"
+            placeholder="Повторіть старий пароль"
             required
         />
         <q-btn
@@ -50,7 +50,7 @@ const formIsValid = computed(() => {
             color="primary"
             type="submit"
         >
-            Сменить пароль
+            Змінити пароль
         </q-btn>
     </q-form>
 </template>

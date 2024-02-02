@@ -1,6 +1,5 @@
 import {Context} from "@/js/types/router.types";
 
-
 const middlewarePipeline = (context: Context, middleware: Function[], index: number) => {
     const nextMiddleware = middleware[index]
 

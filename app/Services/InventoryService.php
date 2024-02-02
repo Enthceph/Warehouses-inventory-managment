@@ -9,20 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class InventoryService
 {
-    public function get()
-    {
-        $company = Auth::user()->company;
-
-        $warehouses = $company->warehouses;
-
-        $inventories = $warehouses->map(function ($warehouse) {
-            $warehouse['inventory'] = $warehouse->inventory;
-            return $warehouse;
-        });
-
-        return $inventories;
-    }
-
     public function store(CreateInventoryRequest $request)
     {
 
@@ -79,6 +65,20 @@ class InventoryService
         $inventory = $warehouse->inventory;
 
         return $inventory;
+    }
+
+    public function get()
+    {
+//        TODO посмотреть в warehouse service show как делать правильно ::with
+        $company = Auth::user()->company;
+
+        $warehouses = $company->warehouses;
+
+        $inventories = $warehouses->map(function ($warehouse) {
+            return $warehouse->inventory()->with(['product.category', 'warehouse'])->get();
+        })->flatten();
+
+        return $inventories;
     }
 
     public function destroy(Request $request, int $id)

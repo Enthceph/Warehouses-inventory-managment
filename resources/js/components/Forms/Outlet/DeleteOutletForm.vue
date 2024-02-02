@@ -38,18 +38,18 @@ const cancel = () => {
         >
             <div>
                 <q-card-section>
-                    Вы действительно хотите удалить точку {{ outletStore.selectedOutlet.name }}?
+                    Ви дійсно бажаєте видалити точку {{ outletStore.selectedOutlet.name }}?
                 </q-card-section>
 
                 <q-card-actions align="right">
                     <q-btn
                         color="grey"
-                        label="Отмена"
+                        label="Відміна"
                         @click="cancel"
                     />
                     <q-btn
                         color="red"
-                        label="Удалить"
+                        label="Видалити"
                         type="submit"
                         @click="submit"
                     />

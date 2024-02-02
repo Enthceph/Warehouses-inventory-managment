@@ -13,6 +13,9 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'additional_info',
+        'company_id',
+        'category_id'
     ];
 
     public function company()
@@ -22,6 +25,6 @@ class Product extends Model
 
     public function category()
     {
-        return $this->hasMany(ProductCategory::class, 'id', 'category_id');
+        return $this->hasOne(ProductCategory::class, 'id', 'category_id');
     }
 }

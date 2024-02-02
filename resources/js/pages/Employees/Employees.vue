@@ -41,11 +41,32 @@ const onRowDelete = (row: Employee) => {
 const onRowClicked = (row: Employee) => {
     router.push(`/employees/${row.id}`)
 }
+
+const columnNames = [
+    'id',
+    'Iм\'я',
+    'Email',
+    'Почав працювати',
+    "Роль",
+]
+
+const tableData = computed(() => {
+    return employeeStore.employees.map((employee) => {
+        return {
+            id: employee.id,
+            full_name: employee.full_name,
+            email: employee.email,
+            created_at: new Date(employee.created_at).toLocaleDateString('ru-RU'),
+            role: employee.role.name,
+        }
+    })
+})
 </script>
 
 <template>
     <Table
-        :rows="employeeStore.employees"
+        :column-names="columnNames"
+        :data="tableData"
         @rowAdd="onRowAdd"
         @rowClicked="onRowClicked"
         @rowDelete="onRowDelete"

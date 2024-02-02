@@ -41,6 +41,7 @@ class AuthService
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+       
         if (!Auth::attempt($credentials)) {
             return response('Email & Password does not match with our record.', 401);
         }

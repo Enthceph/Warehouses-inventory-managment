@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CompanyController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\OutletController;
@@ -18,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('logout', 'logout');
         Route::patch('changePassword', 'changePassword');
         Route::get('checkAuth', 'checkAuth');
+        Route::get('getAuthenticatedUser', 'getAuthenticatedUser');
     });
 
     Route::controller(UserController::class)->group(function () {
@@ -31,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('inventory', InventoryController::class);
     Route::resource('outlet', OutletController::class);
     Route::resource('employee', EmployeeController::class);
+    Route::resource('company', CompanyController::class);
 //    Route::resource('role', RoleController::class);
     Route::get('role', [RoleController::class, 'index']);
 
