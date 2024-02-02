@@ -33,7 +33,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
 </script>
 
 <template>
-    <h2>Регистрация</h2>
+    <h2>Реєстрація</h2>
 
     <q-stepper
         ref="stepper"
@@ -46,7 +46,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
             :done="step > 1"
             :name="1"
             icon="settings"
-            title="Пользователь"
+            title="Користувач"
         >
             <RegistrationUserForm
                 @submit="submitUserForm"
@@ -57,7 +57,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
             :done="step > 2"
             :name="2"
             icon="corporate_fare"
-            title="Компания"
+            title="Компанiя"
         >
             <RegistrationCompanyForm
                 :user="registrationData.user_data"
@@ -74,7 +74,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
 
 <style scoped>
 h2 {
-    font-size: 26px;
+    font-size:   26px;
     font-weight: bold;
 }
 </style>

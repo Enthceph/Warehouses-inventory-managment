@@ -17,10 +17,10 @@ class RolesSeeder extends Seeder
         DB::table('roles')->insert([
             ['name' => 'Admin'],
             ['name' => 'Owner'],
-            ['name' => 'Auditor'],
-            ['name' => 'Accountant'],
-            ['name' => 'Manager'],
-            ['name' => 'Seller'],
+//            ['name' => 'Auditor'],
+//            ['name' => 'Accountant'],
+//            ['name' => 'Manager'],
+            ['name' => 'Employee'],
         ]);
     }
 }

@@ -47,9 +47,7 @@ class AuthController extends Controller
 
     public function getAuthenticatedUser()
     {
-        $user = Auth::user();
-
-        $user->load('role', 'company');
+        $user = Auth::user()->load('role', 'company');
 
         return [
             'id' => $user->id,

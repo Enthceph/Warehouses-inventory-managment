@@ -38,18 +38,18 @@ const cancel = () => {
         >
             <div>
                 <q-card-section>
-                    Вы действительно хотите удалить работника {{ employeeStore.selectedEmployee.full_name }}?
+                    Ви дійсно хочете видалити працівника {{ employeeStore.selectedEmployee.full_name }}?
                 </q-card-section>
 
                 <q-card-actions align="right">
                     <q-btn
                         color="grey"
-                        label="Отмена"
+                        label="Відміна"
                         @click="cancel"
                     />
                     <q-btn
                         color="red"
-                        label="Удалить"
+                        label="Видалити"
                         type="submit"
                         @click="submit"
                     />

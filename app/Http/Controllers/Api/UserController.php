@@ -3,27 +3,16 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Services\UserService;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
 
 class UserController extends Controller
 {
-    public function index(UserService $service)
+    public function index()
     {
-        return $service->get();
-    }
-
-
-    public function show($id, UserService $service)
-    {
-        return $service->show($id);
-    }
-
-    public function update(UpdateUserRequest $request, int $id, UserService $service)
-    {
-        return $service->update($request, $id);
+        return User::where('company_id', Auth::user()->company->id)->with(['role', 'company'])->get();
     }
 
     public function user()
@@ -40,4 +29,27 @@ class UserController extends Controller
         return response()->json(['message' => 'User not found'], 404);
     }
 
+    public function store(StoreUserRequest $request)
+    {
+        return User::create($request->validated());
+    }
+
+    public function show(int $id)
+    {
+        return User::findOrFail($id);
+    }
+
+    public function update(UpdateUserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->fill($request->except(['id']));
+        $user->save();
+        return response()->json($user);
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        if ($user->delete()) return response(null, 204);
+    }
 }

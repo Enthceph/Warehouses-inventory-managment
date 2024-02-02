@@ -2,7 +2,6 @@ import {defineStore} from 'pinia';
 import {getAuthenticatedUser} from "@/api/auth";
 import {Auth} from "@/js/types/auth.types";
 
-
 export const useAuthStore = defineStore({
     id: 'authStore',
     state: (): Auth => ({

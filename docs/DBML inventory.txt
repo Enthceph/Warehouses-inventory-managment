@@ -1,69 +1,82 @@
 https://dbdiagram.io/d
 
-
-
-Table Users {
-  id pk
-  fullname varchar 
-  email varchar [not null, unique]
-  password varchar [not null]
-  role_id int [ref: - Roles.id, not null]
+Table roles {
+  id int [pk, increment] // auto increments
+  name varchar [unique]
 }
 
-Table Companies {
-  id int [pk]
-  title varchar [not null]
+Table companies {
+  id int [pk, increment] // auto increments
+  name varchar [not null]
   address varchar
   contact_info varchar
-  owner_id int [ref: > Users.id, not null]
+  created_at timestamp
+  updated_at timestamp
 }
 
-Table Company_employees{
-  id int [pk]
-  company_id int [ref: > Companies.id, not null]
-  employee_id int [ref: > Users.id, not null]
+Table users {
+  id int [pk, increment]
+  full_name varchar
+  email varchar [unique]
+  password varchar
+  role_id int [ref: > roles.id]
+  company_id int [ref: > companies.id]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
 }
-
-Table Roles{
-  id pk
-  name string
-}
-
-Table Outlets {
-  id int [pk]
-  company_id int [ref: > Companies.id]
+Table product_categories {
+  id int [pk, increment]
   name varchar
-  address varchar
-  contact_info varchar
-  warehouse_id int [ref: - Warehouses.id]
+  company_id int [null, ref: > companies.id]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
 }
 
-Table Warehouses {
-  id int [pk]
-  company_id int [ref: > Companies.id]
-  warehouse_name varchar
-  location varchar
-  contact_info varchar
+Table products {
+  id int [pk, increment]
+  name varchar
+  additional_info varchar [null]
+  company_id int [ref: > companies.id]
+  category_id int [null, ref: > product_categories.id]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
 }
 
-Table Inventory {
-  id int [pk]
-  warehouse_id int [ref: - Warehouses.id]
-  product_id int [ref: > Products.id] 
+Table warehouses {
+  id int [pk, increment]
+  name varchar
+  location varchar [null]
+  contact_info varchar [null]
+  company_id int [ref: > companies.id]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
+}
+
+Table outlets {
+  id int [pk, increment]
+  name varchar
+  address varchar [null]
+  contact_info varchar [null]
+  company_id int [ref: > companies.id]
+  warehouse_id int [ref: > warehouses.id]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
+}
+
+Table inventories {
+  id int [pk, increment]
   quantity int
   unit_price decimal
   total_value decimal
-}
-
-Table Products {
-  id int [pk]
-  name varchar [not null]
-  description varchar
-  category int [ref: > Product_categories.id] 
-  company_id int [ref: > Companies.id, not null]
-}
-
-Table Product_categories {
-  id pk
-  name varchar [not null, unique]
+  product_id int [ref: > products.id]
+  warehouse_id int [ref: > warehouses.id]
+  expires_at date [null]
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp [null]
 }

@@ -18,8 +18,10 @@ const showAddWarehouseModal = ref(false)
 const showEditWarehouseModal = ref(false)
 const showDeleteWarehouseModal = ref(false)
 
-onMounted(() => {
-    warehouseStore.fetchGetWarehouses()
+onMounted(async () => {
+    await warehouseStore.fetchGetWarehouses()
+
+    console.log(warehouseStore.warehouses)
 })
 
 // TABLE EMITS
@@ -40,11 +42,32 @@ const onRowDelete = (row: Warehouse) => {
 const onRowClicked = (row: Warehouse) => {
     router.push(`/warehouses/${row.id}`)
 }
+
+const columnNames = [
+    'id',
+    'Назва',
+    'Контактна інформація',
+    'Місцезнаходження',
+    'Був створений',
+]
+
+const tableData = computed(() => {
+    return warehouseStore.warehouses.map((warehouse) => {
+        return {
+            id: warehouse.id,
+            name: warehouse.name,
+            contact_info: warehouse.contact_info,
+            location: warehouse.location,
+            created_at: new Date(warehouse.created_at).toLocaleDateString('ru-RU'),
+        }
+    })
+})
 </script>
 
 <template>
     <Table
-        :rows="warehouseStore.warehouses"
+        :column-names="columnNames"
+        :data="tableData"
         @rowAdd="onRowAdd"
         @rowClicked="onRowClicked"
         @rowDelete="onRowDelete"

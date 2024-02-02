@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'full_name' => fake()->unique()->name(),
             'email' => fake()->unique()->email(),
             'password' => Hash::make('qwertyui'),
-            'role_id' => fake()->numberBetween(3, 6),
+            'role_id' => 3,
             'company_id' => $company->id,
             'created_at' => $company->created_at,
         ];

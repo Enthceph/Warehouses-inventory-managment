@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -44,5 +45,17 @@ class UserService
         $user->update($request->all());
 
         return $user;
+    }
+
+    public function store(StoreUserRequest $request)
+    {
+        return User::create($request->all());
+    }
+
+    public function destroy()
+    {
+        $user = Auth::user();
+
+        return $user->delete();
     }
 }

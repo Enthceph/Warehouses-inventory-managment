@@ -11,7 +11,10 @@ onMounted(() => {
 <template>
     <div class="badge">
         <router-link class="badge-items" to="/settings">
-            <q-avatar color="orange" size="42px">u</q-avatar>
+            <q-avatar size="42px">
+                <q-icon name="person"></q-icon>
+            </q-avatar>
+
             <div class="user-info">
                 <div>{{ authStore.full_name }}</div>
                 <div>{{ authStore.email }}</div>
@@ -22,7 +25,7 @@ onMounted(() => {
 
 <style scoped>
 .badge {
-    max-width: 200px;
+    max-width: 250px;
     padding:   12px;
     width:     100%;
 }

@@ -43,43 +43,43 @@ const cancel = () => {
     <q-card class="q-dialog-plugin">
         <q-form ref="form" @submit.prevent="submit">
             <q-card-section>
-                <h2 class="text-h5 text-center">Добавить точку</h2>
+                <h2 class="text-h5 text-center">Додати точку</h2>
             </q-card-section>
 
             <q-card-section>
                 <q-form ref="add_outlet_form" autocomplete="off" @submit.prevent="">
                     <q-input
                         v-model="outlet.name"
-                        :rules="[v => v.length >= 2 || `Название точки должно иметь хотя бы 2 буквы`]"
+                        :rules="[v => v.length >= 2 || `Назва точки повинна мати хоча б 2 літери`]"
                         hide-bottom-space
-                        label="Outlet Name"
-                        placeholder="Enter outlet name"
+                        label="Назва точки"
+                        placeholder="Введіть назву точки"
                         required
                     />
 
                     <q-input
                         v-model="outlet.address"
-                        label="Outlet Address"
-                        placeholder="Enter outlet address"
+                        label="Адреса точки"
+                        placeholder="Введіть адресу точки"
                     />
 
                     <q-input
                         v-model="outlet.contact_info"
-                        label="Contact Information"
-                        placeholder="Enter contact information"
+                        label="Контактна інформація"
+                        placeholder="Введіть контактну інформацію"
                     />
 
                     <q-input
                         v-model="outlet.outlet_name"
                         :placeholder="outlet.name + 'outlet'"
-                        label="Warehouse name(not required)"
+                        label="Назва складу (не обов'язково)"
                     />
                 </q-form>
             </q-card-section>
 
             <q-card-actions align="right">
-                <q-btn color="primary" label="Добавить" type="submit"/>
-                <q-btn color="grey" label="Отмена" @click="cancel"/>
+                <q-btn color="primary" label="Додати" type="submit"/>
+                <q-btn color="grey" label="Відміна" @click="cancel"/>
             </q-card-actions>
         </q-form>
     </q-card>
