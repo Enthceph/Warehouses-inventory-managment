@@ -4,7 +4,7 @@ import {useAuthStore} from "@/js/stores/auth";
 const authStore = useAuthStore()
 
 onMounted(() => {
-    authStore.getAuthenticatedUser()
+    authStore.getUser()
 })
 </script>
 

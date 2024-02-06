@@ -14,14 +14,14 @@ export const useAuthStore = defineStore({
     }),
     getters: {},
     actions: {
-        async getAuthenticatedUser(): Promise<(auth: Auth) => void> {
+        async getUser(): Promise<(auth: Auth) => void> {
             const user = await getAuthenticatedUser().json()
             // @ts-ignore
-            this.setAuthenticatedUser(user)
-            return this.setAuthenticatedUser
+            this.setUser(user)
+            return this.setUser
         },
 
-        setAuthenticatedUser(auth: Auth) {
+        setUser(auth: Auth) {
             this.id = auth.id
             this.full_name = auth.full_name
             this.email = auth.email
@@ -29,7 +29,7 @@ export const useAuthStore = defineStore({
             this.company = auth.company
             this.created_at = auth.created_at
         },
-        clearAuth() {
+        clearUser() {
             this.id = 0
             this.full_name = ''
             this.email = ''

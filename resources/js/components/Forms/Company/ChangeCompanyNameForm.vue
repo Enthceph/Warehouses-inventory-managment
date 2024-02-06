@@ -5,58 +5,57 @@ import {useCompanyStore} from "@/js/stores/company";
 const emit = defineEmits(['submitted'])
 
 const companyStore = useCompanyStore()
-const formData = reactive({
-    name: ''
-})
+const name = ref(companyStore.name)
 const loading = ref(false)
 
 
 onMounted(async () => {
     loading.value = true
 
-    await companyStore.fetchCompany()
-    formData.name = companyStore.name
+    let company = await companyStore.fetchCompany()
+    name.value = company.name
 
     loading.value = false
 })
 
 const submit = async () => {
-    await fetchUpdateCompany()
-    emit('submitted')
-}
-const fetchUpdateCompany = async () => {
     loading.value = true
     try {
-        await updateCompany(companyStore.id, formData)
-    } catch (err) {
-        console.log(err)
+        await updateCompany(companyStore.id, {name: name.value})
+        await companyStore.fetchCompany()
+        emit('submitted')
+    } catch (error) {
+        console.error("Failed to update company", error)
     } finally {
         loading.value = false
     }
-
-    await companyStore.fetchCompany()
 }
+
 </script>
 
 <template>
-    {{ companyStore }}
     <q-form class="flex flex-col" @submit.prevent="submit">
         <h2 class="font-bold">Назва компанії</h2>
-        <q-input
-            v-model="formData.name"
-            :disable="loading"
-            :rules="[v => v.length >= 1 || `Назва компанії повинна мати хоча б 1 літеру`]"
-            placeholder="Назва компанії"
-            required
-        />
+        <div class="flex justify-between gap-5 items-center">
+            <q-input
+                v-model="name"
+                :disable="loading"
+                :rules="[
+                v => v.length >= 1 || `Назва компанії повинна мати хоча б 1 літеру`,
+                v => v !== companyStore.name || `Введите другое имя компании`
+            ]"
+                class="flex-1"
+                placeholder="Назва компанії"
+                required
+            />
+            <q-btn
+                :disabled="name.length < 2 || loading"
+                class="h-fit"
+                color="primary"
+                label="save"
+                type="submit"
 
-        <q-btn
-            :disabled="formData.name.length < 2 || loading"
-            class="w-48"
-            color="primary"
-            type="submit"
-        >
-            Змінити назву
-        </q-btn>
+            />
+        </div>
     </q-form>
 </template>

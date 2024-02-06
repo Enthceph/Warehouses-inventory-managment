@@ -19,6 +19,12 @@ const pinia = createPinia()
 
 const app = createApp(Index)
 
+Notify.registerType('success', {
+    position: "top-right",
+    color: "positive",
+    icon: 'check_circle'
+})
+
 app.use(Quasar, {
     plugins: {
         Notify

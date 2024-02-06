@@ -3,7 +3,7 @@ import {useFetching} from "@/js/composables/useFetching";
 import {getUser, user} from "@/api/user";
 import {User} from "@/js/types/user.types";
 
-
+// TODO этот store надо удалить, а вместо него сдеалть employee store
 export const useUserStore = defineStore({
     id: 'userStore',
     state: (): User => ({
@@ -18,7 +18,7 @@ export const useUserStore = defineStore({
             const res = await fetchUser()
             this.setUser(res)
         },
-        async fetchGetUser(id: Number) {
+        async fetchUserById(id: Number) {
             const res = await getUser(id)
         },
         setUser(user: User) {
