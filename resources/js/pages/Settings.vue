@@ -10,6 +10,7 @@ import {useAuthStore} from "@/js/stores/auth";
 import ChangePasswordForm from "@/js/components/Forms/Auth/ChangePasswordForm.vue";
 import ChangeNameForm from "@/js/components/Forms/Auth/ChangeNameForm.vue";
 import ChangeCompanyNameForm from "@/js/components/Forms/Company/ChangeCompanyNameForm.vue";
+import ChangeEmailForm from "@/js/components/Forms/Auth/ChangeEmailForm.vue";
 
 defineEmits([...useDialogPluginComponent.emits])
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
@@ -22,7 +23,7 @@ const logoutModal = ref(false)
 const {fetch: fetchLogout} = useFetching(logout)
 
 const onLogoutModalOk = () => {
-    fetchLogout().then((res) => {
+    fetchLogout().then(() => {
         deleteToken()
 
         router.push({
@@ -38,46 +39,9 @@ onMounted(() => {
     authStore.getUser()
 })
 const tab = ref('company')
-const innerTab = ref('company')
 const splitterModel = ref(120)
-// TODO сделать смену email
 </script>
 <template>
-
-    <!-- <q-card>
-        <q-card-section class="flex justify-space-between">
-            <h1 class="text-h6">Налаштування</h1>
-        </q-card-section>
-
-        <q-separator inset/>
-
-        <q-card-section v-if="authStore.role === 'Owner'" class="max-w-sm">
-            <ChangeCompanyNameForm/>
-        </q-card-section>
-
-        <q-separator inset/>
-
-        <q-card-section class="max-w-sm">
-            <ChangeNameForm/>
-        </q-card-section>
-
-        <q-separator inset/>
-
-        <q-card-section class="max-w-sm">
-            <ChangePasswordForm/>
-        </q-card-section>
-
-        <q-card-section class="grid grid-cols-4 gap-4 items-center">
-            <div></div>
-            <div></div>
-            <div></div>
-            <q-btn color="red" @click="logoutModal = true">
-                Выйти
-            </q-btn>
-        </q-card-section>
-    </q-card> -->
-
-
     <q-card>
         <q-card-section>
             <q-splitter v-model="splitterModel" unit="px">
@@ -98,18 +62,19 @@ const splitterModel = ref(120)
                         animated
                         swipeable
                         transition-next="jump-up"
-                        transition-prev="jump-up"
+                        transition-prev="jump-down"
                         vertical
                     >
-                        <q-tab-panel name="company">
+                        <q-tab-panel class="pr-0" name="company">
                             <ChangeCompanyNameForm/>
                         </q-tab-panel>
 
-                        <q-tab-panel name="profile">
+                        <q-tab-panel class="pr-0" name="profile">
                             <ChangeNameForm/>
+                            <ChangeEmailForm/>
                         </q-tab-panel>
 
-                        <q-tab-panel name="password">
+                        <q-tab-panel class="pr-0" name="password">
                             <ChangePasswordForm/>
                         </q-tab-panel>
                     </q-tab-panels>
@@ -117,13 +82,11 @@ const splitterModel = ref(120)
 
             </q-splitter>
         </q-card-section>
-        <q-card-section class="grid grid-cols-4 gap-4 items-center">
+        <q-card-section class="grid grid-cols-4 gap-4 justify-items-end">
             <div></div>
             <div></div>
             <div></div>
-            <q-btn color="red" @click="logoutModal = true">
-                Выйти
-            </q-btn>
+            <q-btn class="w-20" color="red" label="exit" @click="logoutModal = true"/>
         </q-card-section>
     </q-card>
 

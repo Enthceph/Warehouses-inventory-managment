@@ -1,56 +1,65 @@
 <script lang="ts" setup>
-import {useFetching} from "@/js/composables/useFetching";
-import {changePassword} from "@/api/user";
+import {changePassword} from "@/api/auth";
 
-const passwordForm = reactive({
+import {Notify, QForm} from 'quasar'
+
+const emit = defineEmits(['submit'])
+
+const form = ref<QForm>() as Ref<QForm>
+const formData = reactive({
     new_password: 'asdfgh',
     old_password: 'qwertyui',
     password_conformation: 'qwertyui'
 })
-// TODO отправлять данные в emit
-const {fetch: fetchPassword} = useFetching(changePassword)
+const loading = ref(false)
 
-const formIsValid = computed(() => {
-    if (passwordForm.old_password !== passwordForm.password_conformation)
-        return false
-    else if (passwordForm.new_password.length < 6)
-        return false
+const submit = async () => {
+    loading.value = true
 
-    return true
-})
+    try {
+        await changePassword(formData)
 
+        emit('submit')
+
+        Notify.create({
+            type: 'success',
+            message: 'Password updated'
+        })
+    } catch (error) {
+        console.error("Failed to update password", error)
+    } finally {
+        loading.value = false
+    }
+}
 </script>
 
 <template>
-    <q-form class="flex flex-col" @submit="fetchPassword(passwordForm)">
-        <h2 class="font-bold">Пароль</h2>
+    <q-form class="form" @submit="submit">
+        <h2 class="form__heading">Password</h2>
         <q-input
-            v-model="passwordForm.new_password"
-            :rules="[v => v.length >= 6 || `Довжина пароля повинна мати хоча б 6 букв`]"
-            placeholder="Новий пароль"
+            v-model="formData.new_password"
+            :rules="[v => v.length >= 6 || `The length of the password must be at least 6 letters`]"
+            placeholder="New password"
             required
         />
-
         <q-input
-            v-model="passwordForm.old_password"
-            :rules="[v => v.length >= 6 || `Довжина пароля повинна мати хоча б 6 букв`]"
-            placeholder="Старий пароль"
+            v-model="formData.old_password"
+            :rules="[v => v.length >= 6 || `The length of the password must be at least 6 letters`]"
+            placeholder="Old password"
             required
         />
-
         <q-input
-            v-model="passwordForm.password_conformation"
-            :rules="[v => v === passwordForm.old_password || `Паролі не рівні`]"
-            placeholder="Повторіть старий пароль"
+            v-model="formData.password_conformation"
+            :rules="[v => v === formData.old_password || `The passwords are not the same`]"
+            placeholder="Repeat old password"
             required
         />
         <q-btn
-            :disabled="!formIsValid"
-            class="w-48"
+            class="form__button"
             color="primary"
+            label="save"
             type="submit"
-        >
-            Змінити пароль
-        </q-btn>
+        />
     </q-form>
 </template>
+<style scoped src="@/css/form.css"/>

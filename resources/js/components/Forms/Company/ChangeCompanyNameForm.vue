@@ -1,19 +1,22 @@
 <script lang="ts" setup>
 import {updateCompany} from "@/api/company";
 import {useCompanyStore} from "@/js/stores/company";
+import {Notify, QForm} from 'quasar'
 
-const emit = defineEmits(['submitted'])
+const emit = defineEmits(['submit'])
 
+const form = ref<QForm>() as Ref<QForm>
 const companyStore = useCompanyStore()
 const name = ref(companyStore.name)
 const loading = ref(false)
-
 
 onMounted(async () => {
     loading.value = true
 
     let company = await companyStore.fetchCompany()
     name.value = company.name
+
+    await form.value.resetValidation()
 
     loading.value = false
 })
@@ -23,7 +26,13 @@ const submit = async () => {
     try {
         await updateCompany(companyStore.id, {name: name.value})
         await companyStore.fetchCompany()
-        emit('submitted')
+
+        emit('submit')
+
+        Notify.create({
+            type: 'success',
+            message: 'Company updated'
+        })
     } catch (error) {
         console.error("Failed to update company", error)
     } finally {
@@ -34,28 +43,28 @@ const submit = async () => {
 </script>
 
 <template>
-    <q-form class="flex flex-col" @submit.prevent="submit">
-        <h2 class="font-bold">Назва компанії</h2>
-        <div class="flex justify-between gap-5 items-center">
+    <q-form ref="form" class="form form--compact" @submit.prevent="submit">
+        <h2 class="form__heading">Company name</h2>
+        <div class="form__content form__content--compact">
             <q-input
                 v-model="name"
                 :disable="loading"
                 :rules="[
-                v => v.length >= 1 || `Назва компанії повинна мати хоча б 1 літеру`,
-                v => v !== companyStore.name || `Введите другое имя компании`
-            ]"
-                class="flex-1"
-                placeholder="Назва компанії"
+                    v => v.length >= 1 || `The company name must have at least 1 letter`,
+                    v => v !== companyStore.name || `Enter a different company name`
+                ]"
+                class="form__input form__input--compact"
+                placeholder="Company name"
                 required
             />
             <q-btn
                 :disabled="name.length < 2 || loading"
-                class="h-fit"
+                class="form__button form__button--compact"
                 color="primary"
                 label="save"
                 type="submit"
-
             />
         </div>
     </q-form>
 </template>
+<style scoped src="@/css/form.css"/>

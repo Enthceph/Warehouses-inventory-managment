@@ -1,10 +1,11 @@
 import {defineStore} from 'pinia';
-import {getAuthenticatedUser} from "@/api/auth";
-import {Auth} from "@/js/types/auth.types";
+import {getAuthUser} from "@/api/auth";
+import {AuthUser} from "@/js/types/auth.types";
+
 
 export const useAuthStore = defineStore({
     id: 'authStore',
-    state: (): Auth => ({
+    state: (): AuthUser => ({
         id: 0,
         full_name: '',
         email: '',
@@ -14,14 +15,13 @@ export const useAuthStore = defineStore({
     }),
     getters: {},
     actions: {
-        async getUser(): Promise<(auth: Auth) => void> {
-            const user = await getAuthenticatedUser().json()
-            // @ts-ignore
+        async getUser() {
+            const user = await getAuthUser()
             this.setUser(user)
             return this.setUser
         },
 
-        setUser(auth: Auth) {
+        setUser(auth: AuthUser) {
             this.id = auth.id
             this.full_name = auth.full_name
             this.email = auth.email
@@ -29,6 +29,7 @@ export const useAuthStore = defineStore({
             this.company = auth.company
             this.created_at = auth.created_at
         },
+        
         clearUser() {
             this.id = 0
             this.full_name = ''

@@ -1,4 +1,4 @@
-export interface Auth {
+export interface AuthUser {
     id: Number
     full_name: string
     email: string
@@ -6,3 +6,12 @@ export interface Auth {
     company: string
     created_at: Date | null
 }
+
+export type LoginData = {
+    email: AuthUser["email"];
+    password: string;
+};
+
+export type LoginResponse = {
+    access_token: string;
+};
