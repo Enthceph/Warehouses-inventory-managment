@@ -3,7 +3,6 @@
 namespace App\Services;
 
 
-use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\CreateUserAndCompanyRequest;
 use App\Models\Company;
 use App\Models\User;
@@ -41,7 +40,7 @@ class AuthService
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-       
+
         if (!Auth::attempt($credentials)) {
             return response('Email & Password does not match with our record.', 401);
         }
@@ -52,23 +51,4 @@ class AuthService
         return $accessToken;
     }
 
-    public function logout()
-    {
-        Auth::user()->currentAccessToken()->delete();
-    }
-
-    public function checkAuth()
-    {
-        if (Auth::check()) {
-            return true;
-        }
-        return false;
-    }
-
-    public function changePassword(ChangePasswordRequest $request)
-    {
-        Auth::user()->update(['password' =>
-            Hash::make($request['new_password'])
-        ]);
-    }
 }

@@ -24,6 +24,12 @@ Notify.registerType('success', {
     color: "positive",
     icon: 'check_circle'
 })
+Notify.registerType('error', {
+    position: "top-right",
+    color: "negative",
+    icon: 'error',
+})
+
 
 app.use(Quasar, {
     plugins: {

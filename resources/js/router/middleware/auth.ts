@@ -12,7 +12,6 @@ const auth = async ({next}: Context) => {
         return next({path: '/login'})
     }
 
-
     try {
         await checkAuth()
     } catch (error) {

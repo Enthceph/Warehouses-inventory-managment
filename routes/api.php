@@ -17,15 +17,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::get('logout', 'logout');
-        Route::patch('changePassword', 'changePassword');
         Route::get('checkAuth', 'checkAuth');
-        Route::get('getAuthenticatedUser', 'getAuthenticatedUser');
+        Route::get('getAuthUser', 'getAuthUser');
+        Route::patch('changeName', 'changeName');
+        Route::patch('changeEmail', 'changeEmail');
+        Route::patch('changePassword', 'changePassword');
     });
 
-    Route::controller(UserController::class)->group(function () {
-        Route::get('user', 'user');
-        Route::patch('changeName', 'changeName');
-    });
     Route::resource('user', UserController::class);
 
     Route::resource('warehouse', WarehouseController::class);

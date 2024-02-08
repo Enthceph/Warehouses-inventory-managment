@@ -19,7 +19,7 @@ class CompanyController extends Controller
     public function index()
     {
         $company = $this->service->get();
-        
+
         $this->authorize('view', $company);
 
         return $company;
