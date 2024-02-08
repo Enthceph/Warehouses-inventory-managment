@@ -1,10 +1,5 @@
 <script lang="ts" setup>
-import {logout} from "@/api/auth";
-
-import {deleteToken} from "@/js/utils/token";
-
 import {useDialogPluginComponent} from 'quasar'
-import {useFetching} from "@/js/composables/useFetching";
 import LogoutForm from "@/js/components/Forms/Login/LogoutForm.vue";
 import {useAuthStore} from "@/js/stores/auth";
 import ChangePasswordForm from "@/js/components/Forms/Auth/ChangePasswordForm.vue";
@@ -20,21 +15,6 @@ const authStore = useAuthStore()
 
 const logoutModal = ref(false)
 
-const {fetch: fetchLogout} = useFetching(logout)
-
-const onLogoutModalOk = () => {
-    fetchLogout().then(() => {
-        deleteToken()
-
-        router.push({
-            path: '/login'
-        })
-    }).catch((err) => {
-        console.log(err)
-    })
-
-    router.push('/login')
-}
 onMounted(() => {
     authStore.getUser()
 })
@@ -95,7 +75,7 @@ const splitterModel = ref(120)
     <q-dialog ref="dialogRef" v-model="logoutModal" @hide="onDialogHide">
         <LogoutForm
             @cancel="logoutModal=false"
-            @submit="onLogoutModalOk"
+            @submit="logoutModal=false"
         />
     </q-dialog>
 </template>

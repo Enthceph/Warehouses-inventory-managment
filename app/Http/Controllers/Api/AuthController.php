@@ -44,13 +44,17 @@ class AuthController extends Controller
 
     public function logout()
     {
-        return Auth::user()->currentAccessToken()->delete();
+        if (Auth::user()->currentAccessToken()->delete()) {
+            return response()->json(['message' => true]);
+        }
+
+        return response()->json(['message' => false], 500);
     }
 
     public function checkAuth()
     {
         if (Auth::check()) {
-            return response()->json(['authenticated' => true]);
+            return response()->json(['message' => true]);
         }
 
         return response()->json(['message' => false], 401);
