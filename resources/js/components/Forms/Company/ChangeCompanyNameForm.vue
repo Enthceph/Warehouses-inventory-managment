@@ -16,8 +16,6 @@ onMounted(async () => {
     let company = await companyStore.fetchCompany()
     name.value = company.name
 
-    await form.value.resetValidation()
-
     loading.value = false
 })
 
@@ -39,7 +37,6 @@ const submit = async () => {
         loading.value = false
     }
 }
-
 </script>
 
 <template>
@@ -51,7 +48,7 @@ const submit = async () => {
                 :disable="loading"
                 :rules="[
                     v => v.length >= 1 || `The company name must have at least 1 letter`,
-                    v => v !== companyStore.name || `Enter a different company name`
+                    v => v !== companyStore.name || `Enter a different company name if you want to change it`
                 ]"
                 class="form__input form__input--compact"
                 placeholder="Company name"

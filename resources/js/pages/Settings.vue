@@ -12,6 +12,8 @@ const {dialogRef, onDialogHide} = useDialogPluginComponent()
 
 const authStore = useAuthStore()
 
+const tab = ref('company')
+const splitterModel = ref(120)
 const logoutModal = ref(false)
 
 onMounted(async () => {
@@ -19,9 +21,6 @@ onMounted(async () => {
 
     tab.value = authStore.role === 'Owner' ? 'company' : 'profile'
 })
-
-const tab = ref('company')
-const splitterModel = ref(120)
 </script>
 <template>
     <q-card>
@@ -71,10 +70,7 @@ const splitterModel = ref(120)
             </q-splitter>
         </q-card-section>
         <q-card-section class="grid grid-cols-4 gap-4 justify-items-end">
-            <div></div>
-            <div></div>
-            <div></div>
-            <q-btn class="w-24" color="red" label="exit" @click="logoutModal = true"/>
+            <q-btn class="w-24 col-start-4" color="red" label="exit" @click="logoutModal = true"/>
         </q-card-section>
     </q-card>
 
