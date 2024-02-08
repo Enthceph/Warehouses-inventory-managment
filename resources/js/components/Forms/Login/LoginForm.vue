@@ -1,49 +1,52 @@
 <script lang="ts" setup>
-const props = defineProps({
-    error: String,
-})
+import {setToken} from "@/js/utils/token";
+import {login} from "@/api/auth";
 
-const emit = defineEmits<{
-    (e: 'submit', data: { email: string; password: string }): void;
-}>();
+const emit = defineEmits<{ (e: 'submit'): void; }>();
 
 const form = ref(null)
-
-const formData = reactive({
+const data = reactive({
     email: 'test@test.com',
     password: 'qwertyui'
 })
+const loading = ref(false)
 
-const onSubmit = () => {
-    emit('submit', formData);
-};
+const submit = async () => {
+    loading.value = true
+
+    try {
+        const res = await login(data)
+        setToken(res.access_token);
+
+        emit('submit')
+    } catch (error) {
+        console.error("Failed to update company", error)
+    } finally {
+        loading.value = false
+    }
+}
 </script>
 
 <template>
     <q-card>
-        <q-form ref="form" autocomplete="off" class="form" @submit.prevent="onSubmit">
-
+        <q-form ref="form" autocomplete="off" class="form" @submit.prevent="submit">
             <h2 class="text-h5 font-bold">Авторизація</h2>
 
             <div class="form-inputs">
                 <q-input
-                    v-model="formData.email"
+                    v-model="data.email"
                     autocomplete="off"
                     label="Email"
                     required
                     type="email"
                 />
                 <q-input
-                    v-model="formData.password"
+                    v-model="data.password"
                     autocomplete="off"
                     label="Пароль"
                     required
                     type="password"
                 />
-            </div>
-
-            <div v-if="props.error" class="error-box">
-                {{ props.error }}
             </div>
 
             <div class="buttons-group">
@@ -76,10 +79,5 @@ const onSubmit = () => {
 .to-registration-form {
     color:     var(--va-primary);
     font-size: 12px;
-}
-
-.error-box {
-    color:     red;
-    font-size: 14px;
 }
 </style>
