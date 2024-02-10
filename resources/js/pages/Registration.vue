@@ -10,8 +10,8 @@ import {register} from "@/api/auth";
 const router = useRouter();
 
 const registrationData = reactive({
-    user_data: {},
-    company_data: {}
+    user: {},
+    company: {}
 })
 
 const step = ref(1)
@@ -20,11 +20,11 @@ const {fetch: fetchRegistration, error, errors} = useFetching(register)
 
 const submitUserForm = (data: UserData) => {
     step.value = 2
-    registrationData.user_data = data
+    registrationData.user = data
 
 }
 const submitOrganisationForm = async (data: CompanyData) => {
-    registrationData.company_data = data
+    registrationData.company = data
 
     await fetchRegistration(registrationData)
 
@@ -60,7 +60,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
             title="Компанiя"
         >
             <RegistrationCompanyForm
-                :user="registrationData.user_data"
+                :user="registrationData.user"
                 @stepBack="step -= 1"
                 @submit="submitOrganisationForm"
             />

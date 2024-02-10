@@ -15,9 +15,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function __construct(
-        protected AuthService $service
-    )
+    public function __construct(protected AuthService $service)
     {
     }
 

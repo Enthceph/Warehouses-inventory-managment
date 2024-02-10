@@ -16,8 +16,8 @@ class AuthService
     public function register(CreateUserAndCompanyRequest $request)
     {
         DB::transaction(function () use ($request) {
-            $user_data = $request->user_data;
-            $company_data = $request->company_data;
+            $user_data = $request->user;
+            $company_data = $request->company;
 
             $company = Company::create([
                 'name' => $company_data['name'],

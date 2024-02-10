@@ -32,13 +32,12 @@ const submit = async () => {
             message: 'Company updated'
         })
     } catch (error) {
-        console.error("Failed to update company", error)
+        console.error("Failed to update company name", error)
     } finally {
         loading.value = false
     }
 }
 </script>
-
 <template>
     <q-form ref="form" class="form form--compact" @submit.prevent="submit">
         <h2 class="form__heading">Company name</h2>

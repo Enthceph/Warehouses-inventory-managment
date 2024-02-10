@@ -32,7 +32,6 @@ const submit = async () => {
     }
 }
 </script>
-
 <template>
     <q-form class="form" @submit="submit">
         <h2 class="form__heading">Password</h2>
