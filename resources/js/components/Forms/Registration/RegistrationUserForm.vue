@@ -33,9 +33,9 @@ const submit = () => {
         <div class="form-inputs">
             <q-input
                 v-model="formData.full_name"
-                :rules="[v => v.length >= 2 || `Ім'я повинно мати хоча б 2 літери`]"
+                :rules="[v => v.length >= 2 || `The name must have at least 2 letters`]"
                 hide-bottom-space
-                label="Ім'я"
+                label="Name"
                 required
             />
 
@@ -49,26 +49,26 @@ const submit = () => {
             <q-input
                 v-model="formData.password"
                 autocomplete="off"
-                label="Пароль"
+                label="Password"
                 required
                 type="password"
             />
             <q-input
                 v-model="formData.password_confirmation"
-                :rules="[v => v === formData.password || `Паролі не рівні`]"
+                :rules="[v => v === formData.password || `The passwords are not the same`]"
                 hide-bottom-space
-                label="Повторіть пароль"
+                label="Repeat the password"
                 required
                 type="password"
             />
         </div>
 
         <div class="to-login-form">
-            <router-link to="/login">Уже зареєстровані?</router-link>
+            <router-link to="/login">Already registered?</router-link>
         </div>
 
         <div class="buttons">
-            <q-btn color="primary" type="submit">Далі</q-btn>
+            <q-btn color="primary" type="submit">Next</q-btn>
         </div>
     </q-form>
 </template>

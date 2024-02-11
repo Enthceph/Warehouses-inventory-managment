@@ -14,7 +14,7 @@ const employee = reactive<AddEmployeeForm>({
     full_name: '',
     email: '',
     password: '',
-    password_conformation: '',
+    password_confirmation: '',
     role_id: 6
 })
 

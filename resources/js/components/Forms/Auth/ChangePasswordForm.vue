@@ -8,8 +8,8 @@ const emit = defineEmits(['submit'])
 const form = ref<QForm>() as Ref<QForm>
 const formData = reactive({
     new_password: 'asdfgh',
-    old_password: 'qwertyui',
-    password_conformation: 'qwertyui'
+    password_confirmation: 'asdfgh',
+    old_password: 'qwertyui'
 })
 const loading = ref(false)
 
@@ -42,15 +42,16 @@ const submit = async () => {
             required
         />
         <q-input
+            v-model="formData.password_confirmation"
+            :rules="[v => v === formData.new_password || `The passwords are not the same`]"
+            placeholder="Repeat new password"
+            required
+        />
+
+        <q-input
             v-model="formData.old_password"
             :rules="[v => v.length >= 6 || `The length of the password must be at least 6 letters`]"
             placeholder="Old password"
-            required
-        />
-        <q-input
-            v-model="formData.password_conformation"
-            :rules="[v => v === formData.old_password || `The passwords are not the same`]"
-            placeholder="Repeat old password"
             required
         />
         <q-btn

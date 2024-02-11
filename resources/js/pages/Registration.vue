@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 
 import RegistrationUserForm, {UserData} from "@/js/components/Forms/Registration/RegistrationUserForm.vue";
-import RegistrationCompanyForm, {
-    CompanyData
-} from "@/js/components/Forms/Registration/RegistrationOrganisationForm.vue";
-import {useFetching} from "@/js/composables/useFetching";
+import RegistrationCompanyForm, {CompanyData} from "@/js/components/Forms/Registration/RegistrationCompanyForm.vue";
 import {register} from "@/api/auth";
 
 const router = useRouter();
@@ -16,24 +13,22 @@ const registrationData = reactive({
 
 const step = ref(1)
 
-const {fetch: fetchRegistration, error, errors} = useFetching(register)
-
 const submitUserForm = (data: UserData) => {
     step.value = 2
     registrationData.user = data
-
 }
+
 const submitOrganisationForm = async (data: CompanyData) => {
     registrationData.company = data
 
-    await fetchRegistration(registrationData)
+    await register(registrationData)
 
     router.push('/login')
 }
 </script>
 
 <template>
-    <h2>Реєстрація</h2>
+    <h2>Registration</h2>
 
     <q-stepper
         ref="stepper"
@@ -46,7 +41,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
             :done="step > 1"
             :name="1"
             icon="settings"
-            title="Користувач"
+            title="User"
         >
             <RegistrationUserForm
                 @submit="submitUserForm"
@@ -57,7 +52,7 @@ const submitOrganisationForm = async (data: CompanyData) => {
             :done="step > 2"
             :name="2"
             icon="corporate_fare"
-            title="Компанiя"
+            title="Company"
         >
             <RegistrationCompanyForm
                 :user="registrationData.user"
@@ -66,10 +61,6 @@ const submitOrganisationForm = async (data: CompanyData) => {
             />
         </q-step>
     </q-stepper>
-
-    <div v-if="error" class="error-box">
-        {{ error }}
-    </div>
 </template>
 
 <style scoped>

@@ -24,37 +24,40 @@ class ChangePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'old_password' => [
-                'current_password:sanctum',
-            ],
-            'password_confirmation' => [
-                'same:old_password'
-            ],
             'new_password' => [
                 'different:old_password',
                 'required',
                 'min:6',
                 'max:255',
-            ]
-        ];
-    }
-
-
-    public function messages()
-    {
-        return [
-            'old_password'=>[
-                'current_password'=>'Новый пароль такой же как и предыдущий'
             ],
             'password_confirmation' => [
-                'same'=>'Новый пароль и пароль для подтверждения не совпадают'
+                'same:new_password',
+                'required',
             ],
-            'new_password' => [
-                'different' => 'Новый пароль совпадает с предыдущим',
-                'required' => 'Новый пароль не был передан',
-                'min' => 'Пароль должен быть не меньше 6 символов',
-                'max' => 'Максимальная длина пароля 255 символов'
-            ]
+
+            'old_password' => [
+                'current_password:sanctum',
+                'required',
+            ],
         ];
     }
+
+
+//    public function messages()
+//    {
+//        return [
+//            'old_password' => [
+//                'current_password' => 'The new password is the same as the previous one'
+//            ],
+//            'password_confirmation' => [
+//                'same' => 'The new password and the confirmation password do not match'
+//            ],
+//            'new_password' => [
+//                'different' => 'The new password is the same as the previous one',
+//                'required' => 'The new password was not sent',
+//                'min' => 'Password must be at least 6 characters',
+//                'max' => 'Maximum password length is 255 characters'
+//            ]
+//        ];
+//    }
 }

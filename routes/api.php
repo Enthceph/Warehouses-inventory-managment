@@ -16,7 +16,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
-        Route::get('logout', 'logout');
+        Route::delete('logout', 'logout');
         Route::get('checkAuth', 'checkAuth');
         Route::get('getAuthUser', 'getAuthUser');
         Route::patch('changeName', 'changeName');

@@ -11,7 +11,7 @@ export interface AddEmployeeForm {
     full_name: string
     email: string
     password: string
-    password_conformation: string
+    password_confirmation: string
     role_id: number
 }
 

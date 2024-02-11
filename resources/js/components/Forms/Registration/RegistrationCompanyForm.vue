@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-const form = ref()
+import {Company} from "@/js/types/company.types";
 
 export interface CompanyData {
-    name: string
-    address?: string
-    contact_info?: string
-
+    name: Company['name']
+    address?: Company['address']
+    contact_info?: Company['contact_info']
 }
 
+const form = ref()
 const data = reactive<CompanyData>({
     name: 'test org name',
     address: '',
@@ -21,7 +21,8 @@ const emit = defineEmits<{
 
 const submit = () => {
     const validated = form.value.validate()
-    console.log(validated)
+    if (!validated) return
+
     emit('submit', data)
 }
 </script>
@@ -32,34 +33,33 @@ const submit = () => {
             <q-input
                 v-model="data.name"
                 hide-bottom-space
-                label="Назва компанії"
+                label="Company name"
                 required
             />
 
             <q-input
                 v-model="data.address"
                 hide-bottom-space
-                label="Адреса"
+                label="Address"
             />
 
             <q-input
                 v-model="data.contact_info"
                 autocomplete="off"
-                label="Контактна інформація"
+                label="Contact Information"
             />
         </div>
         <div class="buttons">
             <q-btn
-                class="q-ml-sm"
                 color="primary"
                 flat
-                label="Назад"
+                label="Back"
                 @click="emit('stepBack')"
             />
 
             <q-btn
                 color="primary"
-                label="Реєстрація"
+                label="Register"
                 type="submit"
             />
         </div>
