@@ -32,7 +32,7 @@ class CompanyController extends Controller
 
     public function update(UpdateCompanyRequest $request, int $id)
     {
-        $this->authorize('update', Company::findOrFail($id));
+        $this->authorize('update', Company::class);
 
         $companyUpdated = $this->service->update($request, $id);
 

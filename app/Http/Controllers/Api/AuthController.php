@@ -93,6 +93,4 @@ class AuthController extends Controller
 
         return response(['message' => 'Пароль был обновлен']);
     }
-
-
 }

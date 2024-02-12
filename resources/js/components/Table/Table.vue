@@ -7,9 +7,7 @@ const props = defineProps<{
     columnNames: object[],
     data: object[],
     hideActionButtons?: Boolean
-    hideAddButton?: Boolean
 }>()
-console.log(props.hideAddButton)
 const emit = defineEmits(['rowEdit', 'rowDelete', 'rowAdd', 'rowClicked'])
 </script>
 
@@ -29,7 +27,7 @@ const emit = defineEmits(['rowEdit', 'rowDelete', 'rowAdd', 'rowClicked'])
                     <q-btn class="btn-delete" flat icon="delete" @click="emit('rowDelete', row)"/>
                 </td>
             </TableRow>
-            <tr v-if="!props.hideAddButton">
+            <tr v-if="!props.hideActionButtons">
                 <td class="px-6 py-4 text-center" colspan="100%">
                     <q-btn class="add-button" icon="add" round @click="emit('rowAdd')"/>
                 </td>

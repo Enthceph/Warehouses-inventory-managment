@@ -16,7 +16,7 @@ onMounted(() => {
             </q-avatar>
 
             <div class="user-info">
-                <div>{{ authStore.full_name }}</div>
+                <div>{{ authStore.full_name }} | {{ authStore.role }}</div>
                 <div>{{ authStore.email }}</div>
             </div>
         </router-link>

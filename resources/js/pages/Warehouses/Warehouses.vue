@@ -6,6 +6,7 @@ import Table from "@/js/components/Table/Table.vue";
 import EditWarehouseForm from "@/js/components/Forms/Warehouse/EditWarehouseForm.vue";
 import DeleteWarehouseForm from "@/js/components/Forms/Warehouse/DeleteWarehouseForm.vue";
 import {Warehouse} from "@/js/types/warehouse.types";
+import {useAuthStore} from "@/js/stores/auth";
 
 defineEmits([...useDialogPluginComponent.emits]);
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
@@ -13,6 +14,7 @@ const {dialogRef, onDialogHide} = useDialogPluginComponent()
 const router = useRouter()
 const route = useRoute()
 const warehouseStore = useWarehousesStore()
+const authStore = useAuthStore()
 
 const showAddWarehouseModal = ref(false)
 const showEditWarehouseModal = ref(false)
@@ -20,8 +22,6 @@ const showDeleteWarehouseModal = ref(false)
 
 onMounted(async () => {
     await warehouseStore.fetchGetWarehouses()
-
-    console.log(warehouseStore.warehouses)
 })
 
 // TABLE EMITS
@@ -45,14 +45,14 @@ const onRowClicked = (row: Warehouse) => {
 
 const columnNames = [
     'id',
-    'Назва',
-    'Контактна інформація',
-    'Місцезнаходження',
-    'Був створений',
+    'Name',
+    'Contact info',
+    'Location',
+    'Created',
 ]
 
 const tableData = computed(() => {
-    return warehouseStore.warehouses.map((warehouse) => {
+    return warehouseStore.warehouses.map((warehouse, index) => {
         return {
             id: warehouse.id,
             name: warehouse.name,
@@ -68,6 +68,7 @@ const tableData = computed(() => {
     <Table
         :column-names="columnNames"
         :data="tableData"
+        :hide-action-buttons="authStore.role !== 'Owner'"
         @rowAdd="onRowAdd"
         @rowClicked="onRowClicked"
         @rowDelete="onRowDelete"
