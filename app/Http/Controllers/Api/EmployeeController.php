@@ -8,51 +8,79 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\User;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
-
-    public function index(EmployeeService $service)
+    public function __construct(
+        protected EmployeeService $service
+    )
     {
-        return $service->get();
     }
 
-    public function store(StoreEmployeeRequest $request, EmployeeService $service)
+    public function index()
     {
-        return $service->store($request);
+        $this->authorize('view', User::class);
+
+        return $this->service->get();
     }
 
-    public function show($id, EmployeeService $service)
+    public function store(StoreEmployeeRequest $request)
     {
-        $user = $service->show($id);
+        $this->authorize('create', User::class);
+
+        $employee = $this->service->store($request);
+
+        if (!$employee) {
+            return response(['message' => 'Unable to create employee'], 500);
+        }
+
+        return $employee;
+    }
+
+    public function show($id)
+    {
+        $user = User::find($id);
 
         if (!$user) {
-            return response(['message' => 'Not Found'], 404);
+            return response(['message' => 'Unable to find employee'], 404);
         }
+
+        $this->authorize('show', $user);
 
         return $user;
     }
 
-    public function update(UpdateEmployeeRequest $request, int $id, EmployeeService $service)
+    public function update(UpdateEmployeeRequest $request, int $id)
     {
-        $authUser = Auth::user();
+        $user = User::find($id);
 
-        if ($authUser->role->name == "Owner") {
-            $user = User::findOrFail($id);
-            if ($user['company_id'] !== $authUser['company_id']) {
-                return response(['message' => "You are unauthorized to set a role to that user1..." . "Rcompany_id: " . $request['company_id'] . " Acompany_id: " . $authUser['company_id']], 401);
-            }
-        } else if (Auth::id() !== $request['id']) {
-
-            return response(['message' => 'You are unauthorized to set a role to that user2...'], 401);
+        if (!$user) {
+            return response(['message' => 'Unable to find employee'], 404);
         }
 
-        return $service->update($request, $id);
+        $this->authorize('update', $user);
+
+        $updatedEmployee = $this->service->update($request, $user);
+
+        if (!$updatedEmployee) {
+            return response(['message' => 'Unable to update employee'], 500);
+        }
+
+        return $updatedEmployee;
     }
 
-    public function destroy(Request $request, int $id, EmployeeService $service)
+    public function destroy(Request $request, int $id)
     {
-        return $service->destroy($id);
+        $employee = User::find($id);
+
+        if (!$employee) {
+            return response(['message' => 'Unable to find employee'], 404);
+        }
+
+        $this->authorize('delete', $employee);
+
+        $employee->delete();
+
+        return response(['message' => 'Employee was deleted']);
     }
 }

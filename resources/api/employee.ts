@@ -1,7 +1,7 @@
 import apiRequest from '../js/utils/request'
 
 // TODO проверить на работоспособность
-export const getEmployees = () => apiRequest.get('user')
+export const getEmployees = () => apiRequest.get('employee')
 
 export const getEmployee = (id: Number) => apiRequest.get(`employee/${id}`)
 

@@ -6,6 +6,7 @@ import {Employee} from "@/js/types/employee.types";
 import AddEmployeeForm from "@/js/components/Forms/Employee/AddEmployeeForm.vue";
 import EditEmployeeForm from "@/js/components/Forms/Employee/EditEmployeeForm.vue";
 import DeleteEmployeeForm from "@/js/components/Forms/Employee/DeleteEmployeeForm.vue";
+import {useAuthStore} from "@/js/stores/auth";
 
 defineEmits([...useDialogPluginComponent.emits]);
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
@@ -14,6 +15,7 @@ const router = useRouter()
 const route = useRoute()
 
 const employeeStore = useEmployeesStore()
+const authStore = useAuthStore()
 
 const showAddEmployeeModal = ref(false)
 const showEditEmployeeModal = ref(false)
@@ -44,10 +46,10 @@ const onRowClicked = (row: Employee) => {
 
 const columnNames = [
     'id',
-    'Iм\'я',
+    'Name',
     'Email',
-    'Почав працювати',
-    "Роль",
+    'Started working',
+    "Role",
 ]
 
 const tableData = computed(() => {
@@ -67,6 +69,7 @@ const tableData = computed(() => {
     <Table
         :column-names="columnNames"
         :data="tableData"
+        :hide-action-buttons="authStore.role !== 'Owner'"
         @rowAdd="onRowAdd"
         @rowClicked="onRowClicked"
         @rowDelete="onRowDelete"

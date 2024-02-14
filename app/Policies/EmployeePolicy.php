@@ -2,11 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Outlet;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class OutletPolicy
+class EmployeePolicy
 {
     use HandlesAuthorization;
 
@@ -23,25 +22,25 @@ class OutletPolicy
         return false;
     }
 
-    public function update(User $user, Outlet $outlet): bool
+    public function update(User $user, User $employee): bool
     {
-        if ($user->isOwner() && $user->company_id === $outlet->company_id) {
+        if ($user->isOwner() && $user->company_id === $employee->company_id) {
             return true;
         }
         return false;
     }
 
-    public function show(User $user, Outlet $outlet)
+    public function show(User $user, User $employee)
     {
-        if ($user->company_id === $outlet->company_id) {
+        if ($user->company_id === $employee->company_id) {
             return true;
         }
         return false;
     }
 
-    public function delete(User $user, Outlet $outlet)
+    public function delete(User $user, User $employee)
     {
-        if ($user->isOwner() && $user->company_id === $outlet->company_id) {
+        if ($user->isOwner() && $user->company_id === $employee->company_id) {
             return true;
         }
         return false;

@@ -13,8 +13,6 @@ class UpdateEmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-
-
         return true;
     }
 
@@ -27,10 +25,8 @@ class UpdateEmployeeRequest extends FormRequest
     {
         return [
             'full_name' => 'string|max:255',
-            'email' => 'email|unique:users,email',
-            'role_id' => 'numeric|not_in:1,2|exists:roles,id',
+            'email' => 'email|unique:users,email,' . $this->id,
             'password' => 'string|min:8|confirmed',
         ];
     }
-
 }

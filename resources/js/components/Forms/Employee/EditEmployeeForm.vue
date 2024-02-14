@@ -7,22 +7,25 @@ const emit = defineEmits(['submitted', 'cancel'])
 
 const rolesStore = useRolesStore()
 const employeesStore = useEmployeesStore()
+
+const loading = ref(false)
 const form = ref()
 
 const employee = reactive<EmployeeForEdit>({
     id: 0,
     full_name: '',
     email: '',
-    role_id: 0,
+    // role_id: 0,
 })
-const rolesForEmployee = computed(() => {
-    if (!rolesStore.roles) return []
 
-    return rolesStore.roles.filter((role) => {
-        return role.name != 'Admin' && role.name != 'Owner'
-    })
-})
-const loading = ref(false)
+// const rolesForEmployee = computed(() => {
+//     if (!rolesStore.roles) return []
+//
+//     return rolesStore.roles.filter((role) => {
+//         return role.name != 'Admin' && role.name != 'Owner'
+//     })
+// })
+
 
 onMounted(() => {
     Object.assign(employee, employeesStore.selectedEmployee)
@@ -38,7 +41,8 @@ const submit = async () => {
     try {
         await employeesStore.fetchEditEmployee(employee.id, {
             id: employee.id,
-            role_id: employee.role_id
+            full_name: employee.full_name,
+            email: employee.email,
         })
     } catch (err) {
         console.log('EditEmployeeForm Error', err)
