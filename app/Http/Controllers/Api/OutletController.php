@@ -5,34 +5,81 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateOutletRequest;
 use App\Http\Requests\UpdateOutletRequest;
+use App\Models\Outlet;
 use App\Services\OutletService;
-use App\Services\WarehouseService;
-use Illuminate\Http\Request;
 
 class OutletController extends Controller
 {
-    public function index(OutletService $service)
+    public function __construct(
+        protected OutletService $service
+    )
     {
-        return $service->get();
     }
 
-    public function store(CreateOutletRequest $request, OutletService $service, WarehouseService $warehouseService)
+    public function index()
     {
-        $service->store($request, $warehouseService);
+        $this->authorize('view', Outlet::class);
+
+        return $this->service->get();
     }
 
-    public function update(UpdateOutletRequest $request, int $id, OutletService $service)
+    public function store(CreateOutletRequest $request)
     {
-        return $service->update($request, $id);
+        $this->authorize('create', Outlet::class);
+
+        $outlet = $this->service->store($request);
+
+        if (!$outlet) {
+            return response(['message' => 'Unable to create outlet'], 500);
+        }
+
+        return $outlet;
     }
 
-    public function show($id, OutletService $service)
+    public function update(UpdateOutletRequest $request, int $id)
     {
-        return $service->show($id);
+        $outlet = Outlet::find($id);
+
+        if (!$outlet) {
+            return response(['message' => 'Couldn\'t find requested outlet'], 404);
+        }
+
+        $this->authorize('update', $outlet);
+
+        $updatedOutlet = $this->service->update($request, $outlet);
+
+        if (!$updatedOutlet) {
+            return response(['message' => 'Unable to update outlet'], 500);
+        }
+
+        return response(['message' => 'Outlet changed successfully']);
     }
 
-    public function destroy(Request $request, int $id, OutletService $service)
+    public function show($id)
     {
-        return $service->destroy($id);
+        $outlet = Outlet::find($id);
+
+        if (!$outlet) {
+            return response(['message' => 'Couldn\'t find requested outlet'], 404);
+        }
+
+        $this->authorize('view', $outlet);
+
+        return $outlet;
+    }
+
+    public function destroy(int $id)
+    {
+        $outlet = Outlet::find($id);
+
+        if (!$outlet) {
+            return response(['message' => 'Couldn\'t find requested outlet'], 404);
+        }
+
+        $this->authorize('delete', $outlet);
+
+        $outlet->delete();
+
+        return response(['message' => 'Outlet was deleted']);
     }
 }

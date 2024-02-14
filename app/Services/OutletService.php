@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\DB;
 
 class OutletService
 {
+    protected $warehouseService;
+
+    public function __construct(WarehouseService $warehouseService)
+    {
+        $this->warehouseService = $warehouseService;
+    }
+
     public function get()
     {
         $outlets = Auth::user()->company->outlets;
@@ -23,20 +30,20 @@ class OutletService
                 'name' => $outlet->name,
                 'address' => $outlet->address,
                 'contact_info' => $outlet->contact_info,
-                'warehouse' => $outlet->warehouse, // Include the warehouse data
+                'warehouse' => $outlet->warehouse,
                 'created_at' => $outlet->created_at
             ];
         });
     }
 
-    public function store(CreateOutletRequest $request, WarehouseService $warehouseService)
+    public function store(CreateOutletRequest $request)
     {
-        return DB::transaction(function () use ($request, $warehouseService) {
+        return DB::transaction(function () use ($request) {
             $warehouse_name = $request->has('warehouse_name')
                 ? $request->warehouse_name
                 : $request->name . '\'s warehouse';
 
-            $warehouse = $warehouseService->store(new CreateWarehouseRequest([
+            $warehouse = $this->warehouseService->store(new CreateWarehouseRequest([
                 'name' => $warehouse_name
             ]));
 
@@ -50,63 +57,13 @@ class OutletService
         });
     }
 
-    public function show($id)
+    public function update(Request $request, Outlet $outlet)
     {
-        $userId = Auth::id();
-        $companyId = Auth::user()->company->id;
-        $outlet = Outlet::find($id);
-
-        if (!$userId || $outlet->company_id !== $companyId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-        if (!$outlet) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
-        return $outlet;
-    }
-
-    public function update(Request $request, int $id)
-    {
-        $userId = Auth::id();
-        $companyId = Auth::user()->company->id;
-        $outlet = Outlet::find($id);
-
-        if (!$userId || $outlet->company_id !== $companyId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-        if (!$outlet) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
-        $outlet->update([
+        return $outlet->update([
             'name' => $request->name,
             'address' => $request->address,
             'contact_info' => $request->contact_info,
             'warehouse_id' => $request->warehouse_id
         ]);
-
-        return response(['message' => 'Outlet changed successfully']);
-    }
-
-    public function destroy($id)
-    {
-        $userId = Auth::id();
-        $companyId = Auth::user()->company->id;
-        $outlet = Outlet::find($id);
-
-        if (!$userId || $outlet->company_id !== $companyId) {
-            return response(['message' => 'Unauthorized'], 401);
-        }
-
-        if (!$outlet) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
-        $outlet->delete();
-
-        return response(['message' => 'Outlet was deleted']);
     }
 }

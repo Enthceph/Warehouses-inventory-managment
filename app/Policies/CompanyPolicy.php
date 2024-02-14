@@ -24,8 +24,8 @@ class CompanyPolicy
     {
         if ($user->isOwner() && $user->company_id === $company->id) {
             return true;
-
         }
+        
         return false;
     }
 

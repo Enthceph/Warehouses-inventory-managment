@@ -8,6 +8,7 @@ const props = defineProps<{
     data: object[],
     hideActionButtons?: Boolean
 }>()
+
 const emit = defineEmits(['rowEdit', 'rowDelete', 'rowAdd', 'rowClicked'])
 </script>
 

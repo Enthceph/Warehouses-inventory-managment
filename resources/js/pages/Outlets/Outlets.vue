@@ -6,6 +6,7 @@ import Table from "@/js/components/Table/Table.vue";
 import {Outlet} from "@/js/types/outlet.types";
 import EditOutletForm from "@/js/components/Forms/Outlet/EditOutletForm.vue";
 import DeleteOutletForm from "@/js/components/Forms/Outlet/DeleteOutletForm.vue";
+import {useAuthStore} from "@/js/stores/auth";
 
 defineEmits([...useDialogPluginComponent.emits]);
 const {dialogRef, onDialogHide} = useDialogPluginComponent()
@@ -13,6 +14,7 @@ const {dialogRef, onDialogHide} = useDialogPluginComponent()
 const router = useRouter()
 const route = useRoute()
 const outletStore = useOutletsStore()
+const authStore = useAuthStore()
 
 const showAddOutletModal = ref(false)
 const showEditOutletModal = ref(false)
@@ -43,14 +45,13 @@ const onRowClicked = (row: Outlet) => {
 
 const columnNames = [
     'id',
-    'Назва',
-    'Місцезнаходження',
-    'Контактна інформація',
-    'Склад',
-    'Був створений'
+    'Name',
+    'Location',
+    'Contact info',
+    'Warehouse',
+    'Created'
 ]
 
-"2024-01-21T13:29:17.000000Z"
 const tableData = computed(() => {
     return outletStore.outlets.map((outlet) => {
         return {
@@ -69,6 +70,7 @@ const tableData = computed(() => {
     <Table
         :column-names="columnNames"
         :data="tableData"
+        :hide-action-buttons="authStore.role !== 'Owner'"
         @rowAdd="onRowAdd"
         @rowClicked="onRowClicked"
         @rowDelete="onRowDelete"
