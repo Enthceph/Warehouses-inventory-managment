@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/login',
-        name: 'Логін',
+        name: 'Login',
         component: () => import('../pages/Login.vue'),
         meta: {
             layout: 'CenterLayout',
@@ -28,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/registration',
-        name: 'Реєстрація',
+        name: 'Registration',
         component: () => import('../pages/Registration.vue'),
         meta: {
             layout: 'CenterLayout',
@@ -36,7 +36,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/settings',
-        name: 'Налаштування',
+        name: 'Settings',
         component: () => import('../pages/Settings.vue'),
         meta: {
             middleware: [auth],
@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Склади',
+                name: 'Warehouses',
                 component: () => import('../pages/Warehouses/Warehouses.vue'),
                 meta: {
                     middleware: [auth],
@@ -77,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Товарні запаси',
+                name: 'Inventories',
                 component: () => import('../pages/Inventories/Inventories.vue'),
                 meta: {
                     middleware: [auth],
@@ -85,7 +85,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':inventory',
-                name: 'Інвентар',
+                name: 'Inventory',
                 component: () => import('../pages/Inventories/Inventory.vue'),
                 meta: {
                     middleware: [auth],
@@ -98,7 +98,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Точки',
+                name: 'Outlets',
                 component: () => import('../pages/Outlets/Outlets.vue'),
                 meta: {
                     middleware: [auth],
@@ -106,7 +106,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':outlet',
-                name: 'Точка',
+                name: 'Outlet',
                 component: () => import('../pages/Outlets/Outlet.vue'),
                 meta: {
                     middleware: [auth],
@@ -120,7 +120,7 @@ const routes: Array<RouteRecordRaw> = [
         children: [
             {
                 path: '',
-                name: 'Співробітники',
+                name: 'Employees',
                 component: () => import('../pages/Employees/Employees.vue'),
                 meta: {
                     middleware: [auth],
@@ -128,7 +128,7 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: ':Employee',
-                name: 'Співробітник',
+                name: 'Employee',
                 component: () => import('../pages/Employees/Employee.vue'),
                 meta: {
                     middleware: [auth],
@@ -140,15 +140,32 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/analytics',
         component: () => import('../pages/Analytics.vue'),
-        name: 'Аналітика',
+        name: 'Analytics',
         meta: {
             middleware: [auth],
         },
     },
     {
-        path: '/Dashboard',
+        path: '/dashboard',
         component: () => import('../pages/Dashboard.vue'),
-        name: 'Дашбоард',
+        name: 'Dashboard',
+        meta: {
+            middleware: [auth],
+        },
+    },
+    {
+        path: '/products',
+        component: () => import('../pages/Products.vue'),
+        name: 'Products',
+        meta: {
+            middleware: [auth],
+        },
+    }
+    ,
+    {
+        path: '/productCategories',
+        component: () => import('../pages/ProductCategories.vue'),
+        name: 'Product categories',
         meta: {
             middleware: [auth],
         },
