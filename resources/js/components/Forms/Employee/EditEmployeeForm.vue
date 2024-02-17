@@ -1,49 +1,41 @@
 <script lang="ts" setup>
 import {useEmployeesStore} from "@/js/stores/employees";
-import {EmployeeForEdit} from "@/js/types/employee.types";
+import {EditEmployeeForm, Employee} from "@/js/types/employee.types";
 import {useRolesStore} from "@/js/stores/roles";
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 
-const emit = defineEmits(['submitted', 'cancel'])
+const props = defineProps<{
+    employee: Employee
+}>()
 
-const rolesStore = useRolesStore()
-const employeesStore = useEmployeesStore()
-
-const loading = ref(false)
-const form = ref()
-
-const employee = reactive<EmployeeForEdit>({
-    id: 0,
-    full_name: '',
-    email: '',
-    // role_id: 0,
-})
-
-// const rolesForEmployee = computed(() => {
-//     if (!rolesStore.roles) return []
-//
-//     return rolesStore.roles.filter((role) => {
-//         return role.name != 'Admin' && role.name != 'Owner'
-//     })
-// })
-
+const emit = defineEmits(['submit', 'cancel'])
 
 onMounted(() => {
-    Object.assign(employee, employeesStore.selectedEmployee)
     rolesStore.fetchGetRoles()
 })
 
-const submit = async () => {
-    const validated = form.value.validate()
-    if (!validated) return
+const rolesStore = useRolesStore()
+const employeeStore = useEmployeesStore()
 
+const loading = ref(false)
+
+
+const employee = reactive<EditEmployeeForm>({
+    id: props.employee.id,
+    full_name: props.employee.full_name,
+    email: props.employee.email,
+    role_id: props.employee.role_id,
+})
+
+const rolesForEmployee = computed(
+    () => rolesStore.roles.filter((role) => role.name != 'Admin' && role.name != 'Owner')
+)
+
+const submit = async () => {
     loading.value = true
 
     try {
-        await employeesStore.fetchEditEmployee(employee.id, {
-            id: employee.id,
-            full_name: employee.full_name,
-            email: employee.email,
-        })
+        await employeeStore.fetchEditEmployee(employee)
     } catch (err) {
         console.log('EditEmployeeForm Error', err)
         return
@@ -51,66 +43,40 @@ const submit = async () => {
         loading.value = false
     }
 
-    emit('submitted', employee)
+    emit('submit')
 
-    await employeesStore.fetchGetEmployees()
+    await employeeStore.fetchGetEmployees()
 }
-
 const cancel = () => {
     emit('cancel')
 }
 </script>
 
 <template>
-    <q-card class="q-dialog-plugin">
-        <transition
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-        >
-            <q-form ref="form" @submit.prevent="submit">
-                <q-card-section>
-                    <h2 class="text-h5 text-center">Змінити інформацію про працівника</h2>
-                </q-card-section>
+    <FormWrapper :loading="loading" action-label="Edit" title="Edit employee" @cancel="cancel" @submit="submit">
+        <q-input
+            v-model="employee.full_name"
+            hide-bottom-space
+            label="Employee name"
+            placeholder="Enter employee name"
+        />
 
-                <q-card-section>
-                    <q-form ref="add_employee_form" autocomplete="off" @submit.prevent="">
-                        <q-input
-                            v-model="employee.full_name"
-
-                            hide-bottom-space
-                            label="Ім'я працівника"
-                            placeholder="Введіть ім'я співробітника"
-                        />
-
-                        <q-input
-                            v-model="employee.email"
-
-                            label="Електронна адреса співробітника"
-                            placeholder="Edit employee email"
-                        />
-                        <!--                        <q-select-->
-                        <!--                            v-model="employee.role_id"-->
-                        <!--                            :options="rolesForEmployee"-->
-                        <!--                            emit-value-->
-                        <!--                            hide-bottom-space-->
-                        <!--                            label="role"-->
-                        <!--                            map-options-->
-                        <!--                            option-label="name"-->
-                        <!--                            option-value="id"-->
-                        <!--                            options-dense-->
-                        <!--                            required-->
-                        <!--                        />-->
-                    </q-form>
-                </q-card-section>
-
-                <q-card-actions align="right">
-                    <q-btn color="grey" label="Відміна" @click="cancel"/>
-                    <q-btn color="primary" label="Змінити" type="submit"/>
-                </q-card-actions>
-            </q-form>
-        </transition>
-        <q-inner-loading :showing="loading"/>
-    </q-card>
-
+        <q-input
+            v-model="employee.email"
+            label="E-mail of the employee"
+            placeholder="Edit employee email"
+        />
+        <q-select
+            v-model="employee.role_id"
+            :options="rolesForEmployee"
+            emit-value
+            hide-bottom-space
+            label="role"
+            map-options
+            option-label="name"
+            option-value="id"
+            options-dense
+            required
+        />
+    </FormWrapper>
 </template>

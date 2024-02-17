@@ -1,27 +1,29 @@
 <script lang="ts" setup>
 import {useInventoriesStore} from "@/js/stores/inventories";
 import Table from "@/js/components/Table/Table.vue";
+import {Warehouse} from "@/js/types/warehouse.types";
+import AddInventoryForm from "@/js/components/Forms/Inventory/AddInventoryForm.vue";
+import EditInventoryForm from "@/js/components/Forms/Inventory/EditInventoryForm.vue";
+import DeleteInventoryForm from "@/js/components/Forms/Inventory/DeleteInventoryForm.vue";
 
 const inventoriesStore = useInventoriesStore()
 
 onMounted(async () => {
     await inventoriesStore.fetchGetInventories()
-
-    console.log(inventoriesStore.inventories)
 })
 
 const columnNames = [
     'id',
-    'Назва продукту',
-    'Кількість',
-    'Ціна за одиницю',
-    'Загальна вартість',
-    'Склад',
-    'Знаходится на складі з',
-    'Термін придатності(Якщо є)',
+    'Product',
+    'Quantity',
+    'Unit price',
+    'The total cost',
+    'Warehouse',
+    'In stock since',
+    'Expiry Date',
 ]
 
-const tableData = computed(() => {
+const columns = computed(() => {
     return inventoriesStore.inventories.map((inventory) => {
         return {
             id: inventory.id,
@@ -41,12 +43,19 @@ const tableData = computed(() => {
 <template>
     <Table
         :column-names="columnNames"
-        :data="tableData"
-    />
+        :columns="columns"
+        :data="inventoriesStore.inventories"
+    >
+        <template v-slot:addForm="{submit, cancel}" #addForm>
+            <AddInventoryForm @cancel="cancel" @submit="submit"/>
+        </template>
 
-    <!--    {{ inventoriesStore.inventories }}-->
+        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
+            <EditInventoryForm :inventory="selected" @cancel="cancel" @submit="submit"/>
+        </template>
+
+        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
+            <DeleteInventoryForm :inventory="selected" @cancel="cancel" @submit="submit"/>
+        </template>
+    </Table>
 </template>
-
-<style scoped>
-
-</style>

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {useWarehousesStore} from "@/js/stores/warehouses";
 import {Warehouse} from "@/js/types/warehouse.types";
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 
 const emit = defineEmits(['submitted', 'cancel'])
 
@@ -39,48 +40,41 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card class="q-dialog-plugin">
-        <transition
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-        >
-            <q-form ref="form" @submit.prevent="submit">
-                <q-card-section>
-                    <h2 class="text-h5 text-center">Додати склад</h2>
-                </q-card-section>
+    <FormWrapper :loading="loading">
+        <q-form ref="form" @submit.prevent="submit">
+            <q-card-section>
+                <h2 class="text-h5 text-center">Додати склад</h2>
+            </q-card-section>
 
-                <q-card-section>
-                    <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
-                        <q-input
-                            v-model="warehouse.name"
-                            :rules="[v => v.length >= 2 || `Назва складу повинна мати хоча б 2 літери`]"
-                            hide-bottom-space
-                            label="Назва складу"
-                            placeholder="Введіть назву складу"
-                            required
-                        />
+            <q-card-section>
+                <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
+                    <q-input
+                        v-model="warehouse.name"
+                        :rules="[v => v.length >= 2 || `Назва складу повинна мати хоча б 2 літери`]"
+                        hide-bottom-space
+                        label="Назва складу"
+                        placeholder="Введіть назву складу"
+                        required
+                    />
 
-                        <q-input
-                            v-model="warehouse.location"
-                            label="Розташування складу"
-                            placeholder="Введіть місцезнаходження складу"
-                        />
+                    <q-input
+                        v-model="warehouse.location"
+                        label="Розташування складу"
+                        placeholder="Введіть місцезнаходження складу"
+                    />
 
-                        <q-input
-                            v-model="warehouse.contact_info"
-                            label="Контактна інформація"
-                            placeholder="Введіть контактну інформацію"
-                        />
-                    </q-form>
-                </q-card-section>
+                    <q-input
+                        v-model="warehouse.contact_info"
+                        label="Контактна інформація"
+                        placeholder="Введіть контактну інформацію"
+                    />
+                </q-form>
+            </q-card-section>
 
-                <q-card-actions align="right">
-                    <q-btn color="grey" label="Відміна" @click="cancel"/>
-                    <q-btn color="primary" label="Додати" type="submit"/>
-                </q-card-actions>
-            </q-form>
-        </transition>
-        <q-inner-loading :showing="loading"/>
-    </q-card>
+            <q-card-actions align="right">
+                <q-btn color="grey" label="Відміна" @click="cancel"/>
+                <q-btn color="primary" label="Додати" type="submit"/>
+            </q-card-actions>
+        </q-form>
+    </FormWrapper>
 </template>

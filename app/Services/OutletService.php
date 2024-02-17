@@ -31,6 +31,7 @@ class OutletService
                 'address' => $outlet->address,
                 'contact_info' => $outlet->contact_info,
                 'warehouse' => $outlet->warehouse,
+                'warehouse_id' => $outlet->warehouse_id,
                 'created_at' => $outlet->created_at
             ];
         });
@@ -39,7 +40,7 @@ class OutletService
     public function store(CreateOutletRequest $request)
     {
         return DB::transaction(function () use ($request) {
-            $warehouse_name = $request->has('warehouse_name')
+            $warehouse_name = $request->warehouse_name
                 ? $request->warehouse_name
                 : $request->name . '\'s warehouse';
 

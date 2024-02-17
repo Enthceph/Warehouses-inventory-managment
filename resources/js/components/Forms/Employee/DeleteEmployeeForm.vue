@@ -1,17 +1,22 @@
 <script lang="ts" setup>
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 import {useEmployeesStore} from "@/js/stores/employees";
+import {Employee} from "@/js/types/employee.types";
 
-const emit = defineEmits(['submitted', 'cancel'])
-const employeeStore = useEmployeesStore()
+const emit = defineEmits(['submit', 'cancel'])
+
 const loading = ref(false)
+const employeesStore = useEmployeesStore()
+
+const props = defineProps<{
+    employee: Employee
+}>()
 
 const submit = async () => {
     loading.value = true
 
     try {
-        if (employeeStore.selectedEmployee) {
-            await employeeStore.fetchDeleteEmployee(employeeStore.selectedEmployee.id)
-        }
+        await employeesStore.fetchDeleteEmployee(props.employee.id)
     } catch (err) {
         console.log('DeleteEmployeeForm Error', err)
         return
@@ -19,9 +24,9 @@ const submit = async () => {
         loading.value = false
     }
 
-    emit('submitted')
+    emit('submit')
 
-    await employeeStore.fetchGetEmployees()
+    await employeesStore.fetchGetEmployees()
 }
 
 const cancel = () => {
@@ -30,32 +35,7 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card>
-        <transition
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-        >
-            <div>
-                <q-card-section>
-                    Ви дійсно хочете видалити працівника {{ employeeStore.selectedEmployee.full_name }}?
-                </q-card-section>
-
-                <q-card-actions align="right">
-                    <q-btn
-                        color="grey"
-                        label="Відміна"
-                        @click="cancel"
-                    />
-                    <q-btn
-                        color="red"
-                        label="Видалити"
-                        type="submit"
-                        @click="submit"
-                    />
-                </q-card-actions>
-            </div>
-        </transition>
-        <q-inner-loading :showing="loading"/>
-    </q-card>
+    <FormWrapper :loading="loading" action-label="Delete" title="Delete employee" @cancel="cancel" @submit="submit">
+        Do you really wish to delete <b>{{ props.employee.full_name }}</b>?
+    </FormWrapper>
 </template>

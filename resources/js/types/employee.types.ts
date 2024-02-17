@@ -3,7 +3,7 @@ export interface Employee {
     full_name: string
     email: string
     role_id: number
-    role?: {
+    role: {
         id: number,
         name: string
     }
@@ -19,8 +19,8 @@ export interface AddEmployeeForm {
     role_id: Employee['role_id']
 }
 
-export interface EmployeeForEdit {
-    id: number
+export interface EditEmployeeForm {
+    id: Employee['id']
     full_name?: Employee['full_name']
     email?: Employee['email']
     role_id?: Employee['role_id']

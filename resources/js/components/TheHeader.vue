@@ -17,9 +17,8 @@ const warehouseStore = useWarehousesStore()
                 }}</span>
         </h2>
 
-
         <router-link class="ml-auto" to="/settings">
-            <q-icon name="settings"/>
+            <q-icon name="miscellaneous_services"/>
         </router-link>
     </header>
 </template>

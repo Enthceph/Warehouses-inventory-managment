@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,12 +14,12 @@ class Product extends Model
         'description',
         'additional_info',
         'company_id',
-        'category_id'
+        'category_id',
     ];
 
     public function company()
     {
-        return $this->belongsTo(Controller::class, 'id', 'company_id');
+        return $this->belongsTo(Company::class, 'id',);
     }
 
     public function category()

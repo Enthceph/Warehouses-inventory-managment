@@ -20,12 +20,11 @@ class CompanyPolicy
         return $user->isAdmin();
     }
 
-    public function update(User $user, Company $company): bool
+    public function update(User $user, Company $company)
     {
         if ($user->isOwner() && $user->company_id === $company->id) {
             return true;
         }
-        
         return false;
     }
 
@@ -33,7 +32,6 @@ class CompanyPolicy
     {
         if ($user->isOwner() && $user->company_id === $company->id) {
             return true;
-
         }
         return false;
     }

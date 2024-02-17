@@ -7,10 +7,15 @@ const emit = defineEmits(['submitted', 'cancel'])
 
 const loading = ref(false)
 const productCategoriesStore = useProductCategoriesStore()
+
+onMounted(() => {
+    Object.assign(productCategory, productCategoriesStore.selectedCategory)
+})
+
 // FORM
 
 const productCategory = reactive<ProductCategoryFormData>({
-    name: productCategoriesStore?.selectedCategory?.name
+    name: ""
 })
 
 const submit = async () => {

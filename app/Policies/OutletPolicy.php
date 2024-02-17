@@ -10,7 +10,7 @@ class OutletPolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user)
+    public function view()
     {
         return true;
     }
@@ -23,7 +23,7 @@ class OutletPolicy
         return false;
     }
 
-    public function update(User $user, Outlet $outlet): bool
+    public function update(User $user, Outlet $outlet)
     {
         if ($user->isOwner() && $user->company_id === $outlet->company_id) {
             return true;

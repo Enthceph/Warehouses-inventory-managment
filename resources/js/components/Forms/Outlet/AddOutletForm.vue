@@ -1,24 +1,21 @@
 <script lang="ts" setup>
 import {useOutletsStore} from "@/js/stores/outlets";
-import {OutletFormData} from "@/js/types/outlet.types";
+import {OutletAddForm} from "@/js/types/outlet.types";
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 
-const emit = defineEmits(['submitted', 'cancel'])
+const emit = defineEmits(['submit', 'cancel'])
 
-const form = ref()
-const outlet = reactive<OutletFormData>({
+const outlet = reactive<OutletAddForm>({
     name: '',
     address: '',
     contact_info: '',
-    outlet_name: ''
+    warehouse_name: null
 })
 
 const loading = ref(false)
 const outletStore = useOutletsStore()
 
 const submit = async () => {
-    const validated = form.value.validate()
-    if (!validated) return
-
     loading.value = true
 
     try {
@@ -30,7 +27,7 @@ const submit = async () => {
         loading.value = false
     }
 
-    emit('submitted', outlet)
+    emit('submit', outlet)
 
     await outletStore.fetchGetOutlets()
 }
@@ -40,47 +37,32 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card class="q-dialog-plugin">
-        <q-form ref="form" @submit.prevent="submit">
-            <q-card-section>
-                <h2 class="text-h5 text-center">Додати точку</h2>
-            </q-card-section>
+    <FormWrapper :loading="loading" action-label="Add" title="Add outlet" @cancel="cancel" @submit="submit">
+        <q-input
+            v-model="outlet.name"
+            :rules="[v => v.length >= 2 || `The outlet name must have at least 2 letters`]"
+            hide-bottom-space
+            label="Outlet name"
+            placeholder="Enter the name of the outlet"
+            required
+        />
 
-            <q-card-section>
-                <q-form ref="add_outlet_form" autocomplete="off" @submit.prevent="">
-                    <q-input
-                        v-model="outlet.name"
-                        :rules="[v => v.length >= 2 || `Назва точки повинна мати хоча б 2 літери`]"
-                        hide-bottom-space
-                        label="Назва точки"
-                        placeholder="Введіть назву точки"
-                        required
-                    />
+        <q-input
+            v-model="outlet.address"
+            label="Outlet address"
+            placeholder="Enter outlet address"
+        />
 
-                    <q-input
-                        v-model="outlet.address"
-                        label="Адреса точки"
-                        placeholder="Введіть адресу точки"
-                    />
+        <q-input
+            v-model="outlet.contact_info"
+            label="Contact Information"
+            placeholder="Enter contact information"
+        />
 
-                    <q-input
-                        v-model="outlet.contact_info"
-                        label="Контактна інформація"
-                        placeholder="Введіть контактну інформацію"
-                    />
-
-                    <q-input
-                        v-model="outlet.outlet_name"
-                        :placeholder="outlet.name + 'outlet'"
-                        label="Назва складу (не обов'язково)"
-                    />
-                </q-form>
-            </q-card-section>
-
-            <q-card-actions align="right">
-                <q-btn color="primary" label="Додати" type="submit"/>
-                <q-btn color="grey" label="Відміна" @click="cancel"/>
-            </q-card-actions>
-        </q-form>
-    </q-card>
+        <q-input
+            v-model="outlet.warehouse_name"
+            label="Warehouse name (optional)"
+            placeholder="Enter warehouse name"
+        />
+    </FormWrapper>
 </template>

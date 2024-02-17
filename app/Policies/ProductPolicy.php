@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class EmployeePolicy
+class ProductPolicy
 {
     use HandlesAuthorization;
 
@@ -22,25 +23,25 @@ class EmployeePolicy
         return false;
     }
 
-    public function update(User $user, User $employee)
+    public function update(User $user, Product $product)
     {
-        if ($user->isOwner() && $user->company_id === $employee->company_id) {
+        if ($user->isOwner() && $user->company_id === $product->company_id) {
             return true;
         }
         return false;
     }
 
-    public function show(User $user, User $employee)
+    public function show(User $user, Product $product)
     {
-        if ($user->company_id === $employee->company_id) {
+        if ($user->company_id === $product->company_id) {
             return true;
         }
         return false;
     }
 
-    public function delete(User $user, User $employee)
+    public function delete(User $user, Product $product)
     {
-        if ($user->isOwner() && $user->company_id === $employee->company_id) {
+        if ($user->isOwner() && $user->company_id === $product->company_id) {
             return true;
         }
         return false;
