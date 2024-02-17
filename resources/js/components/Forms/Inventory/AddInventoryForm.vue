@@ -79,7 +79,7 @@ const cancel = () => {
             type="number"
         />
         <q-select
-            v-model="inventory.category_id"
+            v-model="inventory.product_id"
             :disable="loading "
             :options="productStore.products"
             :rules="[v =>  v || 'Product should be selected']"

@@ -2,29 +2,26 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Inventory;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateInventoryRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        return $this->user()->can('create', Inventory::class);
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'quantity' => 'required|numeric|min:0',
+            'unit_price' => 'required|numeric|min:0',
+            'total_value' => 'required|numeric|min:0',
+            'product_id' => 'required|exists:products,id',
+            'warehouse_id' => 'required|exists:warehouses,id',
+            'expires_at' => 'nullable|date|after_or_equal:today',
         ];
     }
 }
+

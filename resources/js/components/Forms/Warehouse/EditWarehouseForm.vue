@@ -1,30 +1,29 @@
 <script lang="ts" setup>
 import {useWarehousesStore} from "@/js/stores/warehouses";
-import {Warehouse} from "@/js/types/warehouse.types";
+import {EditWarehouseForm, Warehouse} from "@/js/types/warehouse.types";
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 
-const emit = defineEmits(['submitted', 'cancel'])
+const props = defineProps<{
+    warehouse: Warehouse
+}>()
+
+const emit = defineEmits(['submit', 'cancel'])
 
 const form = ref()
-const warehouse = reactive<Warehouse>({
-    id: 0,
-    name: '',
-    location: '',
-    contact_info: '',
+const warehouse = reactive<EditWarehouseForm>({
+    id: props.warehouse.id,
+    name: props.warehouse.name,
+    location: props.warehouse.location,
+    contact_info: props.warehouse.contact_info,
 })
 const loading = ref(false)
 const warehouseStore = useWarehousesStore()
 
-onMounted(() => {
-    Object.assign(warehouse, warehouseStore.selectedWarehouse)
-})
-
 const submit = async () => {
-    const validated = form.value.validate()
-    if (!validated) return
-
     loading.value = true
+
     try {
-        await warehouseStore.fetchEditWarehouse(warehouse.id, warehouse)
+        await warehouseStore.fetchEditWarehouse(warehouse)
     } catch (err) {
         console.log('EditWarehouseForm Error', err)
         return
@@ -32,7 +31,7 @@ const submit = async () => {
         loading.value = false
     }
 
-    emit('submitted', warehouse)
+    emit('submit', warehouse)
 
     await warehouseStore.fetchGetWarehouses()
 }
@@ -43,48 +42,26 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card class="q-dialog-plugin">
-        <transition
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-        >
-            <q-form ref="form" @submit.prevent="submit">
-                <q-card-section>
-                    <h2 class="text-h5 text-center">Змінити склад</h2>
-                </q-card-section>
+    <FormWrapper :loading="loading" action-label="Edit" title="Edit warehouse" @cancel="cancel" @submit="submit">
+        <q-input
+            v-model="warehouse.name"
+            :rules="[v => v.length >= 2 || `The name of the warehouse must have at least 2 letters`]"
+            hide-bottom-space
+            label="Warehouse name"
+            placeholder="Enter warehouse namex"
+            required
+        />
 
-                <q-card-section>
-                    <q-form ref="add_warehouse_form" autocomplete="off" @submit.prevent="">
-                        <q-input
-                            v-model="warehouse.name"
-                            :rules="[v => v.length >= 2 || `Назва складу повинна мати хоча б 2 літери`]"
-                            hide-bottom-space
-                            label="Назва складу"
-                            placeholder="Введіть назву складу"
-                            required
-                        />
+        <q-input
+            v-model="warehouse.location"
+            label="Warehouse location"
+            placeholder="Enter warehouse location"
+        />
 
-                        <q-input
-                            v-model="warehouse.location"
-                            label="Розташування складу"
-                            placeholder="Введіть місцезнаходження складу"
-                        />
-
-                        <q-input
-                            v-model="warehouse.contact_info"
-                            label="Контактна інформація"
-                            placeholder="Введіть контактну інформацію"
-                        />
-                    </q-form>
-                </q-card-section>
-
-                <q-card-actions align="right">
-                    <q-btn color="grey" label="Відміна" @click="cancel"/>
-                    <q-btn color="primary" label="Змінити" type="submit"/>
-                </q-card-actions>
-            </q-form>
-        </transition>
-        <q-inner-loading :showing="loading"/>
-    </q-card>
+        <q-input
+            v-model="warehouse.contact_info"
+            label="Contact information"
+            placeholder="Enter contact information"
+        />
+    </FormWrapper>
 </template>

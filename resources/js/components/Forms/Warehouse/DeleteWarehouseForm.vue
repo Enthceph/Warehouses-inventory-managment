@@ -34,7 +34,7 @@ const cancel = () => {
 </script>
 
 <template>
-    <FormWrapper :loading="loading" action-label="Delete" title="" @cancel="cancel" @submit="submit">
+    <FormWrapper :loading="loading" action-label="Delete" title="Delete warehouse" @cancel="cancel" @submit="submit">
         You really want to delete the warehouse <b>{{ props.warehouse.name }}</b> ?
     </FormWrapper>
 </template>

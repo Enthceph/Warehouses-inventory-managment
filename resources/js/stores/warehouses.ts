@@ -1,14 +1,6 @@
 import {defineStore} from 'pinia';
-import {Warehouse, WarehouseWithoutId} from "@/js/types/warehouse.types";
-import {
-    addWarehouse,
-    deleteWarehouse,
-    getWarehouse,
-    getWarehouseInventory,
-    getWarehouses,
-    updateWarehouse
-} from "@/api/warehouse";
-import {Inventory} from "@/js/types/inventory.types";
+import {AddWarehouseForm, EditWarehouseForm, Warehouse} from "@/js/types/warehouse.types";
+import {addWarehouse, deleteWarehouse, getWarehouse, getWarehouses, updateWarehouse} from "@/api/warehouse";
 
 
 export const useWarehousesStore = defineStore({
@@ -27,18 +19,18 @@ export const useWarehousesStore = defineStore({
             let res = await getWarehouse(id)
             return await res.json()
         },
-        async fetchAddWarehouse(warehouse: WarehouseWithoutId) {
+        async fetchAddWarehouse(warehouse: AddWarehouseForm) {
             await addWarehouse(warehouse)
+            await this.fetchGetWarehouses()
         },
-        async fetchEditWarehouse(id: number, warehouse: Warehouse) {
-            await updateWarehouse(id, warehouse)
+        async fetchEditWarehouse(warehouse: EditWarehouseForm) {
+            await updateWarehouse(warehouse)
+            await this.fetchGetWarehouses()
         },
-        async fetchGetWarehouseInventory(id: number): Promise<Inventory[]> {
-            let res = await getWarehouseInventory({id: id})
-            return await res.json()
-        },
+
         async fetchDeleteWarehouse(id: number) {
             await deleteWarehouse(id)
+            await this.fetchGetWarehouses()
         },
     },
 });

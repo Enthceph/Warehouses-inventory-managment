@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateInventoryRequest;
+use App\Http\Requests\UpdateInventoryRequest;
 use App\Models\Inventory;
 use App\Models\Warehouse;
 use App\Services\InventoryService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
@@ -22,7 +22,7 @@ class InventoryController extends Controller
     {
         $companyId = Auth::user()->company_id;
 
-        $inventories = Inventory::with(['product.category', 'warehouse'])
+        $inventories = Inventory::with(['product', 'warehouse'])
             ->whereHas('warehouse', function ($query) use ($companyId) {
                 $query->where('company_id', $companyId);
             })->get();
@@ -32,15 +32,13 @@ class InventoryController extends Controller
 
     public function store(CreateInventoryRequest $request)
     {
+        $inventory = Inventory::create($request->validated());
 
-//        $orgId = Auth::user()->organisation->id;
-//
-//        Outlet::create([
-//            'name' => $request->name,
-//            'address' => $request->address,
-//            'contact_info' => $request->contact_info,
-//            'organisation_id' => $orgId,
-//        ]);
+        if (!$inventory) {
+            return response(['message' => 'Couldn\'t create inventory'], 500);
+        }
+
+        return response(['message' => 'Inventory created']);
     }
 
     public function show($id)
@@ -51,26 +49,34 @@ class InventoryController extends Controller
             return response(['message' => 'Not Found'], 404);
         }
 
+        $this->authorize('view', Inventory::class);
+
         return $warehouse->inventories;
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateInventoryRequest $request, $id)
     {
         $inventory = Inventory::find($id);
 
         if (!$inventory) return response(['message' => 'Cant find inventory'], 404);
 
-        $inventory->update([
-            'name' => $request->name,
-            'address' => $request->name,
-            'contact_info' => $request->name,
-        ]);
+        $this->authorize('update', $inventory);
 
-        return response(['message' => 'Inventory changed successfully']);
+        $inventory->update($request->validated());
+
+        return response(['message' => 'Inventory updated']);
     }
 
-    public function destroy(Request $request, int $id)
+    public function destroy(int $id)
     {
-        //
+        $inventory = Inventory::find($id);
+
+        if (!$inventory) return response(['message' => 'Cant find inventory'], 404);
+
+        $this->authorize('delete', $inventory);
+
+        $inventory->delete();
+
+        return response(['message' => 'Inventory deletd']);
     }
 }
