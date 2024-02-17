@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import {useWarehousesStore} from "@/js/stores/warehouses";
+import {Warehouse} from "@/js/types/warehouse.types";
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 
-const emit = defineEmits(['submitted', 'cancel'])
+const props = defineProps<{
+    warehouse: Warehouse
+}>()
+
+const emit = defineEmits(['submit', 'cancel'])
 const warehouseStore = useWarehousesStore()
 const loading = ref(false)
 
@@ -9,9 +15,7 @@ const submit = async () => {
     loading.value = true
 
     try {
-        if (warehouseStore.selectedWarehouse) {
-            await warehouseStore.fetchDeleteWarehouse(warehouseStore.selectedWarehouse.id)
-        }
+        await warehouseStore.fetchDeleteWarehouse(props.warehouse.id)
     } catch (err) {
         console.log('DeleteWarehouseForm Error', err)
         return
@@ -19,7 +23,7 @@ const submit = async () => {
         loading.value = false
     }
 
-    emit('submitted')
+    emit('submit')
 
     await warehouseStore.fetchGetWarehouses()
 }
@@ -30,32 +34,7 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card>
-        <transition
-            appear
-            enter-active-class="animated fadeIn"
-            leave-active-class="animated fadeOut"
-        >
-            <div>
-                <q-card-section>
-                    Ви дійсно бажаєте видалити склад {{ warehouseStore.selectedWarehouse.name }}?
-                </q-card-section>
-
-                <q-card-actions align="right">
-                    <q-btn
-                        color="grey"
-                        label="Відміна"
-                        @click="cancel"
-                    />
-                    <q-btn
-                        color="red"
-                        label="Видалити"
-                        type="submit"
-                        @click="submit"
-                    />
-                </q-card-actions>
-            </div>
-        </transition>
-        <q-inner-loading :showing="loading"/>
-    </q-card>
+    <FormWrapper :loading="loading" action-label="Delete" title="" @cancel="cancel" @submit="submit">
+        You really want to delete the warehouse <b>{{ props.warehouse.name }}</b> ?
+    </FormWrapper>
 </template>
