@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia';
 import {addEmployee, deleteEmployee, getEmployee, getEmployees, updateEmployee} from "@/api/employee";
-import {AddEmployeeForm, Employee, EmployeeForEdit} from "@/js/types/employee.types";
+import {AddEmployeeForm, EditEmployeeForm, Employee} from "@/js/types/employee.types";
 
 export const useEmployeesStore = defineStore({
     id: 'employeesStore',
@@ -23,8 +23,8 @@ export const useEmployeesStore = defineStore({
             return await addEmployee(employee).json()
         },
 
-        async fetchEditEmployee(id: number, employee: EmployeeForEdit) {
-            return await updateEmployee(id, employee).json()
+        async fetchEditEmployee(employee: EditEmployeeForm) {
+            return await updateEmployee(employee).json()
         },
 
         async fetchDeleteEmployee(id: number) {

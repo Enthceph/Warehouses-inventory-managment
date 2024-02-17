@@ -66,7 +66,7 @@ class EmployeeController extends Controller
             return response(['message' => 'Unable to update employee'], 500);
         }
 
-        return $updatedEmployee;
+        return response(['message' => 'Employee updated']);
     }
 
     public function destroy(Request $request, int $id)

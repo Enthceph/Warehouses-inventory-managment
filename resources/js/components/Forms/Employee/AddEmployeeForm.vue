@@ -2,14 +2,19 @@
 import {useEmployeesStore} from "@/js/stores/employees";
 import {AddEmployeeForm} from "@/js/types/employee.types";
 import {useRolesStore} from "@/js/stores/roles";
+import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 
 const emit = defineEmits(['submitted', 'cancel'])
+
+onMounted(() => {
+    rolesStore.fetchGetRoles()
+})
 
 const rolesStore = useRolesStore()
 const employeeStore = useEmployeesStore()
 
-const form = ref()
 const loading = ref(false)
+
 const employee = reactive<AddEmployeeForm>({
     full_name: '',
     email: '',
@@ -26,14 +31,7 @@ const rolesForEmployee = computed(() => {
     })
 })
 
-onMounted(() => {
-    rolesStore.fetchGetRoles()
-})
-
 const submit = async () => {
-    const validated = form.value.validate()
-    if (!validated) return
-
     loading.value = true
 
     try {
@@ -55,67 +53,52 @@ const cancel = () => {
 </script>
 
 <template>
-    <q-card class="q-dialog-plugin">
-        <q-form ref="form" @submit.prevent="submit">
-            <q-card-section>
-                <h2 class="text-h5 text-center">Додати працівника</h2>
-            </q-card-section>
+    <FormWrapper :loading="loading" action-label="Add" title="Add employee" @cancel="cancel" @submit="submit">
+        <q-input
+            v-model="employee.full_name"
+            :rules="[v => v.length >= 2 || `Employee name must have at least 2 letters`]"
+            hide-bottom-space
+            label="Employee Name"
+            placeholder="Enter employee name"
+            required
+        />
 
-            <q-card-section>
-                <q-form ref="add_employee_form" autocomplete="off" @submit.prevent="">
-                    <q-input
-                        v-model="employee.full_name"
-                        :rules="[v => v.length >= 2 || `Ім'я працівника повинно мати хоча б 2 літери`]"
-                        hide-bottom-space
-                        label="Iм'я працівника"
-                        placeholder="Введіть ім'я співробітника"
-                        required
-                    />
+        <q-input
+            v-model="employee.email"
+            :rules="[val => !!val || 'Enter the employee\'s email address']"
+            hide-bottom-space
+            label="E-mail address of the employee"
+            placeholder="Enter the employee's email address"
+            type="email"
+        />
 
-                    <q-input
-                        v-model="employee.email"
-                        :rules="[val => !!val || 'Поле обов\'язкове']"
-                        hide-bottom-space
-                        label="Електронна адреса співробітника"
-                        placeholder="Введіть електронну адресу співробітника"
-                        type="email"
-                    />
+        <q-input
+            v-model="employee.password"
+            :rules="[val => !!val || 'Field is required']"
+            autocomplete="off"
+            hide-bottom-space
+            label="Password"
+            type="password"
+        />
+        <q-input
+            v-model="employee.password_confirmation"
+            :rules="[v => v === employee.password || `Passwords are not equal`]"
+            hide-bottom-space
+            label="Repeat password"
+            type="password"
+        />
 
-                    <q-input
-                        v-model="employee.password"
-                        :rules="[val => !!val || 'Поле обов\'язкове']"
-                        autocomplete="off"
-                        hide-bottom-space
-                        label="Пароль"
-                        type="password"
-                    />
-                    <q-input
-                        v-model="employee.password_confirmation"
-                        :rules="[v => v === employee.password || `Пароли не равны`]"
-                        hide-bottom-space
-                        label="Повторіть пароль"
-                        type="password"
-                    />
-
-                    <!--                    <q-select-->
-                    <!--                        v-model="employee.role_id"-->
-                    <!--                        :options="rolesForEmployee"-->
-                    <!--                        emit-value-->
-                    <!--                        hide-bottom-space-->
-                    <!--                        label="role"-->
-                    <!--                        map-options-->
-                    <!--                        option-label="name"-->
-                    <!--                        option-value="id"-->
-                    <!--                        options-dense-->
-                    <!--                        required-->
-                    <!--                    />-->
-                </q-form>
-            </q-card-section>
-
-            <q-card-actions align="right">
-                <q-btn color="grey" label="Відміна" @click="cancel"/>
-                <q-btn color="primary" label="Додати" type="submit"/>
-            </q-card-actions>
-        </q-form>
-    </q-card>
+        <q-select
+            v-model="employee.role_id"
+            :options="rolesForEmployee"
+            emit-value
+            hide-bottom-space
+            label="role"
+            map-options
+            option-label="name"
+            option-value="id"
+            options-dense
+            required
+        />
+    </FormWrapper>
 </template>

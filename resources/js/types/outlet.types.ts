@@ -1,3 +1,5 @@
+import {Warehouse} from "@/js/types/warehouse.types";
+
 export interface Outlet {
     id: number;
     company_id: number;
@@ -7,13 +9,19 @@ export interface Outlet {
     contact_info: string | null;
     created_at: string | null;
     updated_at: string | null;
+    warehouse: Warehouse
 }
 
 export interface OutletFormData {
-    name: string
-    address?: string
-    contact_info?: string
-    outlet_name?: string
+    name: Outlet['name']
+    address: Outlet['address']
+    contact_info: Outlet['contact_info']
+    warehouse_id: Outlet['warehouse_id']
 }
 
-export type OutletForEdit = Omit<Outlet, 'created_at' | 'updated_at' | 'company_id'>
+export interface OutletAddForm {
+    name: Outlet['name']
+    address: Outlet['address']
+    contact_info: Outlet['contact_info']
+    warehouse_name: string | null
+}

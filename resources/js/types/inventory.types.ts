@@ -1,46 +1,26 @@
+import {Product} from "@/js/types/product.types";
+import {Warehouse} from "@/js/types/warehouse.types";
+
 export interface Inventory {
     id: number;
     quantity: number;
-    unit_price: string;
-    total_value: string;
+    unit_price: number;
+    total_value: number;
     product_id: number;
     warehouse_id: number;
     created_at: string;
     updated_at: string;
     deleted_at: null | string;
-    expires_at: string;
+    expires_at: string | null;
     product: Product;
     warehouse: Warehouse;
 }
 
-type Category = {
-    id: number;
-    name: string;
-    company_id: number;
-    created_at: string;
-    updated_at: string;
-    deleted_at: null | string;
-};
-
-type Product = {
-    id: number;
-    name: string;
-    company_id: number;
-    created_at: string;
-    updated_at: string;
-    deleted_at: null | string;
-    category_id: number;
-    additional_info: null | string;
-    category: Category;
-};
-
-type Warehouse = {
-    id: number;
-    name: string;
-    location: string;
-    contact_info: null | string;
-    company_id: number;
-    created_at: string;
-    updated_at: string;
-    deleted_at: null | string;
-};
+export interface InventoryFormData {
+    quantity: Inventory['quantity']
+    unit_price: Inventory['unit_price']
+    total_value: Inventory['total_value']
+    product_id: Inventory['product_id']
+    warehouse_id: Inventory['warehouse_id'] | null
+    expires_at: Inventory['expires_at']
+}

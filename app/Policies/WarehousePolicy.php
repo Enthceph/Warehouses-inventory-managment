@@ -10,7 +10,7 @@ class WarehousePolicy
 {
     use HandlesAuthorization;
 
-    public function view(User $user)
+    public function view()
     {
         return true;
     }
@@ -23,7 +23,7 @@ class WarehousePolicy
         return false;
     }
 
-    public function update(User $user, Warehouse $warehouse): bool
+    public function update(User $user, Warehouse $warehouse)
     {
         if ($user->isOwner() && $user->company_id === $warehouse->company_id) {
             return true;
@@ -43,7 +43,6 @@ class WarehousePolicy
     {
         if ($user->isOwner() && $user->company_id === $warehouse->company_id) {
             return true;
-
         }
         return false;
     }

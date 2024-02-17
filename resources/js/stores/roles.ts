@@ -1,10 +1,6 @@
 import {defineStore} from 'pinia';
 import {getRoles} from "@/api/roles";
-
-interface Role {
-    id: number,
-    name: string
-}
+import {Role} from "@/js/types/role.types";
 
 export const useRolesStore = defineStore({
     id: 'rolesStore',

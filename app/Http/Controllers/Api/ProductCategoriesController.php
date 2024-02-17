@@ -60,7 +60,7 @@ class ProductCategoriesController extends Controller
             return response(['message' => 'Unable to update product category'], 500);
         }
 
-        return response(['message' => 'Outlet changed successfully']);
+        return response(['message' => 'Product category changed successfully']);
     }
 
     public function destroy(int $id)
