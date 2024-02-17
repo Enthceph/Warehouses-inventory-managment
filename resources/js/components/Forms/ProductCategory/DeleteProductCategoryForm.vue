@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 import {useProductCategoriesStore} from "@/js/stores/productCategories";
+import {ProductCategory} from "@/js/types/productCategory.types";
+
+const props = defineProps<{
+    category: ProductCategory
+}>()
 
 const emit = defineEmits(['submitted', 'cancel'])
 
@@ -12,9 +17,7 @@ const submit = async () => {
     loading.value = true
 
     try {
-        if (productCategoriesStore.selectedCategory) {
-            await productCategoriesStore.fetchDeleteProductCategory(productCategoriesStore.selectedCategory.id)
-        }
+        await productCategoriesStore.fetchDeleteProductCategory(props.category.id)
     } catch (err) {
         console.log('DeleteProductCategoryForm Error', err)
         return
@@ -31,6 +34,6 @@ const cancel = () => {
 
 <template>
     <FormWrapper :loading="loading" action-label="Delete" title="" @cancel="cancel" @submit="submit">
-        Do you really want ot delete product category <b>{{ productCategoriesStore.selectedCategory.name }}</b>?
+        Do you really want ot delete product category <b>{{ props.category.name }}</b>?
     </FormWrapper>
 </template>

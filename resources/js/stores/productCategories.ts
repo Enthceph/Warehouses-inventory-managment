@@ -6,7 +6,7 @@ import {
     getProductCategory,
     updateProductCategory
 } from "@/api/productCategories";
-import {ProductCategory, ProductCategoryFormData} from "@/js/types/productCategory.types";
+import {AddProductCategoryForm, EditProductCategoryForm, ProductCategory} from "@/js/types/productCategory.types";
 
 interface ProductCategoriesStore {
     categories: ProductCategory[]
@@ -36,12 +36,12 @@ export const useProductCategoriesStore = defineStore({
             let res = await getProductCategory(id)
             return await res.json()
         },
-        async fetchAddProductCategory(category: ProductCategoryFormData) {
+        async fetchAddProductCategory(category: AddProductCategoryForm) {
             await addProductCategory(category)
             await this.fetchGetProductCategories()
         },
-        async fetchUpdateProductCategory(id: number, category: ProductCategoryFormData) {
-            await updateProductCategory(id, category)
+        async fetchUpdateProductCategory(category: EditProductCategoryForm) {
+            await updateProductCategory(category)
             await this.fetchGetProductCategories()
         },
         async fetchDeleteProductCategory(id: number) {

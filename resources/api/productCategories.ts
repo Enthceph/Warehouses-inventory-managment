@@ -1,15 +1,16 @@
 import apiRequest from '../js/utils/request'
+import {AddProductCategoryForm, EditProductCategoryForm} from "@/js/types/productCategory.types";
 
 export const getProductCategories = () => apiRequest.get('productCategory')
 
 export const getProductCategory = (id: Number) => apiRequest.get(`productCategory/${id}`)
 
-export const addProductCategory = (data: Object) => apiRequest.post(`productCategory`, {
-    json: data,
+export const addProductCategory = (category: AddProductCategoryForm) => apiRequest.post(`productCategory`, {
+    json: category,
 })
 
-export const updateProductCategory = (id: Number, data: Object) => apiRequest.patch(`productCategory/${id}`, {
-    json: data,
+export const updateProductCategory = (category: EditProductCategoryForm) => apiRequest.patch(`productCategory/${category.id}`, {
+    json: category,
 })
 
 export const deleteProductCategory = (id: Number) => apiRequest.delete(`productCategory/${id}`)

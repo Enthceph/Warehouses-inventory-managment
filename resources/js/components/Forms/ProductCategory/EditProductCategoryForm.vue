@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
 import {useProductCategoriesStore} from "@/js/stores/productCategories";
-import {ProductCategoryFormData} from "@/js/types/productCategory.types";
+import {EditProductCategoryForm, ProductCategory,} from "@/js/types/productCategory.types";
+
+const props = defineProps<{
+    category: ProductCategory
+}>()
 
 const emit = defineEmits(['submitted', 'cancel'])
 
@@ -14,17 +18,16 @@ onMounted(() => {
 
 // FORM
 
-const productCategory = reactive<ProductCategoryFormData>({
-    name: ""
+const productCategory = reactive<EditProductCategoryForm>({
+    id: props.category.id,
+    name: props.category.name
 })
 
 const submit = async () => {
     loading.value = true
 
     try {
-        if (productCategoriesStore.selectedCategory) {
-            await productCategoriesStore.fetchUpdateProductCategory(productCategoriesStore.selectedCategory.id, productCategory)
-        }
+        await productCategoriesStore.fetchUpdateProductCategory(productCategory)
     } catch (err) {
         console.log('EditProductCategoryForm Error', err)
         return
@@ -52,7 +55,3 @@ const cancel = () => {
         />
     </FormWrapper>
 </template>
-
-<style scoped>
-
-</style>

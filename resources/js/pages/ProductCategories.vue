@@ -64,34 +64,21 @@ const tableData = computed(() => {
 <template>
     <Table
         :column-names="columnNames"
-        :data="tableData"
+        :columns="tableData"
+        :data="productCategoriesStore.categories"
         :hide-action-buttons="authStore.role !== 'Owner'"
-        @rowAdd="onRowAdd"
-        @rowClicked="onRowClicked"
-        @rowDelete="onRowDelete"
-        @rowEdit="onRowEdit"
-    />
+    >
+        <template v-slot:addForm="{submit, cancel}" #addForm>
+            <AddProductCategoryForm @cancel="cancel" @submit="submit"/>
+        </template>
 
-    <!--    MODALS    -->
+        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
+            <EditProductCategoryForm :category="selected" @cancel="cancel" @submit="submit"/>
+        </template>
 
-    <q-dialog ref="dialogRef" v-model="showAddProductCategoryModal" @hide="onDialogHide">
-        <AddProductCategoryForm
-            @cancel="showAddProductCategoryModal = false"
-            @submitted="showAddProductCategoryModal = false"
-        />
-    </q-dialog>
+        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
+            <DeleteProductCategoryForm :category="selected" @cancel="cancel" @submit="submit"/>
+        </template>
+    </Table>
 
-    <q-dialog ref="dialogRef" v-model="showEditProductCategoryModal" @hide="onDialogHide">
-        <EditProductCategoryForm
-            @cancel="showEditProductCategoryModal = false"
-            @submitted="showEditProductCategoryModal = false"
-        />
-    </q-dialog>
-
-    <q-dialog ref="dialogRef" v-model="showDeleteProductCategoryModal" @hide="onDialogHide">
-        <DeleteProductCategoryForm
-            @cancel="showDeleteProductCategoryModal = false"
-            @submitted="showDeleteProductCategoryModal = false"
-        />
-    </q-dialog>
 </template>

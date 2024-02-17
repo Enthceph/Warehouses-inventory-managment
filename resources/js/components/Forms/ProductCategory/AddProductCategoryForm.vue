@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
-import {ProductCategoryFormData} from "@/js/types/productCategory.types";
+import {AddProductCategoryForm} from "@/js/types/productCategory.types";
 import {useProductCategoriesStore} from "@/js/stores/productCategories";
 
 const emit = defineEmits(['submitted', 'cancel'])
@@ -10,9 +10,7 @@ const loading = ref(false)
 
 const productCategoriesStore = useProductCategoriesStore()
 
-// FORM
-
-const productCategory = reactive<ProductCategoryFormData>({
+const productCategory = reactive<AddProductCategoryForm>({
     name: ''
 })
 

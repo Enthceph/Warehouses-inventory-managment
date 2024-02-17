@@ -6,6 +6,11 @@ export interface ProductCategory {
     'deleted_at': Date | null
 }
 
-export interface ProductCategoryFormData {
+export interface AddProductCategoryForm {
+    "name": ProductCategory['name']
+}
+
+export interface EditProductCategoryForm {
+    "id": ProductCategory['id']
     "name": ProductCategory['name']
 }
