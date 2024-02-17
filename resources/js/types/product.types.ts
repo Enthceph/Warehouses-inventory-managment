@@ -1,3 +1,5 @@
+import {ProductCategory} from "@/js/types/productCategory.types";
+
 export interface Product {
     "id": number
     "name": string
@@ -7,6 +9,7 @@ export interface Product {
     "created_at": Date
     "updated_at": Date | null
     "deleted_at": Date | null
+    "category": ProductCategory
 }
 
 export interface ProductFormData {

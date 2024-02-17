@@ -7,35 +7,30 @@ use App\Http\Requests\CreateInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
 use App\Models\Inventory;
 use App\Models\Warehouse;
-use App\Services\InventoryService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
-    public function __construct(
-        protected InventoryService $service
-    )
-    {
-    }
-
-    public function index()
+    public function index(): Collection|array
     {
         $companyId = Auth::user()->company_id;
 
-        $inventories = Inventory::with(['product', 'warehouse'])
+        return Inventory::with(['product.category', 'warehouse'])
             ->whereHas('warehouse', function ($query) use ($companyId) {
                 $query->where('company_id', $companyId);
             })->get();
-
-        return $inventories;
     }
 
-    public function store(CreateInventoryRequest $request)
+    public function store(CreateInventoryRequest $request): Response|Application|ResponseFactory
     {
         $inventory = Inventory::create($request->validated());
 
         if (!$inventory) {
-            return response(['message' => 'Couldn\'t create inventory'], 500);
+            return response(['message' => "Couldn't create inventory"], 500);
         }
 
         return response(['message' => 'Inventory created']);
@@ -77,6 +72,6 @@ class InventoryController extends Controller
 
         $inventory->delete();
 
-        return response(['message' => 'Inventory deletd']);
+        return response(['message' => 'Inventory deleted']);
     }
 }
