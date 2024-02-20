@@ -30,7 +30,6 @@ Notify.registerType('error', {
     icon: 'error',
 })
 
-
 app.use(Quasar, {
     plugins: {
         Notify
@@ -43,3 +42,4 @@ app.use(Quasar, {
 router.isReady().then(() => {
     app.mount('#app')
 })
+

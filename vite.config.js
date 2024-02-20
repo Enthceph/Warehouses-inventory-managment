@@ -4,6 +4,9 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
+    server: {
+        hmr: {host: '0.0.0.0'},
+    },
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.ts'],

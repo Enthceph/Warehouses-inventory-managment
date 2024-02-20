@@ -3,7 +3,6 @@ import LoginForm from "@/js/components/Forms/Login/LoginForm.vue";
 
 const router = useRouter()
 
-
 const onFormSubmit = () => {
     router.push({
         path: '/analytics'
@@ -13,7 +12,6 @@ const onFormSubmit = () => {
 </script>
 
 <template>
-    <LoginForm
-        @submit="onFormSubmit"
-    />
+    12323s
+    <LoginForm @submit="onFormSubmit" />
 </template>
