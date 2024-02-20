@@ -8,10 +8,8 @@ const onFormSubmit = () => {
         path: '/analytics'
     })
 }
-
 </script>
 
 <template>
-    12323s
     <LoginForm @submit="onFormSubmit" />
 </template>
