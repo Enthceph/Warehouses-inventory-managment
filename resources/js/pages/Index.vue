@@ -9,7 +9,6 @@ let layout = computed(() => {
         }
     );
 })
-
 </script>
 
 <template>
