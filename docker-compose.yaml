@@ -61,7 +61,7 @@ services:
         context: ./docker/dockerfiles
         dockerfile: nodejs.Dockerfile
     tty: true
-    command: "npm install && npm run dev"
+    command: "npm run dev"
     ports:
         - "5173:5173"
     working_dir: /var/www/html
