@@ -5,7 +5,11 @@ import AutoImport from 'unplugin-auto-import/vite'
 
 export default defineConfig({
     server: {
-        hmr: {host: '0.0.0.0'},
+        // port:3000,
+        host: true,
+        hmr: {
+            host: '127.0.0.1',
+        },
     },
     plugins: [
         laravel({
@@ -30,6 +34,7 @@ export default defineConfig({
             dirs: ['resources/js/composables'],
         }),
     ],
+
     resolve: {
         alias: {
             vue: 'vue/dist/vue.esm-bundler.js',

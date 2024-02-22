@@ -1,16 +1,12 @@
 FROM node:20.11.1
 
-# Install dependencies
-RUN apt-get update && apt-get install -y \
-    vim \
-    zip \
-    unzip \
-    curl
+WORKDIR /var/www/laravel
 
-# Change current user
-USER node
+# EXPOSE 5173
 
-EXPOSE 5173
-
+RUN npm install
+RUN npm run dev
+RUN echo 'Command executed successfully'
 # https://github.com/vitejs/vite/discussions/3396
-CMD ["sh", "-c", "npm install && npm run dev -- --host"]
+# CMD ["sh", "-c", "npm install && npm run dev && echo 'Command executed successfully'"]
+

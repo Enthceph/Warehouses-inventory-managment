@@ -16,6 +16,7 @@ services:
       - php
     networks:
       - laravel
+
   php:  
     build:
       context: ./docker/dockerfiles
@@ -24,29 +25,17 @@ services:
       - ./:/var/www/laravel
     networks:
       - laravel
+
   mysql:
     image: mysql:8.0
     ports:
-      - "${DB_PORT}:3306"
+      - "${DB_PORT}:${DB_PORT}"
     env_file:
       - ./.env
     volumes:
       - db_data:/var/lib/mysql
     networks:
       - laravel
-  # phpmyadmin:
-  #   image: phpmyadmin:5.2.0
-  #   container_name: phpmyadmin
-  #   environment:
-  #     PMA_ARBITRARY: 1
-  #     PMA_HOST: ${DB_HOST}
-  #     PMA_USER: ${DB_USERNAME}
-  #     PMA_PASSWORD: ${DB_PASSWORD}
-  #     PMA_PORT: ${DB_PORT}
-  #   depends_on:
-  #     - mysql
-  #   ports:
-  #     - 8888:80
 
   composer:
     build:
@@ -67,20 +56,19 @@ services:
     networks:
       - laravel
 
-  npm:
-    image: node:latest
-    container_name: npm
-    restart: always
-    volumes:
-      - ./:/var/www/html
-      - .env:/var/www/html/.env
+  node:
+    build:
+        context: ./docker/dockerfiles
+        dockerfile: nodejs.Dockerfile
+    tty: true
+    command: "npm i && npm run dev"
     ports:
-      - 5173:5173
+        - "5173:5173"
     working_dir: /var/www/html
-    entrypoint: ['npm']
+    volumes:
+        - .:/var/www/html 
     networks:
       - laravel
-
 
 volumes:
   db_data:

@@ -12,6 +12,5 @@ const onFormSubmit = () => {
 </script>
 
 <template>
-    12323s
     <LoginForm @submit="onFormSubmit" />
 </template>
