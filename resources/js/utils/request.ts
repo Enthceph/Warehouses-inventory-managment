@@ -33,7 +33,8 @@ const apiRequest = ky.create({
             },
         ],
     },
-    prefixUrl: `${import.meta.env.VITE_SERVER_URL}/api/`,
+    // ${import.meta.env.VITE_SERVER_URL}/
+    prefixUrl: `api/`,
 })
 
 export default apiRequest
