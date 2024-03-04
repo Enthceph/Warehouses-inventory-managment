@@ -12,7 +12,7 @@ services:
       - "DB_HOST=mysql"
       - "XDG_CONFIG_HOME=/app"
     ports:
-    - "8080:80"
+    - "8000:80"
     links:
       - php-fpm
       - node
@@ -30,33 +30,6 @@ services:
       - mysql
       - node
 
-  php-cli:
-    build:
-      context: ./
-      dockerfile: docker/php-cli.docker
-    volumes:
-    - ./:/var/www
-    environment:
-      - "DB_PORT=3306"
-      - "DB_HOST=mysql"
-      - "COMPOSER_MEMORY_LIMIT=-1"
-    links:
-      - mysql
-    tty: true
-
-  # mysql:
-  #   image: mysql:8.0
-  #   volumes:
-  #   - db_data:/var/lib/mysql
-  #   environment:
-  #     - MYSQL_DATABASE=inventory_managment
-  #     - MYSQL_USER=root
-  #     - MYSQL_ROOT_USER=root
-  #     - MYSQL_PASSWORD=password
-  #     - MYSQL_ROOT_PASSWORD=password
-  #   ports:
-  #     - 3306:3306
-
   mysql:
     image: mysql:8.0
     ports:
@@ -66,7 +39,6 @@ services:
     
     volumes:
       - db_data:/var/lib/mysql
-
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
