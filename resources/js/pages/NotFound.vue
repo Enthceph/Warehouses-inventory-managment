@@ -26,16 +26,16 @@ let imgPath = computed(
 
 <style scoped>
 .not-found {
-    display:               grid;
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    height:                100vh;
-    width:                 100%;
+    height: 100vh;
+    width: 100%;
 }
 
 .text {
-    display:     grid;
+    display: grid;
     place-items: center;
-    text-align:  center;
+    text-align: center;
 }
 
 .text a {
@@ -43,7 +43,7 @@ let imgPath = computed(
 }
 
 img {
-    height:     100vh;
+    height: 100vh;
     object-fit: cover;
 }
 </style>

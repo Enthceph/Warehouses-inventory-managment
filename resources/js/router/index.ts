@@ -1,12 +1,12 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import auth from './middleware/auth.js'
-import {Context} from "@/js/types/router.types";
-import middlewarePipeline from "@/js/router/middleware/middlewarePipeline";
+import { Context } from '@/js/types/router.types'
+import middlewarePipeline from '@/js/router/middleware/middlewarePipeline'
 
-import CenterLayout from '../layouts/CenterLayout.vue';
-import NoLayout from '../layouts/NoLayout.vue';
-import DefaultLayout from '../layouts/DefaultLayout.vue';
-import { Component } from 'vue';
+import CenterLayout from '../layouts/CenterLayout.vue'
+import NoLayout from '../layouts/NoLayout.vue'
+import DefaultLayout from '../layouts/DefaultLayout.vue'
+import { Component } from 'vue'
 
 declare module 'vue-router' {
     interface RouteMeta {
@@ -36,7 +36,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Registration',
         component: () => import('../pages/Registration.vue'),
         meta: {
-            layout: CenterLayout
+            layout: CenterLayout,
         },
     },
     {
@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'NotFound',
         component: () => import('../pages/NotFound.vue'),
         meta: {
-            layout: NoLayout
+            layout: NoLayout,
         },
     },
     {
@@ -165,8 +165,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             middleware: [auth],
         },
-    }
-    ,
+    },
     {
         path: '/productCategories',
         component: () => import('../pages/ProductCategories.vue'),
@@ -174,7 +173,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             middleware: [auth],
         },
-    }
+    },
 ] as const
 
 const router = createRouter({
@@ -188,7 +187,7 @@ router.beforeEach((to, from, next) => {
     }
 
     const middleware = to.meta.middleware
-    const context: Context = {to, from, next}
+    const context: Context = { to, from, next }
 
     return middleware[0]({
         ...context,
