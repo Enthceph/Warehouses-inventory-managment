@@ -1,18 +1,14 @@
 <script lang="ts" setup>
+import DefaultLayout from '../layouts/DefaultLayout.vue';
+
 let layout = computed(() => {
     const {meta} = useRoute();
-    const layoutName = meta.layout ?? 'DefaultLayout';
-    return defineAsyncComponent(
-        () => {
-            // @ts-ignore
-            return import(`../layouts/${layoutName}.vue`)
-        }
-    );
-})
+     return meta.layout ?? DefaultLayout
+})  
 </script>
 
 <template>
     <component :is="layout">
-        <router-view/>
+        <router-view/> 
     </component>
 </template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import TheHeader from '../components/TheHeader.vue'
-import TheMenu from "@/js/components/TheMenu.vue";</script>
-
+import TheMenu from "@/js/components/TheMenu.vue";
+</script>
 <template>
     <div class="default-layout">
         <the-header class="header"/>
