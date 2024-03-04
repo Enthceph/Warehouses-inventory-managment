@@ -30,7 +30,7 @@ const submit = async () => {
 <template>
     <q-card>
         <q-form ref="form" autocomplete="off" class="form" @submit.prevent="submit">
-            <h2 class="text-h5 font-bold">Авторизація</h2>
+            <h2 class="text-h5 font-bold">Login</h2>
 
             <div class="form-inputs">
                 <q-input

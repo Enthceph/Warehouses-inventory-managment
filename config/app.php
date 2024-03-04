@@ -159,7 +159,6 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
-        Barryvdh\Debugbar\ServiceProvider::class,
 
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -212,7 +211,5 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-
     ])->toArray(),
-//    'Debugbar' => Barryvdh\Debugbar\Facade::class,
 ];

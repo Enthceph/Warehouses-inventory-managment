@@ -3,9 +3,14 @@ import auth from './middleware/auth.js'
 import {Context} from "@/js/types/router.types";
 import middlewarePipeline from "@/js/router/middleware/middlewarePipeline";
 
+import CenterLayout from '../layouts/CenterLayout.vue';
+import NoLayout from '../layouts/NoLayout.vue';
+import DefaultLayout from '../layouts/DefaultLayout.vue';
+import { Component } from 'vue';
+
 declare module 'vue-router' {
     interface RouteMeta {
-        layout?: string
+        layout?: Component
         middleware?: Function[]
     }
 }
@@ -23,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Login',
         component: () => import('../pages/Login.vue'),
         meta: {
-            layout: 'CenterLayout',
+            layout: CenterLayout,
         },
     },
     {
@@ -31,7 +36,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Registration',
         component: () => import('../pages/Registration.vue'),
         meta: {
-            layout: 'CenterLayout',
+            layout: CenterLayout
         },
     },
     {
@@ -48,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'NotFound',
         component: () => import('../pages/NotFound.vue'),
         meta: {
-            layout: 'NoLayout',
+            layout: NoLayout
         },
     },
     {
@@ -170,7 +175,7 @@ const routes: Array<RouteRecordRaw> = [
             middleware: [auth],
         },
     }
-]
+] as const
 
 const router = createRouter({
     history: createWebHistory(),
