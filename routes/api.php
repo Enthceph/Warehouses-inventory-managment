@@ -34,5 +34,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('productCategory', ProductCategoriesController::class);
 
     Route::get('role', [RoleController::class, 'index']);
-
 });
