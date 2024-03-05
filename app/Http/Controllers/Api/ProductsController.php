@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -8,6 +7,7 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Services\ProductCategoryService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class ProductsController extends Controller
 {
@@ -17,7 +17,9 @@ class ProductsController extends Controller
 //    {
 //    }
     // TODO сделать сервис
-
+    /**
+     * @return Product[]
+     */
     public function index()
     {
         $this->authorize('view', Product::class);
@@ -25,7 +27,7 @@ class ProductsController extends Controller
         return Product::where('company_id', Auth::user()->company_id)->with(['company', 'category'])->get();
     }
 
-    public function store(CreateProductRequest $request)
+    public function store(CreateProductRequest $request) : Product
     {
         return Product::create([
             'name' => $request['name'],
@@ -35,7 +37,7 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function show(Product $product)
+    public function show(Product $product) : Product
     {
         $this->authorize('view', $product);
 
@@ -43,7 +45,7 @@ class ProductsController extends Controller
     }
 
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product) : Response
     {
         $this->authorize('update', $product);
 
@@ -52,7 +54,7 @@ class ProductsController extends Controller
         return response(['message' => 'Product changed successfully']);
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $product) : Response
     {
         $this->authorize('delete', $product);
 

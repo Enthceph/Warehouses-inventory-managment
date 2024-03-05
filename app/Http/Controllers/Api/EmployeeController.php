@@ -8,15 +8,17 @@ use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\User;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class EmployeeController extends Controller
 {
     public function __construct(
         protected EmployeeService $service
-    )
-    {
+    ) {
     }
-
+    /**
+     * @return User[]
+     */
     public function index()
     {
         $this->authorize('view', User::class);
@@ -24,59 +26,32 @@ class EmployeeController extends Controller
         return $this->service->get();
     }
 
-    public function store(StoreEmployeeRequest $request)
+    public function store(StoreEmployeeRequest $request) : User
     {
         $this->authorize('create', User::class);
 
-        $employee = $this->service->store($request);
+        return $this->service->store($request->validated());
 
-        if (!$employee) {
-            return response(['message' => 'Unable to create employee'], 500);
-        }
-
-        return $employee;
     }
 
-    public function show($id)
+    public function show(User $user) : User
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response(['message' => 'Unable to find employee'], 404);
-        }
-
         $this->authorize('show', $user);
 
         return $user;
     }
 
-    public function update(UpdateEmployeeRequest $request, int $id)
+    public function update(UpdateEmployeeRequest $request, User $user) : Response
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response(['message' => 'Unable to find employee'], 404);
-        }
-
         $this->authorize('update', $user);
 
-        $updatedEmployee = $this->service->update($request, $user);
-
-        if (!$updatedEmployee) {
-            return response(['message' => 'Unable to update employee'], 500);
-        }
+        $this->service->update($request, $user);
 
         return response(['message' => 'Employee updated']);
     }
 
-    public function destroy(Request $request, int $id)
+    public function destroy(Request $request, User $employee) : Response
     {
-        $employee = User::find($id);
-
-        if (!$employee) {
-            return response(['message' => 'Unable to find employee'], 404);
-        }
-
         $this->authorize('delete', $employee);
 
         $employee->delete();

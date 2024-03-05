@@ -18,7 +18,7 @@ class OutletController extends Controller
     /**
      * @return Outlet[]
      */
-    public function index() : array
+    public function index()
     {
         $this->authorize('view', Outlet::class);
 
@@ -41,14 +41,14 @@ class OutletController extends Controller
         return response(['message' => 'Outlet changed successfully']);
     }
 
-    public function show(Outlet $outlet)
+    public function show(Outlet $outlet) : Outlet
     {
         $this->authorize('view', $outlet);
 
         return $outlet;
     }
 
-    public function destroy(Outlet $outlet)
+    public function destroy(Outlet $outlet) : Response
     {
         $this->authorize('delete', $outlet);
 

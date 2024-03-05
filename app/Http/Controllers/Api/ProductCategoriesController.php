@@ -7,9 +7,13 @@ use App\Http\Requests\CreateProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Response;
 
 class ProductCategoriesController extends Controller
 {
+    /**
+     * @return ProductCategory[]
+     */
     public function index()
     {
         $this->authorize('view', ProductCategory::class);
@@ -17,7 +21,7 @@ class ProductCategoriesController extends Controller
         return ProductCategory::where('company_id', Auth::user()->company_id)->get(['id', 'name']);
     }
 
-    public function store(CreateProductCategoryRequest $request)
+    public function store(CreateProductCategoryRequest $request) : ProductCategory
     {
         return ProductCategory::create([
             'name' => $request['name'],
@@ -25,14 +29,14 @@ class ProductCategoriesController extends Controller
         ]);
     }
 
-    public function show(ProductCategory $productCategory)
+    public function show(ProductCategory $productCategory) : ProductCategory
     {
         $this->authorize('view', $productCategory);
 
         return $productCategory;
     }
 
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory) : Response
     {
         $this->authorize('update', $productCategory);
 
@@ -41,7 +45,7 @@ class ProductCategoriesController extends Controller
         return response(['message' => 'Product category changed successfully']);
     }
 
-    public function destroy(ProductCategory $productCategory)
+    public function destroy(ProductCategory $productCategory) : Response
     {
         $this->authorize('delete', $productCategory);
 

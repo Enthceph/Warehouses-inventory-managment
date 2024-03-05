@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateWarehouseRequest;
 use App\Models\Warehouse;
 use App\Services\WarehouseService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class WarehouseController extends Controller
 {
@@ -15,22 +16,24 @@ class WarehouseController extends Controller
         protected WarehouseService $service
     ) {
     }
-
-    public function index()
+    /**
+     * @return Warehouse[]
+     */
+    public function index() : array
     {
         $this->authorize('view', Warehouse::class);
 
         return $this->service->get();
     }
 
-    public function store(CreateWarehouseRequest $request)
+    public function store(CreateWarehouseRequest $request) : Warehouse
     {
         $this->authorize('create', Warehouse::class);
 
         return $this->service->store($request);
     }
 
-    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse)
+    public function update(UpdateWarehouseRequest $request, Warehouse $warehouse) : Response
     {
         $this->authorize('update', $warehouse);
 
@@ -39,7 +42,7 @@ class WarehouseController extends Controller
         return response(['message' => 'Updated warehouse successfully']);
     }
 
-    public function show(Warehouse $warehouse)
+    public function show(Warehouse $warehouse) : Warehouse
     {
         $this->authorize('show', $warehouse);
 

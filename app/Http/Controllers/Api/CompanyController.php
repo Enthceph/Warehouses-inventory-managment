@@ -15,13 +15,11 @@ class CompanyController extends Controller
     ) {
     }
 
-    public function index()
+    public function index() : Company
     {
-        $company = $this->service->get();
+        // $this->authorize('view', $company);
 
-        $this->authorize('view', $company);
-
-        return $company;
+        return $this->service->get();
     }
 
     public function store(Request $request)

@@ -7,8 +7,11 @@ use App\Models\Role;
 
 class RoleController extends Controller
 {
+    /** 
+     * @return Role[]
+     */
     public function index()
     {
-        return Role::all();
+        return Role::all()->toArray();
     }
 }

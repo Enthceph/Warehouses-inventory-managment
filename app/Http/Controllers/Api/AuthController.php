@@ -11,6 +11,7 @@ use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -20,14 +21,14 @@ class AuthController extends Controller
     {
     }
 
-    public function register(CreateUserAndCompanyRequest $request)
+    public function register(CreateUserAndCompanyRequest $request) : Response
     {
         $this->service->register($request->validated());
 
-        return response(['message' => 'User created'], 200);
+        return response(['message' => 'User created']);
     }
 
-    public function login(LoginRequest $request)
+    public function login(LoginRequest $request) : Response
     {
         if (! Auth::attempt($request->validated())) {
             return response(['message' => 'Email or Password does not match with our record'], 401);
@@ -36,10 +37,10 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->firstOrFail();
         $accessToken = $user->createToken("API TOKEN")->plainTextToken;
 
-        return ['access_token' => $accessToken];
+        return response(['access_token' => $accessToken]);
     }
 
-    public function logout()
+    public function logout() : Response
     {
         if (Auth::user()->currentAccessToken()->delete()) {
             return response(['message' => true]);
@@ -48,7 +49,7 @@ class AuthController extends Controller
         return response(['message' => false], 500);
     }
 
-    public function checkAuth()
+    public function checkAuth() : Response
     {
         if (Auth::check()) {
             return response(['message' => true]);
@@ -70,25 +71,23 @@ class AuthController extends Controller
         ];
     }
 
-    public function changeName(ChangeNameRequest $request)
+    public function changeName(ChangeNameRequest $request) : Response
     {
         Auth::user()->update(['full_name' => $request['name']]);
 
         return response(['message' => 'Name successfully updated']);
     }
 
-    public function changeEmail(ChangeEmailRequest $request)
+    public function changeEmail(ChangeEmailRequest $request) : Response
     {
         Auth::user()->update($request->validated());
 
         return response(['message' => 'Email successfully updated']);
     }
 
-    public function changePassword(ChangePasswordRequest $request)
+    public function changePassword(ChangePasswordRequest $request) : Response
     {
-        Auth::user()->update(['password' =>
-            Hash::make($request['new_password'])
-        ]);
+        Auth::user()->update(['password' => Hash::make($request['new_password'])]);
 
         return response(['message' => 'Password successfully updated']);
     }

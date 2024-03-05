@@ -10,7 +10,7 @@ class CompanyService
 {
     public function get() : Company
     {
-        return Auth::user()->company()->firstOrFail();
+        return Auth::user()->company;
     }
     public function store($request)
     {
