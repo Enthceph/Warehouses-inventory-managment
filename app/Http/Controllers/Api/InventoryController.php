@@ -15,7 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
-    public function index(): Collection|array
+    /**
+     * @return Inventory[]
+     */
+    public function index() : array
     {
         $companyId = Auth::user()->company_id;
 
@@ -25,36 +28,24 @@ class InventoryController extends Controller
             })->get();
     }
 
-    public function store(CreateInventoryRequest $request): Response|Application|ResponseFactory
+    public function store(CreateInventoryRequest $request) : Response
     {
-        $inventory = Inventory::create($request->validated());
-
-        if (!$inventory) {
-            return response(['message' => "Couldn't create inventory"], 500);
-        }
+        Inventory::create($request->validated());
 
         return response(['message' => 'Inventory created']);
     }
-
-    public function show($id)
+    /**
+     * @return Inventory[]
+     */
+    public function show(Warehouse $warehouse) : array
     {
-        $warehouse = Warehouse::find($id);
-
-        if (!$warehouse) {
-            return response(['message' => 'Not Found'], 404);
-        }
-
         $this->authorize('view', Inventory::class);
 
         return $warehouse->inventories;
     }
 
-    public function update(UpdateInventoryRequest $request, $id)
+    public function update(UpdateInventoryRequest $request, Inventory $inventory) : Response
     {
-        $inventory = Inventory::find($id);
-
-        if (!$inventory) return response(['message' => 'Cant find inventory'], 404);
-
         $this->authorize('update', $inventory);
 
         $inventory->update($request->validated());
@@ -62,12 +53,8 @@ class InventoryController extends Controller
         return response(['message' => 'Inventory updated']);
     }
 
-    public function destroy(int $id)
+    public function destroy(Inventory $inventory) : Response
     {
-        $inventory = Inventory::find($id);
-
-        if (!$inventory) return response(['message' => 'Cant find inventory'], 404);
-
         $this->authorize('delete', $inventory);
 
         $inventory->delete();

@@ -12,8 +12,7 @@ class CompanyController extends Controller
 {
     public function __construct(
         protected CompanyService $service
-    )
-    {
+    ) {
     }
 
     public function index()
@@ -30,24 +29,20 @@ class CompanyController extends Controller
         //
     }
 
-    public function update(UpdateCompanyRequest $request, int $id)
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
         $this->authorize('update', Company::class);
 
-        $companyUpdated = $this->service->update($request, $id);
+        $this->service->update($request, $company);
 
-        if (!$companyUpdated) {
-            return response()->json(['message' => 'Failed to update the company.'], 422);
-        }
-
-        return response(Company::findOrFail($id));
+        return response(['message' => 'Company was updated']);
     }
 
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        $this->authorize('update', Company::findOrFail($id));
+        $this->authorize('update', $company);
 
-        $this->service->destroy($id);
+        $this->service->destroy($company);
 
         return response(['message' => 'Company was deleted']);
     }

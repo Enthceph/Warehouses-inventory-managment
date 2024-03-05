@@ -34,7 +34,7 @@ class UserController extends Controller
         return User::create($request->validated());
     }
 
-    public function show(int $id)
+    public function show(innt $id)
     {
         return User::findOrFail($id);
     }
@@ -50,6 +50,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if ($user->delete()) return response(null, 204);
+        if ($user->delete())
+            return response(null, 204);
     }
 }

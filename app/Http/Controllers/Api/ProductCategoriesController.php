@@ -19,58 +19,30 @@ class ProductCategoriesController extends Controller
 
     public function store(CreateProductCategoryRequest $request)
     {
-        $productCategory = ProductCategory::create([
+        return ProductCategory::create([
             'name' => $request['name'],
             'company_id' => Auth::user()->company_id
         ]);
-
-        if (!$productCategory) {
-            return response(['message' => 'Couldn\'t create product category'], 500);
-        }
-
-        return $productCategory;
     }
 
-    public function show($id)
+    public function show(ProductCategory $productCategory)
     {
-        $productCategory = ProductCategory::find($id);
-
-        if (!$productCategory) {
-            return response(['message' => 'Couldn\'t find requested product category'], 404);
-        }
-
         $this->authorize('view', $productCategory);
 
         return $productCategory;
     }
 
-    public function update(UpdateProductCategoryRequest $request, int $id)
+    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
-        $productCategory = ProductCategory::find($id);
-
-        if (!$productCategory) {
-            return response(['message' => 'Couldn\'t find requested product category'], 404);
-        }
-
         $this->authorize('update', $productCategory);
 
-        $updatedProductCategory = $productCategory->update($request->all());
-
-        if (!$updatedProductCategory) {
-            return response(['message' => 'Unable to update product category'], 500);
-        }
+        $productCategory->update($request->validated());
 
         return response(['message' => 'Product category changed successfully']);
     }
 
-    public function destroy(int $id)
+    public function destroy(ProductCategory $productCategory)
     {
-        $productCategory = ProductCategory::find($id);
-
-        if (!$productCategory) {
-            return response(['message' => 'Couldn\'t find requested product category'], 404);
-        }
-
         $this->authorize('delete', $productCategory);
 
         $productCategory->delete();

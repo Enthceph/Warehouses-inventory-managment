@@ -7,6 +7,7 @@ use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangeNameRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\CreateUserAndCompanyRequest;
+use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\Request;
@@ -21,20 +22,18 @@ class AuthController extends Controller
 
     public function register(CreateUserAndCompanyRequest $request)
     {
-        $this->service->register($request);
+        $this->service->register($request->validated());
 
         return response(['message' => 'User created'], 200);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($request->validated())) {
             return response(['message' => 'Email or Password does not match with our record'], 401);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->firstOrFail();
         $accessToken = $user->createToken("API TOKEN")->plainTextToken;
 
         return ['access_token' => $accessToken];
@@ -43,22 +42,22 @@ class AuthController extends Controller
     public function logout()
     {
         if (Auth::user()->currentAccessToken()->delete()) {
-            return response()->json(['message' => true]);
+            return response(['message' => true]);
         }
 
-        return response()->json(['message' => false], 500);
+        return response(['message' => false], 500);
     }
 
     public function checkAuth()
     {
         if (Auth::check()) {
-            return response()->json(['message' => true]);
+            return response(['message' => true]);
         }
 
-        return response()->json(['message' => false], 401);
+        return response(['message' => false], 401);
     }
 
-    public function getAuthUser(): array
+    public function getAuthUser() : array
     {
         $user = Auth::user()->load('role', 'company');
         return [
@@ -75,14 +74,14 @@ class AuthController extends Controller
     {
         Auth::user()->update(['full_name' => $request['name']]);
 
-        return response(['message' => 'Имя было обновлено']);
+        return response(['message' => 'Name successfully updated']);
     }
 
     public function changeEmail(ChangeEmailRequest $request)
     {
-        Auth::user()->update(['email' => $request['email']]);
+        Auth::user()->update($request->validated());
 
-        return response(['message' => 'Email был обновлен']);
+        return response(['message' => 'Email successfully updated']);
     }
 
     public function changePassword(ChangePasswordRequest $request)
@@ -91,6 +90,6 @@ class AuthController extends Controller
             Hash::make($request['new_password'])
         ]);
 
-        return response(['message' => 'Пароль был обновлен']);
+        return response(['message' => 'Password successfully updated']);
     }
 }

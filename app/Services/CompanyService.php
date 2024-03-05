@@ -4,30 +4,24 @@ namespace App\Services;
 
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\UpdateCompanyRequest;
 
 class CompanyService
 {
-    public function get()
+    public function get() : Company
     {
         return Auth::user()->company()->firstOrFail();
     }
-
     public function store($request)
     {
 
     }
-
-
-    public function update($request, int $id)
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $company = Company::find($id);
-        return $company->update($request->all());
+        return $company->update($request->validated());
     }
-
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        $company = Company::find($id);
         return $company->delete();
     }
-
 }

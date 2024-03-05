@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Services;
 
 use App\Http\Requests\CreateOutletRequest;
@@ -60,11 +59,6 @@ class OutletService
 
     public function update(Request $request, Outlet $outlet)
     {
-        return $outlet->update([
-            'name' => $request->name,
-            'address' => $request->address,
-            'contact_info' => $request->contact_info,
-            'warehouse_id' => $request->warehouse_id
-        ]);
+        return $outlet->update($request->validated());
     }
 }

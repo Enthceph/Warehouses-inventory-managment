@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductsController extends Controller
 {
-//    public function __construct(
+    //    public function __construct(
 //        protected ProductCategoryService $service
 //    )
 //    {
 //    }
+    // TODO сделать сервис
 
     public function index()
     {
@@ -26,61 +27,33 @@ class ProductsController extends Controller
 
     public function store(CreateProductRequest $request)
     {
-        $product = Product::create([
+        return Product::create([
             'name' => $request['name'],
             'additional_info' => $request['additional_info'],
             'category_id' => $request['category_id'],
             'company_id' => Auth::user()->company_id
         ]);
-
-        if (!$product) {
-            return response(['message' => 'Couldn\'t create product'], 500);
-        }
-
-        return $product;
     }
 
-    public function show(int $id)
+    public function show(Product $product)
     {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return response(['message' => 'Couldn\'t find requested product'], 404);
-        }
-
         $this->authorize('view', $product);
 
         return $product;
     }
 
 
-    public function update(UpdateProductRequest $request, int $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return response(['message' => 'Couldn\'t find requested product'], 404);
-        }
-
         $this->authorize('update', $product);
 
-        $updatedProductCategory = $product->update($request->all());
-
-        if (!$updatedProductCategory) {
-            return response(['message' => 'Unable to update product'], 500);
-        }
+        $product->update($request->validated());
 
         return response(['message' => 'Product changed successfully']);
     }
 
-    public function destroy(int $id)
+    public function destroy(Product $product)
     {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return response(['message' => 'Couldn\'t find requested product'], 404);
-        }
-
         $this->authorize('delete', $product);
 
         $product->delete();
