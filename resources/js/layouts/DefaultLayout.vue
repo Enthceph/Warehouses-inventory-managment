@@ -1,9 +1,6 @@
 <script lang="ts" setup>
 import TheHeader from '../components/TheHeader.vue'
 import TheMenu from "@/js/components/TheMenu.vue";
-onMounted(() => {
-    console.log('Default layout mounted')
-})
 </script>
 
 <template>
