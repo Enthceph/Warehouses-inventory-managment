@@ -9,6 +9,21 @@ use Illuminate\Support\Facades\Auth;
 
 class WarehouseService
 {
+    public function get()
+    {
+        $company = Auth::user()->company;
+
+        $warehouses = $company->warehouses;
+
+        $warehousesWithInventories = $warehouses->map(function ($warehouse) {
+            $warehouse['inventory'] = $warehouse->inventory;
+
+            return $warehouse;
+        });
+
+        return $warehousesWithInventories;
+    }
+
     public function store(StoreWarehouseRequest $request)
     {
         $company_id = Auth::user()->company->id;
@@ -30,20 +45,6 @@ class WarehouseService
         ]);
     }
 
-    public function get()
-    {
-        $company = Auth::user()->company;
-
-        $warehouses = $company->warehouses;
-
-        $warehousesWithInventories = $warehouses->map(function ($warehouse) {
-            $warehouse['inventory'] = $warehouse->inventory;
-
-            return $warehouse;
-        });
-
-        return $warehousesWithInventories;
-    }
 
     public function getInventory($request)
     {

@@ -7,6 +7,7 @@ use App\Http\Requests\StoreWarehouseRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
 use App\Models\Warehouse;
 use App\Services\WarehouseService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -19,7 +20,7 @@ class WarehouseController extends Controller
     /**
      * @return Warehouse[]
      */
-    public function index() : array
+    public function index() : Collection
     {
         $this->authorize('view', Warehouse::class);
 

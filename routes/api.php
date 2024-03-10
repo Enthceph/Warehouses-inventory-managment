@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
-Route::get('checkAuth', 'checkAuth');
+
 
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::delete('logout', 'logout');
         Route::get('getAuthUser', 'getAuthUser');
+        Route::get('checkAuth', 'checkAuth');
         Route::patch('changeName', 'changeName');
         Route::patch('changeEmail', 'changeEmail');
         Route::patch('changePassword', 'changePassword');
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('warehouse', WarehouseController::class);
     Route::resource('inventory', InventoryController::class);
+    Route::get('getAnalyticsFilterInfo', [InventoryController::class, 'getAnalyticsFilterInfo']);
     Route::resource('outlet', OutletController::class);
     Route::resource('employee', EmployeeController::class);
     Route::resource('company', CompanyController::class);
