@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\ProductCategory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductCategoryRequest extends FormRequest
+class StoreProductCategoryRequest extends FormRequest
 {
     public function authorize()
     {

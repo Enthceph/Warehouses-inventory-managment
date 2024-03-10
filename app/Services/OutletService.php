@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Http\Requests\CreateOutletRequest;
-use App\Http\Requests\CreateWarehouseRequest;
+use App\Http\Requests\StoreOutletRequest;
+use App\Http\Requests\StoreWarehouseRequest;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,14 +36,14 @@ class OutletService
         });
     }
 
-    public function store(CreateOutletRequest $request)
+    public function store(StoreOutletRequest $request)
     {
         return DB::transaction(function () use ($request) {
             $warehouse_name = $request->warehouse_name
                 ? $request->warehouse_name
                 : $request->name . '\'s warehouse';
 
-            $warehouse = $this->warehouseService->store(new CreateWarehouseRequest([
+            $warehouse = $this->warehouseService->store(new StoreWarehouseRequest([
                 'name' => $warehouse_name
             ]));
 

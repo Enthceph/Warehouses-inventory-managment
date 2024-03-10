@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateProductCategoryRequest;
+use App\Http\Requests\StoreProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +21,7 @@ class ProductCategoriesController extends Controller
         return ProductCategory::where('company_id', Auth::user()->company_id)->get(['id', 'name']);
     }
 
-    public function store(CreateProductCategoryRequest $request) : ProductCategory
+    public function store(StoreProductCategoryRequest $request) : ProductCategory
     {
         return ProductCategory::create([
             'name' => $request['name'],

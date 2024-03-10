@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Services\ProductCategoryService;
@@ -27,7 +27,7 @@ class ProductsController extends Controller
         return Product::where('company_id', Auth::user()->company_id)->with(['company', 'category'])->get();
     }
 
-    public function store(CreateProductRequest $request) : Product
+    public function store(StoreProductRequest $request) : Product
     {
         return Product::create([
             'name' => $request['name'],

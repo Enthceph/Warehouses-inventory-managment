@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-use App\Http\Requests\CreateOwnerAndCompanyRequest;
+use App\Http\Requests\RegisterOwnerAndCompanyRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    public function register(CreateOwnerAndCompanyRequest $request)
+    public function register(RegisterOwnerAndCompanyRequest $request)
     {
         return DB::transaction(function () use ($request) {
             $user_data = $request->user;

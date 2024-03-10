@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Inventory;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateInventoryRequest extends FormRequest
+class StoreInventoryRequest extends FormRequest
 {
     public function authorize()
     {

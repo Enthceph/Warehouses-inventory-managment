@@ -2,7 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateInventoryRequest;
+use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
 use App\Models\Inventory;
 use App\Models\Warehouse;
@@ -24,7 +24,7 @@ class InventoryController extends Controller
             })->get();
     }
 
-    public function store(CreateInventoryRequest $request) : Response
+    public function store(StoreInventoryRequest $request) : Response
     {
         Inventory::create($request->validated());
 

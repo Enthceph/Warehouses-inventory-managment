@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateOutletRequest;
+use App\Http\Requests\StoreOutletRequest;
 use App\Http\Requests\UpdateOutletRequest;
 use App\Models\Outlet;
 use App\Services\OutletService;
@@ -25,7 +25,7 @@ class OutletController extends Controller
         return $this->service->get();
     }
 
-    public function store(CreateOutletRequest $request) : Outlet
+    public function store(StoreOutletRequest $request) : Outlet
     {
         $this->authorize('create', Outlet::class);
 

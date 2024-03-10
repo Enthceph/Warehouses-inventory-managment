@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CreateWarehouseRequest;
+use App\Http\Requests\StoreWarehouseRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 
 class WarehouseService
 {
-    public function store(CreateWarehouseRequest $request)
+    public function store(StoreWarehouseRequest $request)
     {
         $company_id = Auth::user()->company->id;
 
@@ -51,11 +51,11 @@ class WarehouseService
         $companyId = Auth::user()->company->id;
         $warehouse = Warehouse::find($request['id']);
 
-        if (!$warehouse) {
+        if (! $warehouse) {
             return response(['message' => 'Not Found'], 404);
         }
 
-        if (!$userId || $warehouse->company_id !== $companyId) {
+        if (! $userId || $warehouse->company_id !== $companyId) {
             return response(['message' => 'Unauthorized'], 401);
         }
 

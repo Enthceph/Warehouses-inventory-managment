@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateWarehouseRequest;
+use App\Http\Requests\StoreWarehouseRequest;
 use App\Http\Requests\UpdateWarehouseRequest;
 use App\Models\Warehouse;
 use App\Services\WarehouseService;
@@ -26,7 +26,7 @@ class WarehouseController extends Controller
         return $this->service->get();
     }
 
-    public function store(CreateWarehouseRequest $request) : Warehouse
+    public function store(StoreWarehouseRequest $request) : Warehouse
     {
         $this->authorize('create', Warehouse::class);
 
