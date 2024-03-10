@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ChangeEmailRequest;
 use App\Http\Requests\ChangeNameRequest;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Http\Requests\CreateUserAndCompanyRequest;
+use App\Http\Requests\CreateOwnerAndCompanyRequest;
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
 use App\Services\AuthService;
@@ -21,9 +21,9 @@ class AuthController extends Controller
     {
     }
 
-    public function register(CreateUserAndCompanyRequest $request) : Response
+    public function register(CreateOwnerAndCompanyRequest $request) : Response
     {
-        $this->service->register($request->validated());
+        $this->service->register($request);
 
         return response(['message' => 'User created']);
     }

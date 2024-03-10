@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\CreateCompanyRequest;
 use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UpdateCompanyRequest;
@@ -12,10 +13,12 @@ class CompanyService
     {
         return Auth::user()->company;
     }
-    public function store($request)
-    {
 
+    public function store(CreateCompanyRequest $request)
+    {
+        return Company::create($request->validated());
     }
+
     public function update(UpdateCompanyRequest $request, Company $company)
     {
         return $company->update($request->validated());

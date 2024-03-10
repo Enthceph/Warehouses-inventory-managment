@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::get('checkAuth', 'checkAuth');
 
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::controller(AuthController::class)->group(function () {
         Route::delete('logout', 'logout');
-        Route::get('checkAuth', 'checkAuth');
         Route::get('getAuthUser', 'getAuthUser');
         Route::patch('changeName', 'changeName');
         Route::patch('changeEmail', 'changeEmail');

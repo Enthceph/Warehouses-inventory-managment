@@ -3,7 +3,7 @@
 namespace App\Services;
 
 
-use App\Http\Requests\CreateUserAndCompanyRequest;
+use App\Http\Requests\CreateOwnerAndCompanyRequest;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    public function register(CreateUserAndCompanyRequest $request)
+    public function register(CreateOwnerAndCompanyRequest $request)
     {
         return DB::transaction(function () use ($request) {
             $user_data = $request->user;
@@ -41,7 +41,7 @@ class AuthService
     {
         $credentials = $request->only('email', 'password');
 
-        if (!Auth::attempt($credentials)) {
+        if (! Auth::attempt($credentials)) {
             return response('Email & Password does not match with our record.', 401);
         }
 
