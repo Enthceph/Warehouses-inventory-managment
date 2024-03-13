@@ -1,12 +1,18 @@
-import {defineStore} from 'pinia';
-import {addOutlet, deleteOutlet, getOutlet, getOutlets, updateOutlet} from "@/api/outlet";
-import {Outlet, OutletAddForm, OutletFormData} from "@/js/types/outlet.types";
+import { defineStore } from 'pinia'
+import {
+    addOutlet,
+    deleteOutlet,
+    getOutlet,
+    getOutlets,
+    updateOutlet,
+} from '@/api/outlet'
+import { Outlet, OutletAddForm, OutletFormData } from '@/js/types/outlet.types'
 
 export const useOutletsStore = defineStore({
     id: 'outletsStore',
-    state: (): { outlets: Outlet[], selectedOutlet: Outlet | null } => ({
+    state: (): { outlets: Outlet[]; selectedOutlet: Outlet | null } => ({
         outlets: [],
-        selectedOutlet: null
+        selectedOutlet: null,
     }),
     actions: {
         async fetchGetOutlets(): Promise<Outlet[]> {
@@ -21,11 +27,11 @@ export const useOutletsStore = defineStore({
         async fetchAddOutlet(outlet: OutletAddForm) {
             await addOutlet(outlet)
         },
-        async fetchEditOutlet(id: number, outlet: OutletFormData) {
+        async fetchUpdateOutlet(id: number, outlet: OutletFormData) {
             await updateOutlet(id, outlet)
         },
         async fetchDeleteOutlet(id: number) {
             await deleteOutlet(id)
         },
-    }
-});
+    },
+})

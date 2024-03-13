@@ -1,12 +1,12 @@
 export interface Warehouse {
-    id: number;
-    name: string;
-    location: string | null;
-    contact_info: string | null;
+    id: number
+    name: string
+    location: string | null
+    contact_info: string | null
     created_at: Date | null
 }
 
-export interface EditWarehouseForm {
+export interface UpdateWarehouseForm {
     id: Warehouse['id']
     name: Warehouse['name']
     location: Warehouse['location']

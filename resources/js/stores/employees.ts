@@ -1,12 +1,25 @@
-import {defineStore} from 'pinia';
-import {addEmployee, deleteEmployee, getEmployee, getEmployees, updateEmployee} from "@/api/employee";
-import {AddEmployeeForm, EditEmployeeForm, Employee} from "@/js/types/employee.types";
+import { defineStore } from 'pinia'
+import {
+    addEmployee,
+    deleteEmployee,
+    getEmployee,
+    getEmployees,
+    updateEmployee,
+} from '@/api/employee'
+import {
+    AddEmployeeForm,
+    UpdateEmployeeForm,
+    Employee,
+} from '@/js/types/employee.types'
 
 export const useEmployeesStore = defineStore({
     id: 'employeesStore',
-    state: (): { employees: Employee[], selectedEmployee: Employee | null } => ({
+    state: (): {
+        employees: Employee[]
+        selectedEmployee: Employee | null
+    } => ({
         employees: [],
-        selectedEmployee: null
+        selectedEmployee: null,
     }),
     actions: {
         async fetchGetEmployees(): Promise<Employee[]> {
@@ -23,12 +36,12 @@ export const useEmployeesStore = defineStore({
             return await addEmployee(employee).json()
         },
 
-        async fetchEditEmployee(employee: EditEmployeeForm) {
+        async fetchUpdateEmployee(employee: UpdateEmployeeForm) {
             return await updateEmployee(employee).json()
         },
 
         async fetchDeleteEmployee(id: number) {
             return await deleteEmployee(id).json()
         },
-    }
-});
+    },
+})

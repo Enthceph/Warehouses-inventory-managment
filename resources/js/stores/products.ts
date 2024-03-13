@@ -1,6 +1,12 @@
-import {defineStore} from 'pinia';
-import {addProduct, deleteProduct, getProduct, getProducts, updateProduct} from "@/api/product";
-import {Product, ProductFormData} from "@/js/types/product.types";
+import { defineStore } from 'pinia'
+import {
+    addProduct,
+    deleteProduct,
+    getProduct,
+    getProducts,
+    updateProduct,
+} from '@/api/product'
+import { Product, ProductFormData } from '@/js/types/product.types'
 
 interface ProductsStore {
     products: Product[]
@@ -26,7 +32,7 @@ export const useProductsStore = defineStore({
             await addProduct(product)
             await this.fetchGetProducts()
         },
-        async fetchEditProduct(id: number, product: ProductFormData) {
+        async fetchUpdateProduct(id: number, product: ProductFormData) {
             await updateProduct(id, product)
             await this.fetchGetProducts()
         },
@@ -34,5 +40,5 @@ export const useProductsStore = defineStore({
             await deleteProduct(id)
             await this.fetchGetProducts()
         },
-    }
-});
+    },
+})

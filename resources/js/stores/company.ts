@@ -1,7 +1,6 @@
-import {defineStore} from 'pinia';
-import {getCompany, getUserCompany, updateCompany} from "@/api/company";
-import {Company, CompanyForEdit} from "@/js/types/company.types";
-
+import { defineStore } from 'pinia'
+import { getCompany, getUserCompany, updateCompany } from '@/api/company'
+import { Company, CompanyForEdit } from '@/js/types/company.types'
 
 export const useCompanyStore = defineStore({
     id: 'companyStore',
@@ -14,7 +13,7 @@ export const useCompanyStore = defineStore({
     getters: {},
     actions: {
         async fetchCompany() {
-            const company = await getUserCompany().json() as Company
+            const company = (await getUserCompany().json()) as Company
             this.setCompany(company)
             return company
         },
@@ -22,9 +21,12 @@ export const useCompanyStore = defineStore({
             return await getCompany(id).json()
         },
         async fetchUpdateCompany(id: number, company: CompanyForEdit) {
-            let edittedCompany = await updateCompany(id, company).json() as Company
-            this.setCompany(edittedCompany)
-            return edittedCompany
+            let updatedCompany = (await updateCompany(
+                id,
+                company
+            ).json()) as Company
+            this.setCompany(updatedCompany)
+            return updatedCompany
         },
         setCompany(company: Company) {
             this.id = company.id
@@ -37,6 +39,6 @@ export const useCompanyStore = defineStore({
             this.name = ''
             this.address = ''
             this.contact_info = ''
-        }
+        },
     },
-});
+})

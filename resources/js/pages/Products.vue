@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import EditProductForm from "@/js/components/Forms/Product/EditProductForm.vue";
+import UpdateProductForm from "@/js/components/Forms/Product/UpdateProductForm.vue";
 import Table from "@/js/components/Table/Table.vue";
 import AddProductForm from "@/js/components/Forms/Product/AddProductForm.vue";
 import DeleteProductForm from "@/js/components/Forms/Product/DeleteProductForm.vue";
-import {useProductsStore} from "@/js/stores/products";
-import {useAuthStore} from "@/js/stores/auth";
+import { useProductsStore } from "@/js/stores/products";
+import { useAuthStore } from "@/js/stores/auth";
 
 const router = useRouter()
 const route = useRoute()
@@ -36,22 +36,18 @@ const columns = computed(
 </script>
 
 <template>
-    <Table
-        :column-names="columnNames"
-        :columns="columns"
-        :data="productStore.products"
-        :hide-action-buttons="authStore.role !== 'Owner'"
-    >
-        <template v-slot:addForm="{submit, cancel}" #addForm>
-            <AddProductForm @cancel="cancel" @submit="submit"/>
+    <Table :column-names="columnNames" :columns="columns" :data="productStore.products"
+        :hide-action-buttons="authStore.role !== 'Owner'">
+        <template v-slot:addForm="{ submit, cancel }" #addForm>
+            <AddProductForm @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
-            <EditProductForm :product="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
+            <UpdateProductForm :product="selected" @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
-            <DeleteProductForm :product="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>
+            <DeleteProductForm :product="selected" @cancel="cancel" @submit="submit" />
         </template>
     </Table>
 

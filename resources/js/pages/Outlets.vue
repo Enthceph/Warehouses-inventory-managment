@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {useOutletsStore} from "@/js/stores/outlets";
+import { useOutletsStore } from "@/js/stores/outlets";
 import AddOutletForm from "@/js/components/Forms/Outlet/AddOutletForm.vue";
 import Table from "@/js/components/Table/Table.vue";
-import EditOutletForm from "@/js/components/Forms/Outlet/EditOutletForm.vue";
+import UpdateOutletForm from "@/js/components/Forms/Outlet/UpdateOutletForm.vue";
 import DeleteOutletForm from "@/js/components/Forms/Outlet/DeleteOutletForm.vue";
-import {useAuthStore} from "@/js/stores/auth";
+import { useAuthStore } from "@/js/stores/auth";
 
 const router = useRouter()
 const route = useRoute()
@@ -39,23 +39,18 @@ const columns = computed(() => {
 </script>
 
 <template>
-    <Table
-        :column-names="columnNames"
-        :columns="columns"
-        :data="outletStore.outlets"
-        :hide-action-buttons="authStore.role !== 'Owner'"
-
-    >
-        <template v-slot:addForm="{submit, cancel}" #addForm>
-            <AddOutletForm @cancel="cancel" @submit="submit"/>
+    <Table :column-names="columnNames" :columns="columns" :data="outletStore.outlets"
+        :hide-action-buttons="authStore.role !== 'Owner'">
+        <template v-slot:addForm="{ submit, cancel }" #addForm>
+            <AddOutletForm @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
-            <EditOutletForm :outlet="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
+            <UpdateOutletForm :outlet="selected" @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
-            <DeleteOutletForm :outlet="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>
+            <DeleteOutletForm :outlet="selected" @cancel="cancel" @submit="submit" />
         </template>
     </Table>
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
-import {useProductCategoriesStore} from "@/js/stores/productCategories";
-import {EditProductCategoryForm, ProductCategory,} from "@/js/types/productCategory.types";
+import { useProductCategoriesStore } from "@/js/stores/productCategories";
+import { UpdateProductCategoryForm, ProductCategory, } from "@/js/types/productCategory.types";
 
 const props = defineProps<{
     category: ProductCategory
@@ -16,9 +16,7 @@ onMounted(() => {
     Object.assign(productCategory, productCategoriesStore.selectedCategory)
 })
 
-// FORM
-
-const productCategory = reactive<EditProductCategoryForm>({
+const productCategory = reactive<UpdateProductCategoryForm>({
     id: props.category.id,
     name: props.category.name
 })
@@ -29,7 +27,7 @@ const submit = async () => {
     try {
         await productCategoriesStore.fetchUpdateProductCategory(productCategory)
     } catch (err) {
-        console.log('EditProductCategoryForm Error', err)
+        console.log('UpdateProductCategoryForm Error', err)
         return
     } finally {
         loading.value = false
@@ -43,15 +41,10 @@ const cancel = () => {
 </script>
 
 <template>
-    <FormWrapper :loading="loading" action-label="Edit" title="Edit product category" @cancel="cancel" @submit="submit">
-        <q-input
-            v-model="productCategory.name"
-            :disable="loading"
-            :rules="[v => v.length >= 2 || `Category must have at least 2 letters`]"
-            hide-bottom-space
-            label="Name"
-            placeholder="Enter category"
-            required
-        />
+    <FormWrapper :loading="loading" action-label="Update" title="Update product category" @cancel="cancel"
+        @submit="submit">
+        <q-input v-model="productCategory.name" :disable="loading"
+            :rules="[v => v.length >= 2 || `Category must have at least 2 letters`]" hide-bottom-space label="Name"
+            placeholder="Enter category" required />
     </FormWrapper>
 </template>

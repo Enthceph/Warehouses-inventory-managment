@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import {setToken} from "@/js/utils/token";
-import {login} from "@/api/auth";
+import { setToken } from "@/js/utils/token";
+import { login } from "@/api/auth";
 
 const emit = defineEmits<{ (e: 'submit'): void; }>();
 
@@ -33,30 +33,18 @@ const submit = async () => {
             <h2 class="text-h5 font-bold">Login</h2>
 
             <div class="form-inputs">
-                <q-input
-                    v-model="data.email"
-                    autocomplete="off"
-                    label="Email"
-                    required
-                    type="email"
-                />
-                <q-input
-                    v-model="data.password"
-                    autocomplete="off"
-                    label="Пароль"
-                    required
-                    type="password"
-                />
+                <q-input v-model="data.email" autocomplete="off" label="Email" required type="email" />
+                <q-input v-model="data.password" autocomplete="off" label="Password" required type="password" />
             </div>
 
             <div class="buttons-group">
                 <q-btn class="w-full" color="info" type="submit">
-                    Увійти
+                    Login
                 </q-btn>
             </div>
 
             <div class="to-registration-form">
-                <router-link to="/registration">Ще не зареєстровані?</router-link>
+                <router-link to="/registration">Not registered yet?</router-link>
             </div>
         </q-form>
     </q-card>
@@ -77,7 +65,7 @@ const submit = async () => {
 }
 
 .to-registration-form {
-    color:     var(--va-primary);
+    color: var(--va-primary);
     font-size: 12px;
 }
 </style>

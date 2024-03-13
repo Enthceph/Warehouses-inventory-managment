@@ -1,13 +1,25 @@
-import {defineStore} from 'pinia';
-import {AddWarehouseForm, EditWarehouseForm, Warehouse} from "@/js/types/warehouse.types";
-import {addWarehouse, deleteWarehouse, getWarehouse, getWarehouses, updateWarehouse} from "@/api/warehouse";
-
+import { defineStore } from 'pinia'
+import {
+    AddWarehouseForm,
+    UpdateWarehouseForm,
+    Warehouse,
+} from '@/js/types/warehouse.types'
+import {
+    addWarehouse,
+    deleteWarehouse,
+    getWarehouse,
+    getWarehouses,
+    updateWarehouse,
+} from '@/api/warehouse'
 
 export const useWarehousesStore = defineStore({
     id: 'warehousesStore',
-    state: (): { warehouses: Warehouse[], selectedWarehouse: Warehouse | null } => ({
+    state: (): {
+        warehouses: Warehouse[]
+        selectedWarehouse: Warehouse | null
+    } => ({
         warehouses: [],
-        selectedWarehouse: null
+        selectedWarehouse: null,
     }),
     actions: {
         async fetchGetWarehouses(): Promise<Warehouse[]> {
@@ -23,7 +35,7 @@ export const useWarehousesStore = defineStore({
             await addWarehouse(warehouse)
             await this.fetchGetWarehouses()
         },
-        async fetchEditWarehouse(warehouse: EditWarehouseForm) {
+        async fetchUpdateWarehouse(warehouse: UpdateWarehouseForm) {
             await updateWarehouse(warehouse)
             await this.fetchGetWarehouses()
         },
@@ -33,4 +45,4 @@ export const useWarehousesStore = defineStore({
             await this.fetchGetWarehouses()
         },
     },
-});
+})

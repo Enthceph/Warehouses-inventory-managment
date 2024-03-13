@@ -4,7 +4,7 @@ export interface Employee {
     email: string
     role_id: number
     role: {
-        id: number,
+        id: number
         name: string
     }
     company_id: number
@@ -19,7 +19,7 @@ export interface AddEmployeeForm {
     role_id: Employee['role_id']
 }
 
-export interface EditEmployeeForm {
+export interface UpdateEmployeeForm {
     id: Employee['id']
     full_name?: Employee['full_name']
     email?: Employee['email']

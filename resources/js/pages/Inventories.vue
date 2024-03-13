@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {useInventoriesStore} from "@/js/stores/inventories";
+import { useInventoriesStore } from "@/js/stores/inventories";
 import Table from "@/js/components/Table/Table.vue";
-import {Warehouse} from "@/js/types/warehouse.types";
+import { Warehouse } from "@/js/types/warehouse.types";
 import AddInventoryForm from "@/js/components/Forms/Inventory/AddInventoryForm.vue";
-import EditInventoryForm from "@/js/components/Forms/Inventory/EditInventoryForm.vue";
 import DeleteInventoryForm from "@/js/components/Forms/Inventory/DeleteInventoryForm.vue";
+import UpdateInventoryForm from "../components/Forms/Inventory/UpdateInventoryForm.vue";
 
 const inventoriesStore = useInventoriesStore()
 
@@ -41,21 +41,17 @@ const columns = computed(() => {
 </script>
 
 <template>
-    <Table
-        :column-names="columnNames"
-        :columns="columns"
-        :data="inventoriesStore.inventories"
-    >
-        <template v-slot:addForm="{submit, cancel}" #addForm>
-            <AddInventoryForm @cancel="cancel" @submit="submit"/>
+    <Table :column-names="columnNames" :columns="columns" :data="inventoriesStore.inventories">
+        <template v-slot:addForm="{ submit, cancel }" #addForm>
+            <AddInventoryForm @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
-            <EditInventoryForm :inventory="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
+            <UpdateInventoryForm :inventory="selected" @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
-            <DeleteInventoryForm :inventory="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>
+            <DeleteInventoryForm :inventory="selected" @cancel="cancel" @submit="submit" />
         </template>
     </Table>
 </template>

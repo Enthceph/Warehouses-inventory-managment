@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import Table from "@/js/components/Table/Table.vue";
-import {useAuthStore} from "@/js/stores/auth";
-import {Product} from "@/js/types/product.types";
+import { useAuthStore } from "@/js/stores/auth";
+import { Product } from "@/js/types/product.types";
 
-import {useDialogPluginComponent} from 'quasar'
-import {useProductCategoriesStore} from "@/js/stores/productCategories";
+import { useDialogPluginComponent } from 'quasar'
+import { useProductCategoriesStore } from "@/js/stores/productCategories";
 import AddProductCategoryForm from "@/js/components/Forms/ProductCategory/AddProductCategoryForm.vue";
-import EditProductCategoryForm from "@/js/components/Forms/ProductCategory/EditProductCategoryForm.vue";
+import UpdateProductCategoryForm from "@/js/components/Forms/ProductCategory/UpdateProductCategoryForm.vue";
 import DeleteProductCategoryForm from "@/js/components/Forms/ProductCategory/DeleteProductCategoryForm.vue";
 
 defineEmits([...useDialogPluginComponent.emits]);
-const {dialogRef, onDialogHide} = useDialogPluginComponent()
+const { dialogRef, onDialogHide } = useDialogPluginComponent()
 
 const router = useRouter()
 const route = useRoute()
@@ -18,7 +18,7 @@ const productCategoriesStore = useProductCategoriesStore()
 const authStore = useAuthStore()
 
 const showAddProductCategoryModal = ref(false)
-const showEditProductCategoryModal = ref(false)
+const showUpdateProductCategoryModal = ref(false)
 const showDeleteProductCategoryModal = ref(false)
 
 onMounted(async () => {
@@ -30,9 +30,9 @@ const onRowAdd = () => {
     showAddProductCategoryModal.value = true
 }
 
-const onRowEdit = (row: Product) => {
+const onRowUpdate = (row: Product) => {
     productCategoriesStore.selectedCategory = row
-    showEditProductCategoryModal.value = true
+    showUpdateProductCategoryModal.value = true
 }
 
 const onRowDelete = (row: Product) => {
@@ -62,22 +62,18 @@ const tableData = computed(() => {
 </script>
 
 <template>
-    <Table
-        :column-names="columnNames"
-        :columns="tableData"
-        :data="productCategoriesStore.categories"
-        :hide-action-buttons="authStore.role !== 'Owner'"
-    >
-        <template v-slot:addForm="{submit, cancel}" #addForm>
-            <AddProductCategoryForm @cancel="cancel" @submit="submit"/>
+    <Table :column-names="columnNames" :columns="tableData" :data="productCategoriesStore.categories"
+        :hide-action-buttons="authStore.role !== 'Owner'">
+        <template v-slot:addForm="{ submit, cancel }" #addForm>
+            <AddProductCategoryForm @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
-            <EditProductCategoryForm :category="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
+            <UpdateProductCategoryForm :category="selected" @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
-            <DeleteProductCategoryForm :category="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>
+            <DeleteProductCategoryForm :category="selected" @cancel="cancel" @submit="submit" />
         </template>
     </Table>
 

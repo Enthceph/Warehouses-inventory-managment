@@ -2,9 +2,10 @@
 import { useEmployeesStore } from "@/js/stores/employees";
 import Table from "@/js/components/Table/Table.vue";
 import AddEmployeeForm from "@/js/components/Forms/Employee/AddEmployeeForm.vue";
-import EditEmployeeForm from "@/js/components/Forms/Employee/EditEmployeeForm.vue";
+import UpdateEmployeeForm from "@/js/components/Forms/Employee/UpdateEmployeeForm.vue";
 import DeleteEmployeeForm from "@/js/components/Forms/Employee/DeleteEmployeeForm.vue";
 import { useAuthStore } from "@/js/stores/auth";
+import { Employee } from "../types/employee.types";
 
 const employeeStore = useEmployeesStore()
 const authStore = useAuthStore()
@@ -42,8 +43,8 @@ const columns = computed(() => {
             <AddEmployeeForm @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:editForm="{ submit, cancel, selected }" #editForm>
-            <EditEmployeeForm :employee="selected" @cancel="cancel" @submit="submit" />
+        <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
+            <UpdateEmployeeForm :employee="selected" @cancel="cancel" @submit="submit" />
         </template>
 
         <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>

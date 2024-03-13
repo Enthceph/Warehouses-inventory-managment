@@ -1,12 +1,16 @@
-import {defineStore} from 'pinia';
+import { defineStore } from 'pinia'
 import {
     addProductCategory,
     deleteProductCategory,
     getProductCategories,
     getProductCategory,
-    updateProductCategory
-} from "@/api/productCategories";
-import {AddProductCategoryForm, EditProductCategoryForm, ProductCategory} from "@/js/types/productCategory.types";
+    updateProductCategory,
+} from '@/api/productCategories'
+import {
+    AddProductCategoryForm,
+    UpdateProductCategoryForm,
+    ProductCategory,
+} from '@/js/types/productCategory.types'
 
 interface ProductCategoriesStore {
     categories: ProductCategory[]
@@ -19,7 +23,7 @@ export const useProductCategoriesStore = defineStore({
     state: (): ProductCategoriesStore => ({
         categories: [],
         selectedCategory: null,
-        loading: true
+        loading: true,
     }),
     actions: {
         async fetchGetProductCategories(): Promise<ProductCategory[]> {
@@ -40,7 +44,7 @@ export const useProductCategoriesStore = defineStore({
             await addProductCategory(category)
             await this.fetchGetProductCategories()
         },
-        async fetchUpdateProductCategory(category: EditProductCategoryForm) {
+        async fetchUpdateProductCategory(category: UpdateProductCategoryForm) {
             await updateProductCategory(category)
             await this.fetchGetProductCategories()
         },
@@ -48,5 +52,5 @@ export const useProductCategoriesStore = defineStore({
             await deleteProductCategory(id)
             await this.fetchGetProductCategories()
         },
-    }
-});
+    },
+})

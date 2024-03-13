@@ -1,11 +1,17 @@
-import {defineStore} from 'pinia';
-import {addInventory, deleteInventory, getInventories, getInventory, updateInventory} from "@/api/inventory";
-import {Inventory, InventoryFormData} from "@/js/types/inventory.types";
+import { defineStore } from 'pinia'
+import {
+    addInventory,
+    deleteInventory,
+    getInventories,
+    getInventory,
+    updateInventory,
+} from '@/api/inventory'
+import { Inventory, InventoryFormData } from '@/js/types/inventory.types'
 
 export const useInventoriesStore = defineStore({
     id: 'inventoriesStore',
     state: (): { inventories: Inventory[] } => ({
-        inventories: []
+        inventories: [],
     }),
     actions: {
         async fetchGetInventories(): Promise<Inventory[]> {
@@ -20,11 +26,11 @@ export const useInventoriesStore = defineStore({
         async fetchAddInventory(inventory: InventoryFormData) {
             await addInventory(inventory)
         },
-        async fetchEditInventory(id: number, inventory: InventoryFormData) {
+        async fetchUpdateInventory(id: number, inventory: InventoryFormData) {
             await updateInventory(id, inventory)
         },
         async fetchDeleteInventory(id: number) {
             await deleteInventory(id)
         },
     },
-});
+})

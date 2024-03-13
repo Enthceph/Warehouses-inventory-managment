@@ -8,11 +8,11 @@ const props = defineProps<{
     columnNames: string[];
     data: {
         id: number;
-        [key: string]: string | number | null;
+        [key: string]: string | number | null | object;
     }[];
     columns: {
         id: number;
-        [key: string]: string | number | null;
+        [key: string]: string | number | null | object;
     }[];
     hideActionButtons?: boolean;
 }>();
@@ -21,19 +21,21 @@ const props = defineProps<{
 const emit = defineEmits(['rowClicked', ...useDialogPluginComponent.emits])
 const { dialogRef, onDialogHide } = useDialogPluginComponent()
 
-const selectedRow = reactive({})
+const selectedRow = reactive<{
+    [key: string]: string | number | null | object;
+}>({})
 
 const addModal = ref(false)
-const editModal = ref(false)
+const updateModal = ref(false)
 const deleteModal = ref(false)
 
 const showAddModal = () => {
     addModal.value = true
 }
 
-const showEditModal = (row: Object) => {
+const showUpdateModal = (row: Object) => {
     Object.assign(selectedRow, row)
-    editModal.value = true
+    updateModal.value = true
 }
 
 const showDeleteModal = (row: Object) => {
@@ -45,9 +47,9 @@ const closeAddModal = () => {
     addModal.value = false
 }
 
-const closeEditModal = () => {
+const closeUpdateModal = () => {
     Object.assign(selectedRow, {})
-    editModal.value = false
+    updateModal.value = false
 }
 
 const closeDeleteModal = () => {
@@ -70,7 +72,8 @@ const closeDeleteModal = () => {
 
                     <td v-if="!props.hideActionButtons" class="action-buttons">
                         <div class="flex justify-end items-center">
-                            <q-btn class="btn-edit" flat icon="mode_edit" @click="showEditModal(props.data[index])" />
+                            <q-btn class="btn-update" flat icon="mode_update"
+                                @click="showUpdateModal(props.data[index])" />
                             <q-btn class="btn-delete" flat icon="delete" @click="showDeleteModal(props.data[index])" />
                         </div>
                     </td>
@@ -91,8 +94,8 @@ const closeDeleteModal = () => {
         <slot :cancel="closeAddModal" :submit="closeAddModal" name="addForm" />
     </q-dialog>
 
-    <q-dialog ref="dialogRef" v-model="editModal" @hide="onDialogHide">
-        <slot :cancel="closeEditModal" :selected="selectedRow" :submit="closeEditModal" name="editForm" />
+    <q-dialog ref="dialogRef" v-model="updateModal" @hide="onDialogHide">
+        <slot :cancel="closeUpdateModal" :selected="selectedRow" :submit="closeUpdateModal" name="updateForm" />
     </q-dialog>
 
     <q-dialog ref="dialogRef" v-model="deleteModal" @hide="onDialogHide">
@@ -104,7 +107,7 @@ const closeDeleteModal = () => {
     color: lime;
 }
 
-.btn-edit {
+.btn-update {
     color: orange;
 }
 

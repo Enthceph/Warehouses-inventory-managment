@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import {useWarehousesStore} from "@/js/stores/warehouses";
+import { useWarehousesStore } from "@/js/stores/warehouses";
 import AddWarehouseForm from "@/js/components/Forms/Warehouse/AddWarehouseForm.vue";
 import Table from "@/js/components/Table/Table.vue";
-import EditWarehouseForm from "@/js/components/Forms/Warehouse/EditWarehouseForm.vue";
+import UpdateWarehouseForm from "@/js/components/Forms/Warehouse/UpdateWarehouseForm.vue";
 import DeleteWarehouseForm from "@/js/components/Forms/Warehouse/DeleteWarehouseForm.vue";
-import {useAuthStore} from "@/js/stores/auth";
+import { useAuthStore } from "@/js/stores/auth";
 
 const router = useRouter()
 const route = useRoute()
@@ -37,22 +37,18 @@ const tableData = computed(() => {
 </script>
 
 <template>
-    <Table
-        :column-names="columnNames"
-        :columns="tableData"
-        :data="warehouseStore.warehouses"
-        :hide-action-buttons="authStore.role !== 'Owner'"
-    >
-        <template v-slot:addForm="{submit, cancel}" #addForm>
-            <AddWarehouseForm @cancel="cancel" @submit="submit"/>
+    <Table :column-names="columnNames" :columns="tableData" :data="warehouseStore.warehouses"
+        :hide-action-buttons="authStore.role !== 'Owner'">
+        <template v-slot:addForm="{ submit, cancel }" #addForm>
+            <AddWarehouseForm @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:editForm="{submit, cancel, selected}" #editForm>
-            <EditWarehouseForm :warehouse="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
+            <UpdateWarehouseForm :warehouse="selected" @cancel="cancel" @submit="submit" />
         </template>
 
-        <template v-slot:deleteForm="{submit, cancel , selected}" #deleteForm>
-            <DeleteWarehouseForm :warehouse="selected" @cancel="cancel" @submit="submit"/>
+        <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>
+            <DeleteWarehouseForm :warehouse="selected" @cancel="cancel" @submit="submit" />
         </template>
     </Table>
 
