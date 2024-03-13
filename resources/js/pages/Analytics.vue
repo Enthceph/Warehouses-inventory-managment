@@ -110,18 +110,6 @@ const isObject = (objValue: any): boolean => {
             <q-select name="products" label="Products" v-model="filterModels.products" :options="filterOptions.products"
                 multiple filled />
 
-            <div class="q-pa-md">
-                <div>Quantity</div>
-
-                <q-range label v-model="filterModels.quantity" :max="filterOptions.quantity?.max"
-                    :min="filterOptions.quantity?.min" />
-
-                <div class="minmax flex justify-between">
-                    <span>{{ filterOptions.quantity?.min }}</span>
-                    <span>{{ filterOptions.quantity?.max }}</span>
-                </div>
-            </div>
-
             <q-select name="warehouses" label="Warehouses" v-model="filterModels.warehouses"
                 :options="filterOptions.warehouses" multiple filled />
 
@@ -130,6 +118,8 @@ const isObject = (objValue: any): boolean => {
 
             <q-select name="additional_info" label="Additional info" v-model="filterModels.additional_info"
                 :options="filterOptions.additional_info" multiple filled />
+
+            <div></div>
 
             <div class="q-pa-md">
                 <div class="q-mb-sm text-center">
@@ -190,11 +180,15 @@ const isObject = (objValue: any): boolean => {
                     <span>{{ filterOptions.total_value?.max }}</span>
                 </div>
             </div>
+            <div class="q-pa-md">
+                <div>Quantity</div>
 
-            <div class="q-pa-md text-center">
-                <div class="q-mb-sm  text-center">Download excel</div>
-                <div class="px-6 py-4 text-center">
-                    <q-btn class="add-button" color="green" icon="note" round />
+                <q-range label v-model="filterModels.quantity" :max="filterOptions.quantity?.max"
+                    :min="filterOptions.quantity?.min" />
+
+                <div class="minmax flex justify-between">
+                    <span>{{ filterOptions.quantity?.min }}</span>
+                    <span>{{ filterOptions.quantity?.max }}</span>
                 </div>
             </div>
         </div>
@@ -207,15 +201,6 @@ const isObject = (objValue: any): boolean => {
 
     <Table v-if="filteredInventory.length > 0" :column-names="columnNames" :columns="tableData" :data="tableData"
         :hide-action-buttons="true" />
-
-    <!-- <ul class="pagination">
-           <li><a class="active" href="#">1</a></li>
-           <li><a href="#">2</a></li>
-           <li><a href="#">3</a></li>
-           <li><a href="#">4</a></li>
-           <li><span>...</span></li>
-           <li><a href="#">7</a></li>
-      </ul> -->
 </template>
 
 <style scoped>
@@ -225,6 +210,7 @@ const isObject = (objValue: any): boolean => {
     display: grid;
     gap: 10px;
     grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 2;
     padding: 20px;
 }
 
