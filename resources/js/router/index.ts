@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('../pages/Settings.vue'),
         meta: {
             middleware: [auth],
-            description: 'Настройки',
+            description: 'Settings',
         },
     },
     {
@@ -58,88 +58,36 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/warehouses',
-        children: [
-            {
-                path: '',
-                name: 'Warehouses',
-                component: () => import('../pages/Warehouses/Warehouses.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-            {
-                path: ':warehouse',
-                name: 'Склад',
-                component: () => import('../pages/Warehouses/Warehouse.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-        ],
+        name: 'Warehouses',
+        component: () => import('../pages/Warehouses.vue'),
+        meta: {
+            middleware: [auth],
+        },
     },
     {
         path: '/inventories',
-        children: [
-            {
-                path: '',
-                name: 'Inventories',
-                component: () => import('../pages/Inventories/Inventories.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-            {
-                path: ':inventory',
-                name: 'Inventory',
-                component: () => import('../pages/Inventories/Inventory.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-        ],
+        name: 'Inventories',
+        component: () => import('../pages/Inventories.vue'),
+        meta: {
+            middleware: [auth],
+        },
     },
     {
         path: '/outlets',
-        children: [
-            {
-                path: '',
-                name: 'Outlets',
-                component: () => import('../pages/Outlets/Outlets.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-            {
-                path: ':outlet',
-                name: 'Outlet',
-                component: () => import('../pages/Outlets/Outlet.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-        ],
+        name: 'Outlets',
+        component: () => import('../pages/Outlets.vue'),
+        meta: {
+            middleware: [auth],
+        },
     },
 
     {
         path: '/employees',
-        children: [
-            {
-                path: '',
-                name: 'Employees',
-                component: () => import('../pages/Employees/Employees.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-            {
-                path: ':Employee',
-                name: 'Employee',
-                component: () => import('../pages/Employees/Employee.vue'),
-                meta: {
-                    middleware: [auth],
-                },
-            },
-        ],
+        name: 'Employees',
+        component: () => import('../pages/Employees.vue'),
+        meta: {
+            middleware: [auth],
+        },
     },
 
     {

@@ -11,30 +11,6 @@ onMounted(async () => {
 
 const filteredInventory = ref<Inventory[]>([])
 
-const columnNames = [
-    'id',
-    'Product',
-    'Quantity',
-    'Unit price',
-    'Total value',
-    'Warehouse',
-    'Arrived at warehouse at',
-    'Expires at',
-]
-
-const tableData = computed(() => filteredInventory.value.map(inventory => {
-    return {
-        id: inventory.id,
-        product: inventory.product.name,
-        quantity: inventory.quantity,
-        unit_price: inventory.unit_price,
-        total_value: inventory.total_value,
-        warehouse: inventory.warehouse.name,
-        created_at: new Date(inventory.created_at).toLocaleDateString('ru-RU'),
-        expires_at: inventory.expires_at !== null ? new Date(inventory.expires_at).toLocaleDateString('ru-RU') : null,
-    }
-}))
-
 const filterOptions = reactive<AnalyticsFilterOptions>({
     products: [],
     additional_info: [],
@@ -77,6 +53,30 @@ const clear = () => {
     filterModels.unit_price = undefined
     filterModels.total_value = undefined
 }
+
+const tableColumnNames = [
+    'id',
+    'Product',
+    'Quantity',
+    'Unit price',
+    'Total value',
+    'Warehouse',
+    'Arrived at warehouse at',
+    'Expires at',
+]
+
+const tableData = computed(() => filteredInventory.value.map(inventory => {
+    return {
+        id: inventory.id,
+        product: inventory.product.name,
+        quantity: inventory.quantity,
+        unit_price: inventory.unit_price,
+        total_value: inventory.total_value,
+        warehouse: inventory.warehouse.name,
+        created_at: new Date(inventory.created_at).toLocaleDateString('ru-RU'),
+        expires_at: inventory.expires_at !== null ? new Date(inventory.expires_at).toLocaleDateString('ru-RU') : null,
+    }
+}))
 
 const filterModelsToUrlQuery = (filterModels: AnalyticsFilterModels) => {
     const query: { [key: string]: string | number; } = {}
@@ -194,12 +194,12 @@ const isObject = (objValue: any): boolean => {
         </div>
 
         <div class="buttons">
-            <button class="btn-1" type="submit">Search</button>
-            <button class="btn-2" type="reset" @click="clear">Clear</button>
+            <q-btn unelevated class="btn-1" type="submit">Search</q-btn>
+            <q-btn unelevated class="btn-2" type="reset" @click="clear">Clear</q-btn>
         </div>
     </q-form>
 
-    <Table v-if="filteredInventory.length > 0" :column-names="columnNames" :columns="tableData" :data="tableData"
+    <Table v-if="filteredInventory.length > 0" :column-names="tableColumnNames" :columns="tableData" :data="tableData"
         :hide-action-buttons="true" />
 </template>
 
