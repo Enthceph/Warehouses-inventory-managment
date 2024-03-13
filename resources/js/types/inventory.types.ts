@@ -56,3 +56,39 @@ export interface AnalyticsFilterOptions {
         | undefined
         | Date
 }
+export interface AnalyticsFilterModels {
+    products: String[] | undefined
+    warehouses: String[] | undefined
+    outlets: String[] | undefined
+    additional_info: String[] | undefined
+    quantity:
+        | {
+              min: number
+              max: number
+          }
+        | undefined
+    created_at:
+        | {
+              from: number
+              to: number
+          }
+        | undefined
+    expires_at:
+        | {
+              from: number
+              to: number
+          }
+        | undefined
+    unit_price:
+        | {
+              min: number
+              max: number
+          }
+        | undefined
+    total_value:
+        | {
+              min: number
+              max: number
+          }
+        | undefined
+}

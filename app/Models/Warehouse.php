@@ -16,7 +16,8 @@ class Warehouse extends Model
         'name',
         'location',
         'contact_info',
-        'company_id'
+        'company_id',
+        'outlet_id'
     ];
 
     public function inventory()
@@ -27,5 +28,9 @@ class Warehouse extends Model
     public function company()
     {
         return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+    public function outlet()
+    {
+        return $this->belongsTo(Outlet::class, 'outlet_id', 'id');
     }
 }

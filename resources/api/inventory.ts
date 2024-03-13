@@ -2,7 +2,10 @@ import apiRequest from '../js/utils/request'
 import { InventoryFormData } from '@/js/types/inventory.types'
 
 // TODO добавить return types
-export const getInventories = () => apiRequest.get('inventory')
+export const getInventories = (params?: { [key: string]: string | number }) =>
+    apiRequest.get('inventory', {
+        searchParams: params,
+    })
 
 export const getInventory = (id: Number) => apiRequest.get(`inventory/${id}`)
 
