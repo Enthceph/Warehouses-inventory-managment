@@ -5,9 +5,15 @@ export interface Company {
     contact_info: string
 }
 
-export interface CompanyForEdit {
+export interface CompanyForUpdate {
     id: number
     name?: string
     address?: string
     contact_info?: string
+}
+
+export interface CompanyForm {
+    name: Company['name']
+    address?: Company['address']
+    contact_info?: Company['contact_info']
 }

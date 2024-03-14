@@ -6,7 +6,7 @@ import Table from "../components/Table/Table.vue";
 const router = useRouter()
 
 onMounted(async () => {
-    Object.assign(filterOptions, await getAnalyticsFilterInfo().json())
+    Object.assign(filterOptions, await getAnalyticsFilterInfo())
 })
 
 const filteredInventory = ref<Inventory[]>([])
@@ -39,7 +39,7 @@ const submit = async () => {
 
     router.replace({ query })
 
-    filteredInventory.value = await getInventories(query).json()
+    filteredInventory.value = await getInventories(query)
 }
 
 const clear = () => {

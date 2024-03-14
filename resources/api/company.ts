@@ -1,16 +1,25 @@
+import { Company, CompanyForUpdate } from '@/js/types/company.types'
 import apiRequest from '../js/utils/request'
+import { JSONResponse } from '@/js/types/response.types'
 
-// TODO проверить на работоспособность
-export const getUserCompany = () => apiRequest.get('company')
+export const getUserCompany = () => apiRequest.get('company').json<Company>()
 
-export const getCompany = (id: Number) => apiRequest.get(`company/${id}`)
+export const getCompany = (id: Number) =>
+    apiRequest.get(`company/${id}`).json<Company>()
 
-export const addCompany = (data: Object) => apiRequest.post(`company`, {
-    json: data,
-})
+export const addCompany = (company: Company) =>
+    apiRequest
+        .post(`company`, {
+            json: company,
+        })
+        .json<JSONResponse>()
 
-export const updateCompany = (id: Number, data: Object) => apiRequest.patch(`company/${id}`, {
-    json: data,
-})
+export const updateCompany = (id: Number, company: CompanyForUpdate) =>
+    apiRequest
+        .patch(`company/${id}`, {
+            json: company,
+        })
+        .json<Company>()
 
-export const deleteCompany = (id: Number) => apiRequest.delete(`company/${id}`)
+export const deleteCompany = (id: Number) =>
+    apiRequest.delete(`company/${id}`).json<JSONResponse>()

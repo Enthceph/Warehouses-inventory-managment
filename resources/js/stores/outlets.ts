@@ -17,12 +17,12 @@ export const useOutletsStore = defineStore({
     actions: {
         async fetchGetOutlets(): Promise<Outlet[]> {
             let res = await getOutlets()
-            this.outlets = await res.json()
+            this.outlets = await res
             return this.outlets
         },
         async fetchGetOutlet(id: number): Promise<Outlet> {
             let res = await getOutlet(id)
-            return await res.json()
+            return await res
         },
         async fetchAddOutlet(outlet: OutletAddForm) {
             await addOutlet(outlet)

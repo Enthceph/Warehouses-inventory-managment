@@ -20,13 +20,13 @@ export const useProductsStore = defineStore({
     actions: {
         async fetchGetProducts(): Promise<Product[]> {
             let res = await getProducts()
-            this.products = await res.json()
+            this.products = await res
 
             return this.products
         },
         async fetchGetProduct(id: number): Promise<Product> {
             let res = await getProduct(id)
-            return await res.json()
+            return await res
         },
         async fetchAddProduct(product: ProductFormData) {
             await addProduct(product)

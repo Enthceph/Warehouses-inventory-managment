@@ -1,26 +1,37 @@
+import { JSONResponse } from '@/js/types/response.types'
 import apiRequest from '../js/utils/request'
-import { InventoryFormData } from '@/js/types/inventory.types'
+import {
+    AnalyticsFilterOptions,
+    Inventory,
+    InventoryFormData,
+} from '@/js/types/inventory.types'
 
-// TODO добавить return types
 export const getInventories = (params?: { [key: string]: string | number }) =>
-    apiRequest.get('inventory', {
-        searchParams: params,
-    })
+    apiRequest
+        .get('inventory', {
+            searchParams: params,
+        })
+        .json<Inventory[]>()
 
-export const getInventory = (id: Number) => apiRequest.get(`inventory/${id}`)
+export const getInventory = (id: Number) =>
+    apiRequest.get(`inventory/${id}`).json<Inventory>()
 
 export const addInventory = (data: InventoryFormData) =>
-    apiRequest.post(`inventory`, {
-        json: data,
-    })
+    apiRequest
+        .post(`inventory`, {
+            json: data,
+        })
+        .json<Inventory>()
 
 export const updateInventory = (id: Number, data: InventoryFormData) =>
-    apiRequest.patch(`inventory/${id}`, {
-        json: data,
-    })
+    apiRequest
+        .patch(`inventory/${id}`, {
+            json: data,
+        })
+        .json<Inventory>()
 
 export const deleteInventory = (id: Number) =>
-    apiRequest.delete(`inventory/${id}`)
+    apiRequest.delete(`inventory/${id}`).json<JSONResponse>()
 
 export const getAnalyticsFilterInfo = () =>
-    apiRequest.get('getAnalyticsFilterInfo')
+    apiRequest.get('getAnalyticsFilterInfo').json<AnalyticsFilterOptions>()

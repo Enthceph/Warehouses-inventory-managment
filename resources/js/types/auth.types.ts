@@ -7,11 +7,11 @@ export interface AuthUser {
     created_at: Date | null
 }
 
-export type LoginData = {
-    email: AuthUser["email"];
-    password: string;
-};
+export type LoginForm = {
+    email: AuthUser['email']
+    password: string
+}
 
 export type LoginResponse = {
-    access_token: string;
-};
+    access_token: string
+}

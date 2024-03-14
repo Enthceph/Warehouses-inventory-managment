@@ -16,12 +16,12 @@ export const useInventoriesStore = defineStore({
     actions: {
         async fetchGetInventories(): Promise<Inventory[]> {
             let res = await getInventories()
-            this.inventories = await res.json()
+            this.inventories = await res
             return this.inventories
         },
         async fetchGetInventory(id: number): Promise<Inventory> {
             let res = await getInventory(id)
-            return await res.json()
+            return await res
         },
         async fetchAddInventory(inventory: InventoryFormData) {
             await addInventory(inventory)

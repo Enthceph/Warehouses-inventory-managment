@@ -1,3 +1,4 @@
-import apiRequest from "@/js/utils/request";
+import { Role } from '@/js/types/role.types'
+import apiRequest from '@/js/utils/request'
 
-export const getRoles = () => apiRequest.get('role')
+export const getRoles = () => apiRequest.get('role').json<Role[]>()
