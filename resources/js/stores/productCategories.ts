@@ -5,7 +5,7 @@ import {
     getProductCategories,
     getProductCategory,
     updateProductCategory,
-} from '@/api/productCategories'
+} from '@/js/api/productCategories'
 import {
     AddProductCategoryForm,
     UpdateProductCategoryForm,

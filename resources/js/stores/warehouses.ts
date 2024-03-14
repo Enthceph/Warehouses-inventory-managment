@@ -10,7 +10,7 @@ import {
     getWarehouse,
     getWarehouses,
     updateWarehouse,
-} from '@/api/warehouse'
+} from '@/js/api/warehouse'
 
 export const useWarehousesStore = defineStore({
     id: 'warehousesStore',

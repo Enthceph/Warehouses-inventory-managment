@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getAnalyticsFilterInfo, getInventories } from "@/api/inventory";
-import { AnalyticsFilterModels, AnalyticsFilterOptions, Inventory } from "../types/inventory.types";
+import {  getAnalytics FilterInfo, getInventori es } from " @/api/inventory";
+import { An alyticsFilte rModels, AnalyticsFilterOptions, Inventory } from "../types/inventory.types";
 import Table from "../components/Table/Table.vue";
 
 const router = useRouter()
@@ -11,8 +11,8 @@ onMounted(async () => {
 
 const filteredInventory = ref<Inventory[]>([])
 
-const filterOptions = reactive<AnalyticsFilterOptions>({
-    products: [],
+c filterOptions = reactive<AnalyticsFil terOptions>({
+     products: [],
     additional_info: [],
     warehouses: [],
     outlets: [],
@@ -291,3 +291,4 @@ const isObject = (objValue: any): boolean => {
     color: white;
 }
 </style>
+@/js/api/inventory

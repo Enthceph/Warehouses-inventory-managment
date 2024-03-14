@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getCompany, getUserCompany, updateCompany } from '@/api/company'
+import { getCompany, getUserCompany, updateCompany } from '@/js/api/company'
 import { Company, CompanyForUpdate } from '@/js/types/company.types'
 
 export const useCompanyStore = defineStore({

@@ -50,7 +50,7 @@ class WarehouseController extends Controller
         return $warehouse;
     }
 
-    public function destroy(Request $request, Warehouse $warehouse)
+    public function destroy(Request $request, Warehouse $warehouse) : Response
     {
         $this->authorize('delete', $warehouse);
 

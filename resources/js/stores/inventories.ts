@@ -5,7 +5,7 @@ import {
     getInventories,
     getInventory,
     updateInventory,
-} from '@/api/inventory'
+} from '@/js/api/inventory'
 import { Inventory, InventoryFormData } from '@/js/types/inventory.types'
 
 export const useInventoriesStore = defineStore({

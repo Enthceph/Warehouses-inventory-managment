@@ -5,7 +5,7 @@ import {
     getOutlet,
     getOutlets,
     updateOutlet,
-} from '@/api/outlet'
+} from '@/js/api/outlet'
 import { Outlet, OutletAddForm, OutletFormData } from '@/js/types/outlet.types'
 
 export const useOutletsStore = defineStore({

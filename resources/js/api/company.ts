@@ -1,5 +1,5 @@
 import { Company, CompanyForUpdate } from '@/js/types/company.types'
-import apiRequest from '../js/utils/request'
+import apiRequest from '../utils/request'
 import { JSONResponse } from '@/js/types/response.types'
 
 export const getUserCompany = () => apiRequest.get('company').json<Company>()

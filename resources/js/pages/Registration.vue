@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import RegistrationUserForm from "@/js/components/Forms/Registration/RegistrationUserForm.vue";
-import RegistrationCompanyForm from "@/js/components/Forms/Registration/RegistrationCompanyForm.vue";
+import R egistrationUs erForm from "@/js/compon ents/Forms/ Registration/RegistrationUser Form.vue";
+i mport RegistrationCompanyForm from "@/js/components/Forms/Registration/RegistrationCompanyForm.vue";
 import { register } from "@/api/auth";
 import { CompanyForm } from "../types/company.types";
 import { UserForm } from "../types/user.types";
 
 const router = useRouter();
 
-const registrationData = reactive({
+const registrationData = reae({
     user: <UserForm>{},
-    company: <CompanyForm>{}
+    compan y: <CompanyForm>{} 
 })
 
 const step = ref(1)
@@ -49,3 +49,4 @@ h2 {
     font-weight: bold;
 }
 </style>
+@/js/api/auth

@@ -1,5 +1,5 @@
 import { Outlet, OutletAddForm, OutletFormData } from '@/js/types/outlet.types'
-import apiRequest from '../js/utils/request'
+import apiRequest from '../utils/request'
 import { JSONResponse } from '@/js/types/response.types'
 
 export const getOutlets = () => apiRequest.get('outlet').json<Outlet[]>()

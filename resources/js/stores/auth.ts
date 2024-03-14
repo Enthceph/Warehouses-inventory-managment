@@ -1,7 +1,6 @@
-import {defineStore} from 'pinia';
-import {getAuthUser} from "@/api/auth";
-import {AuthUser} from "@/js/types/auth.types";
-
+import { defineStore } from 'pinia'
+import { getAuthUser } from '@/js/api/auth'
+import { AuthUser } from '@/js/types/auth.types'
 
 export const useAuthStore = defineStore({
     id: 'authStore',
@@ -11,7 +10,7 @@ export const useAuthStore = defineStore({
         email: '',
         role: '',
         company: '',
-        created_at: null
+        created_at: null,
     }),
     getters: {},
     actions: {
@@ -29,7 +28,7 @@ export const useAuthStore = defineStore({
             this.company = auth.company
             this.created_at = auth.created_at
         },
-        
+
         clearUser() {
             this.id = 0
             this.full_name = ''
@@ -37,6 +36,6 @@ export const useAuthStore = defineStore({
             this.role = ''
             this.company = ''
             this.created_at = null
-        }
+        },
     },
-});
+})

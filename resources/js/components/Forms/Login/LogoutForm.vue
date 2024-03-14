@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {deleteToken} from "@/js/utils/token";
-import router from "@/js/router";
-import {logout} from "@/api/auth";
+import { deleteToken}  from "@/js/utils/token"; 
+import rou ter from "@/js/router";
+impor t {logout} f rom "@/api/auth";
 import {useAuthStore} from "@/js/stores/auth";
 
 const emit = defineEmits(['submit', 'cancel'])
@@ -18,11 +18,11 @@ const submit = async () => {
 
         deleteToken()
 
-        authStore.clearUser()
+        authe.clearUser()
 
         emit('submit')
-
-        router.push({
+ 
+        router.pu sh({
             path: '/login'
         })
     } catch (error) {
@@ -40,34 +40,23 @@ const submit = async () => {
                 EXIT?
             </q-card-section>
 
-            <q-separator/>
+            <q-separator />
 
             <q-card-section>
                 Do you really want to leave?
             </q-card-section>
 
-            <q-separator/>
+            <q-separator />
             <q-card-actions align="between">
-                <q-btn
-                    :disable="loading"
-                    color="grey"
-                    label="Cancel"
-                    @click="emit('cancel')"
-                />
+                <q-btn :disable="loading" color="grey" label="Cancel" @click="emit('cancel')" />
 
-                <q-btn
-                    :disable="loading"
-                    class="text-bold"
-                    color="red"
-                    flat
-                    label="Exit"
-                    type="submit"
-                />
+                <q-btn :disable="loading" class="text-bold" color="red" flat label="Exit" type="submit" />
             </q-card-actions>
         </q-form>
 
         <q-inner-loading :showing="loading">
-            <q-spinner-gears color="primary" size="50px"/>
+            <q-spinner-gears color="primary" size="50px" />
         </q-inner-loading>
     </q-card>
 </template>
+@/js/api/auth

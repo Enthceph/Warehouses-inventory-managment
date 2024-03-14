@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getRoles } from '@/api/roles'
+import { getRoles } from '@/js/api/roles'
 import { Role } from '@/js/types/role.types'
 
 export const useRolesStore = defineStore({

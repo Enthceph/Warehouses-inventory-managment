@@ -5,7 +5,7 @@ import {
     getEmployee,
     getEmployees,
     updateEmployee,
-} from '@/api/employee'
+} from '@/js/api/employee'
 import {
     AddEmployeeForm,
     UpdateEmployeeForm,

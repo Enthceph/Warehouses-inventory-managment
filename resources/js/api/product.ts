@@ -1,5 +1,5 @@
 import { Product, ProductFormData } from '@/js/types/product.types'
-import apiRequest from '../js/utils/request'
+import apiRequest from '../utils/request'
 import { JSONResponse } from '@/js/types/response.types'
 
 export const getProducts = () => apiRequest.get('product').json<Product[]>()

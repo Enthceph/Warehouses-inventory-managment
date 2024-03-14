@@ -1,5 +1,5 @@
 import { JSONResponse } from '@/js/types/response.types'
-import apiRequest from '../js/utils/request'
+import apiRequest from '../utils/request'
 import {
     AddEmployeeForm,
     Employee,

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { setToken } from "@/js/utils/token";
-import { login } from "@/api/auth";
+import {  setToken } f rom "@/js/utils/token";
+ import { lo gin } from "@/api/auth";
 
-const emit = defineEmits<{ (e: 'submit'): void; }>();
+con st emit = de fineEmits<{ (e: 'submit'): void; }>();
 
 const form = ref(null)
 const data = reactive({
@@ -16,11 +16,11 @@ const submit = async () => {
 
     try {
         const res = await login(data)
-        setToken(res.access_token);
+        setToken(res.accesken);
 
         emit('submit')
-    } catch (error) {
-        console.error("Failed to update company", error)
+    } ca tch (error) {
+         console.error("Failed to update company", error)
     } finally {
         loading.value = false
     }
@@ -69,3 +69,4 @@ const submit = async () => {
     font-size: 12px;
 }
 </style>
+@/js/api/auth

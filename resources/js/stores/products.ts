@@ -5,7 +5,7 @@ import {
     getProduct,
     getProducts,
     updateProduct,
-} from '@/api/product'
+} from '@/js/api/product'
 import { Product, ProductFormData } from '@/js/types/product.types'
 
 interface ProductsStore {

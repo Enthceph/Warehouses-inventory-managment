@@ -1,5 +1,5 @@
 import { UserForm } from '@/js/types/user.types'
-import apiRequest from '../js/utils/request'
+import apiRequest from '../utils/request'
 import { AuthUser, LoginForm, LoginResponse } from '@/js/types/auth.types'
 import { CompanyForm } from '@/js/types/company.types'
 import { JSONResponse } from '@/js/types/response.types'
