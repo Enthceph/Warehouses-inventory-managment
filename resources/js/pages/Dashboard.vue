@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Chart from '../components/Chart.vue'
-import {useInventoriesStore} from "@/js/stores/inventories";
+import { useInventoriesStore } from "@/js/stores/inventories";
 import AnalyticsCard from "@/js/components/AnalyticsCard.vue";
 
 const inventoriesStore = useInventoriesStore()
@@ -50,7 +50,7 @@ const productsByCategory = computed(() => {
 
     return {
         labels: labelsFromCountMap(countMap),
-        name: 'Кількість продуктів за категоріями',
+        name: 'Number of products by category',
         data: Object.values(countMap)
     }
 })
@@ -68,7 +68,7 @@ const productsByQuantity = computed(() => {
 
     return {
         labels: labelsFromCountMap(countMap),
-        name: 'Кількість продуктів на ім\'ям',
+        name: 'Number of products by name',
         data: Object.values(countMap)
     }
 })
@@ -93,7 +93,7 @@ const productsByLocation = computed(() => {
 
     return {
         labels: labelsFromCountMap(countMap),
-        name: 'Кількість продуктів за локаціями',
+        name: 'Number of products by location',
         data: Object.values(countMap)
     }
 })
@@ -114,7 +114,7 @@ const productsByAdditional = computed(() => {
 
     return {
         labels: labelsFromCountMap(countMap),
-        name: 'Кількість товарів за дод. інформацією',
+        name: 'The number of products per additional info',
         data: Object.values(countMap)
     }
 })
@@ -135,9 +135,9 @@ const totalNumberOfProducts = computed(() => {
 
 <template>
     <q-card class="flex justify-between card">
-        <analytics-card :number="totalCostOfProducts+'грн.'" icon="credit_card" name="Загальна вартість товарiв"/>
-        <analytics-card :number="122+'шт.'" icon="inventory" name="Товари скоро пропадуть"/>
-        <analytics-card :number="totalNumberOfProducts + 'шт.'" icon="credit_card" name="Товарiв на складi"/>
+        <analytics-card :number="totalCostOfProducts + ' uan.'" icon="credit_card" name="Total cost of products" />
+        <analytics-card :number="122 + ' pcs.'" icon="inventory" name="The products will disappear soon" />
+        <analytics-card :number="totalNumberOfProducts + ' pcs.'" icon="credit_card" name="Products in stock" />
     </q-card>
 
     <br><br>
@@ -145,20 +145,20 @@ const totalNumberOfProducts = computed(() => {
     <div v-if="initialLoaded" class="grid text-center">
         <q-card>
             <h2>{{ productsByCategory.name }}</h2>
-            <Chart :labels="productsByCategory.labels" :series="productsByCategory.data" type="pie"/>
+            <Chart :labels="productsByCategory.labels" :series="productsByCategory.data" type="pie" />
         </q-card>
 
         <q-card>
             <h2>{{ productsByQuantity.name }}</h2>
-            <Chart :labels="productsByQuantity.labels" :series="productsByQuantity.data" type="pie"/>
+            <Chart :labels="productsByQuantity.labels" :series="productsByQuantity.data" type="pie" />
         </q-card>
         <q-card>
             <h2>{{ productsByLocation.name }}</h2>
-            <Chart :labels="productsByLocation.labels" :series="productsByLocation.data" type="pie"/>
+            <Chart :labels="productsByLocation.labels" :series="productsByLocation.data" type="pie" />
         </q-card>
         <q-card>
             <h2>{{ productsByAdditional.name }}</h2>
-            <Chart :labels="productsByAdditional.labels" :series="productsByAdditional.data" type="pie"/>
+            <Chart :labels="productsByAdditional.labels" :series="productsByAdditional.data" type="pie" />
         </q-card>
     </div>
 
@@ -167,15 +167,14 @@ const totalNumberOfProducts = computed(() => {
 
 <style scoped>
 .grid {
-    display:               grid;
-    gap:                   32px;
-    grid-auto-rows:        auto;
+    display: grid;
+    gap: 32px;
+    grid-auto-rows: auto;
     grid-template-columns: 1fr 1fr;
-    width:                 100%;
+    width: 100%;
 }
 
 .card {
     background-color: #1C77FB;
 }
-
 </style>

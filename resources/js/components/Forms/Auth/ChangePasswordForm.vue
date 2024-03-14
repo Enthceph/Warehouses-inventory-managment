@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {changePassword} from "@/api/auth";
+import { changePassword } from "@/js/api/auth";
 
-import {Notify, QForm} from 'quasar'
+import { Notify, QForm } from 'quasar'
 
 const emit = defineEmits(['submit'])
 

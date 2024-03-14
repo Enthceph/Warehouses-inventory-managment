@@ -6,7 +6,6 @@ export interface Company {
 }
 
 export interface CompanyForUpdate {
-    id: number
     name?: string
     address?: string
     contact_info?: string

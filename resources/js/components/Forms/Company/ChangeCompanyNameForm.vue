@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {updateCompany} from "@/api/company";
-import {useCompanyStore} from "@/js/stores/company";
-import {Notify, QForm} from 'quasar'
+import { updateCompany } from "@/js/api/company";
+import { useCompanyStore } from "@/js/stores/company";
+import { Notify, QForm } from 'quasar'
 
 const emit = defineEmits(['submit'])
 
@@ -22,7 +22,7 @@ onMounted(async () => {
 const submit = async () => {
     loading.value = true
     try {
-        await updateCompany(companyStore.id, {name: name.value})
+        await updateCompany(companyStore.id, { name: name.value })
         await companyStore.fetchCompany()
 
         emit('submit')

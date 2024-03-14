@@ -5,7 +5,6 @@ import AddEmployeeForm from "@/js/components/Forms/Employee/AddEmployeeForm.vue"
 import UpdateEmployeeForm from "@/js/components/Forms/Employee/UpdateEmployeeForm.vue";
 import DeleteEmployeeForm from "@/js/components/Forms/Employee/DeleteEmployeeForm.vue";
 import { useAuthStore } from "@/js/stores/auth";
-import { Employee } from "../types/employee.types";
 
 const employeeStore = useEmployeesStore()
 const authStore = useAuthStore()

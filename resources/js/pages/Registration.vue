@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import R egistrationUs erForm from "@/js/compon ents/Forms/ Registration/RegistrationUser Form.vue";
-i mport RegistrationCompanyForm from "@/js/components/Forms/Registration/RegistrationCompanyForm.vue";
-import { register } from "@/api/auth";
+import RegistrationUserForm from "@/js/components/Forms/Registration/RegistrationUserForm.vue";
+import RegistrationCompanyForm from "@/js/components/Forms/Registration/RegistrationCompanyForm.vue";
+import { register } from "@/js/api/auth";
 import { CompanyForm } from "../types/company.types";
 import { UserForm } from "../types/user.types";
 
 const router = useRouter();
 
-const registrationData = reae({
+const registrationData = reactive({
     user: <UserForm>{},
-    compan y: <CompanyForm>{} 
+    company: <CompanyForm>{}
 })
 
 const step = ref(1)

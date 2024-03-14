@@ -9,7 +9,6 @@ const props = defineProps<{
 
 const emit = defineEmits(['submit', 'cancel'])
 
-const form = ref()
 const warehouse = reactive<UpdateWarehouseForm>({
     id: props.warehouse.id,
     name: props.warehouse.name,

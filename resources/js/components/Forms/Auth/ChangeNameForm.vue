@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import {Notify, QForm} from 'quasar'
-import {changeName} from "@/api/auth";
-import {useAuthStore} from "@/js/stores/auth";
+import { Notify, QForm } from 'quasar'
+import { changeName } from "@/js/api/auth";
+import { useAuthStore } from "@/js/stores/auth";
 
 const emit = defineEmits(['submit'])
 
@@ -18,7 +18,7 @@ onMounted(() => {
 const submit = async () => {
     loading.value = true
     try {
-        await changeName({name: name.value})
+        await changeName({ name: name.value })
 
         await authStore.getUser()
 

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { deleteToken}  from "@/js/utils/token"; 
-import rou ter from "@/js/router";
-impor t {logout} f rom "@/api/auth";
-import {useAuthStore} from "@/js/stores/auth";
+import { deleteToken } from "@/js/utils/token";
+import router from "@/js/router";
+import { logout } from "@/js/api/auth";
+import { useAuthStore } from "@/js/stores/auth";
 
 const emit = defineEmits(['submit', 'cancel'])
 
@@ -18,11 +18,11 @@ const submit = async () => {
 
         deleteToken()
 
-        authe.clearUser()
+        authStore.clearUser()
 
         emit('submit')
- 
-        router.pu sh({
+
+        router.push({
             path: '/login'
         })
     } catch (error) {

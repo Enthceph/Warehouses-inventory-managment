@@ -6,8 +6,6 @@ import UpdateWarehouseForm from "@/js/components/Forms/Warehouse/UpdateWarehouse
 import DeleteWarehouseForm from "@/js/components/Forms/Warehouse/DeleteWarehouseForm.vue";
 import { useAuthStore } from "@/js/stores/auth";
 
-const router = useRouter()
-const route = useRoute()
 const warehouseStore = useWarehousesStore()
 const authStore = useAuthStore()
 
