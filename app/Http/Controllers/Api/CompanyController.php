@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateCompanyRequest;
 use App\Models\Company;
 use App\Services\CompanyService;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Requests\CreateCompanyRequest;
 
 class CompanyController extends Controller
 {
@@ -17,17 +19,17 @@ class CompanyController extends Controller
 
     public function index() : Company
     {
-        // $this->authorize('view', $company);
-
         return $this->service->get();
     }
 
-    public function store(Request $request)
+    public function store(CreateCompanyRequest $request) : Company
     {
-        //TODO просто для вида хотя бы сделать
+        $this->authorize('store', Company::class);
+
+        return $this->service->store($request);
     }
 
-    public function update(UpdateCompanyRequest $request, Company $company)
+    public function update(UpdateCompanyRequest $request, Company $company) : Response
     {
         $this->authorize('update', Company::class);
 
@@ -36,7 +38,7 @@ class CompanyController extends Controller
         return response(['message' => 'Company was updated']);
     }
 
-    public function destroy(Company $company)
+    public function destroy(Company $company) : Response
     {
         $this->authorize('update', $company);
 
