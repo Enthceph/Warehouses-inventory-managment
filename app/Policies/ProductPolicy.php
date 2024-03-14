@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class ProductPolicy
 {
@@ -15,7 +16,7 @@ class ProductPolicy
         return true;
     }
 
-    public function create(User $user)
+    public function store(User $user)
     {
         if ($user->isOwner()) {
             return true;

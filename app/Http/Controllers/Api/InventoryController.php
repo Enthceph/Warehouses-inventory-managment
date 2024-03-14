@@ -7,11 +7,8 @@ use App\Http\Requests\StoreInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
 use App\Models\Inventory;
 use App\Models\Warehouse;
-use App\Models\Outlet;
 use App\Services\InventoryService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 class InventoryController extends Controller
 {
@@ -54,7 +51,7 @@ class InventoryController extends Controller
         return $this->service->show($warehouse);
     }
 
-    public function update(UpdateInventoryRequest $request, Inventory $inventory) : Response
+    public function update(Inventory $inventory, UpdateInventoryRequest $request)
     {
         $this->authorize('update', $inventory);
 
@@ -62,6 +59,7 @@ class InventoryController extends Controller
 
         return response(['message' => 'Inventory updated']);
     }
+
 
     public function destroy(Inventory $inventory) : Response
     {

@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Warehouse;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class WarehousePolicy
 {
@@ -15,7 +16,7 @@ class WarehousePolicy
         return true;
     }
 
-    public function create(User $user)
+    public function store(User $user)
     {
         if ($user->isOwner()) {
             return true;

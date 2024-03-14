@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyPolicy
 {
@@ -15,7 +16,7 @@ class CompanyPolicy
         return $user->company_id === $company->id;
     }
 
-    public function create(User $user)
+    public function store(User $user)
     {
         return $user->isAdmin();
     }

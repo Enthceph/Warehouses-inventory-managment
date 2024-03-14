@@ -29,7 +29,7 @@ class WarehouseController extends Controller
 
     public function store(StoreWarehouseRequest $request) : Warehouse
     {
-        $this->authorize('create', Warehouse::class);
+        $this->authorize('store', Warehouse::class);
 
         return $this->service->store($request);
     }

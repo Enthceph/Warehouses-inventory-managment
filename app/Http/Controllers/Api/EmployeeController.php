@@ -28,10 +28,9 @@ class EmployeeController extends Controller
 
     public function store(StoreEmployeeRequest $request) : User
     {
-        $this->authorize('create', User::class);
+        $this->authorize('store', User::class);
 
-        return $this->service->store($request->validated());
-
+        return $this->service->store($request);
     }
 
     public function show(User $user) : User
@@ -41,16 +40,16 @@ class EmployeeController extends Controller
         return $user;
     }
 
-    public function update(UpdateEmployeeRequest $request, User $user) : Response
+    public function update(UpdateEmployeeRequest $request, User $employee)
     {
-        $this->authorize('update', $user);
+        $this->authorize('update', $employee);
 
-        $this->service->update($request, $user);
+        $this->service->update($request, $employee);
 
         return response(['message' => 'Employee updated']);
     }
 
-    public function destroy(Request $request, User $employee) : Response
+    public function destroy(User $employee) : Response
     {
         $this->authorize('delete', $employee);
 

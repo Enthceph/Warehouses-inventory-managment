@@ -9,7 +9,7 @@ class StoreProductCategoryRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can('create', ProductCategory::class);
+        return true;
     }
 
     public function rules()

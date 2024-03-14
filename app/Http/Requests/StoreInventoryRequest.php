@@ -9,7 +9,7 @@ class StoreInventoryRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->can('create', Inventory::class);
+        return true;
     }
 
     public function rules()

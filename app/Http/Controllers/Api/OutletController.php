@@ -27,16 +27,16 @@ class OutletController extends Controller
 
     public function store(StoreOutletRequest $request) : Outlet
     {
-        $this->authorize('create', Outlet::class);
+        $this->authorize('store', Outlet::class);
 
-        return $this->service->store($request->validated());
+        return $this->service->store($request);
     }
 
     public function update(UpdateOutletRequest $request, Outlet $outlet) : Response
     {
         $this->authorize('update', $outlet);
 
-        $this->service->update($request->validated(), $outlet);
+        $this->service->update($request, $outlet);
 
         return response(['message' => 'Outlet changed successfully']);
     }

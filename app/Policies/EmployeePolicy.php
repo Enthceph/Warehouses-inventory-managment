@@ -4,45 +4,34 @@ namespace App\Policies;
 
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeePolicy
 {
     use HandlesAuthorization;
 
-    public function view()
+    public function view() : bool
     {
         return true;
     }
 
-    public function create(User $user)
+    public function store(User $user) : bool
     {
-        if ($user->isOwner()) {
-            return true;
-        }
-        return false;
+        return $user->isOwner();
     }
 
-    public function update(User $user, User $employee)
+    public function update(User $user, User $employee) : bool
     {
-        if ($user->isOwner() && $user->company_id === $employee->company_id) {
-            return true;
-        }
-        return false;
+        return $user->isOwner() && $user->company_id === $employee->company_id;
     }
 
-    public function show(User $user, User $employee)
+    public function show(User $user, User $employee) : bool
     {
-        if ($user->company_id === $employee->company_id) {
-            return true;
-        }
-        return false;
+        return $user->company_id === $employee->company_id;
     }
 
-    public function delete(User $user, User $employee)
+    public function delete(User $user, User $employee) : bool
     {
-        if ($user->isOwner() && $user->company_id === $employee->company_id) {
-            return true;
-        }
-        return false;
+        return $user->isOwner() && $user->company_id === $employee->company_id;
     }
 }

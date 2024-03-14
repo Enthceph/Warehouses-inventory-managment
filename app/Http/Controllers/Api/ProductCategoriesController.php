@@ -23,6 +23,7 @@ class ProductCategoriesController extends Controller
 
     public function store(StoreProductCategoryRequest $request) : ProductCategory
     {
+        $this->authorize('store', ProductCategory::class);
         return ProductCategory::create([
             'name' => $request['name'],
             'company_id' => Auth::user()->company_id
@@ -40,7 +41,7 @@ class ProductCategoriesController extends Controller
     {
         $this->authorize('update', $productCategory);
 
-        $productCategory->update($request->validated());
+        $productCategory->update($request);
 
         return response(['message' => 'Product category changed successfully']);
     }

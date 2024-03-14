@@ -16,6 +16,9 @@ class InventoryService
     {
         return Inventory::query()
             ->with(['warehouse', 'product.category'])
+            ->whereHas('warehouse', function ($query) use ($request) {
+                $query->where('company_id', Auth::user()->company_id);
+            })
             ->when($request->has('products'), function ($query) use ($request) {
                 $query->whereHas('product', function ($query) use ($request) {
                     $products = explode(',', $request->products);

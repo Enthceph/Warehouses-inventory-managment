@@ -29,6 +29,8 @@ class ProductsController extends Controller
 
     public function store(StoreProductRequest $request) : Product
     {
+        $this->authorize('store', Product::class);
+
         return Product::create([
             'name' => $request['name'],
             'additional_info' => $request['additional_info'],
@@ -49,7 +51,7 @@ class ProductsController extends Controller
     {
         $this->authorize('update', $product);
 
-        $product->update($request->validated());
+        $product->update($request);
 
         return response(['message' => 'Product changed successfully']);
     }
