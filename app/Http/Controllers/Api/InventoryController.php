@@ -51,7 +51,7 @@ class InventoryController extends Controller
         return $this->service->show($warehouse);
     }
 
-    public function update(Inventory $inventory, UpdateInventoryRequest $request)
+    public function update(Inventory $inventory, UpdateInventoryRequest $request) : Response
     {
         $this->authorize('update', $inventory);
 

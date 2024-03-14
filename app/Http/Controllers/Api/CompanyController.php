@@ -24,7 +24,7 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
-        //
+        //TODO просто для вида хотя бы сделать
     }
 
     public function update(UpdateCompanyRequest $request, Company $company)
