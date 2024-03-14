@@ -5,53 +5,44 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
-use App\Services\ProductCategoryService;
-use Illuminate\Support\Facades\Auth;
+use App\Services\ProductService;
 use Illuminate\Http\Response;
 
 class ProductsController extends Controller
 {
-    //    public function __construct(
-//        protected ProductCategoryService $service
-//    )
-//    {
-//    }
-    // TODO сделать сервис
+    public function __construct(
+        protected ProductService $service
+    ) {
+    }
+
     /**
      * @return Product[]
      */
     public function index()
     {
         $this->authorize('view', Product::class);
-
-        return Product::where('company_id', Auth::user()->company_id)->with(['company', 'category'])->get();
+        return $this->service->get();
     }
-
-    public function store(StoreProductRequest $request) : Product
-    {
-        $this->authorize('store', Product::class);
-
-        return Product::create([
-            'name' => $request['name'],
-            'additional_info' => $request['additional_info'],
-            'category_id' => $request['category_id'],
-            'company_id' => Auth::user()->company_id
-        ]);
-    }
-
     public function show(Product $product) : Product
     {
         $this->authorize('view', $product);
-
-        return $product;
+        return $this->service->show($product);
     }
 
+    public function store(StoreProductRequest $request) : Response
+    {
+        $this->authorize('store', Product::class);
+
+        $this->service->store($request);
+
+        return response(['message' => 'Product created successfully']);
+    }
 
     public function update(UpdateProductRequest $request, Product $product) : Response
     {
         $this->authorize('update', $product);
 
-        $product->update($request);
+        $this->service->update($request, $product);
 
         return response(['message' => 'Product changed successfully']);
     }
@@ -60,7 +51,7 @@ class ProductsController extends Controller
     {
         $this->authorize('delete', $product);
 
-        $product->delete();
+        $this->service->destroy($product);
 
         return response(['message' => 'Product was deleted']);
     }
