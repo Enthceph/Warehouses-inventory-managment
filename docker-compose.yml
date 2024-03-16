@@ -1,34 +1,40 @@
 version: '3.8'
 
+networks:
+    laravel:
+
 services:
     nginx:
+        container_name: nginx
         build:
-            context: ./docker/nginx
-            dockerfile: Dockerfile
+            context: ./docker/dockerfiles
+            dockerfile: nginx.dockerfile
         volumes:
-            - ./:/var/www
-        environment:
-            - 'DB_PORT=3306'
-            - 'DB_HOST=mysql'
-            - 'XDG_CONFIG_HOME=/app'
+            - ./:/var/www:delegated
+
         ports:
             - '8000:80'
-        links:
-            - php-fpm
+        depends_on:
+            - php
             - node
+            - mysql
+        networks:
+            - laravel
 
-    php-fpm:
+    php:
         build:
-            context: ./docker/php-fpm
-            dockerfile: Dockerfile
+            context: ./docker/dockerfiles
+            dockerfile: php.dockerfile
+        container_name: php
         volumes:
-            - ./:/var/www
+            - ./:/var/www:delegated
+        networks:
+            - laravel
         environment:
             - 'DB_PORT=3306'
             - 'DB_HOST=mysql'
         links:
             - mysql
-            - node
 
     mysql:
         image: mysql:8.0
@@ -36,21 +42,10 @@ services:
             - '${DB_PORT}:${DB_PORT}'
         env_file:
             - ./.env
-
         volumes:
             - db_data:/var/lib/mysql
-
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
-        environment:
-            - PMA_HOST=mysql
-            - PMA_USER=enth
-            - PMA_PASSWORD=password
-            - UPLOAD_LIMIT=64M
-        restart: always
-        ports:
-            - 8081:80
+        networks:
+            - laravel
 
     node:
         image: node:18-alpine
@@ -60,6 +55,8 @@ services:
             - ./:/var/www
         working_dir: /var/www
         tty: true
+        networks:
+            - laravel
 
 volumes:
     db_data:
