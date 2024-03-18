@@ -23,7 +23,14 @@ class InventoryController extends Controller
     {
         $this->authorize('view', Inventory::class);
 
-        return $this->service->get($request);
+        $inventories =  $this->service->get($request);
+
+        return $inventories->paginate(
+            $request->perPage,
+            ['*'],
+            'page',
+            $request->page
+        );
     }
 
     public function getAnalyticsFilterInfo() : array

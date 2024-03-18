@@ -5,13 +5,14 @@ import {
     Inventory,
     InventoryFormData,
 } from '@/js/types/inventory.types'
+import { Pagination } from '../types/pagination.types'
 
 export const getInventories = (params?: { [key: string]: string | number }) =>
     apiRequest
         .get('inventory', {
             searchParams: params,
         })
-        .json<Inventory[]>()
+        .json<Pagination<Inventory>>()
 
 export const getInventory = (id: Number) =>
     apiRequest.get(`inventory/${id}`).json<Inventory>()

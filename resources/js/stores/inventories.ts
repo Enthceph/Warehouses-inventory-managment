@@ -7,6 +7,7 @@ import {
     updateInventory,
 } from '@/js/api/inventory'
 import { Inventory, InventoryFormData } from '@/js/types/inventory.types'
+import { Pagination } from '../types/pagination.types'
 
 export const useInventoriesStore = defineStore({
     id: 'inventoriesStore',
@@ -14,10 +15,12 @@ export const useInventoriesStore = defineStore({
         inventories: [],
     }),
     actions: {
-        async fetchGetInventories(): Promise<Inventory[]> {
-            let res = await getInventories()
-            this.inventories = await res
-            return this.inventories
+        async fetchGetInventories(params?: {
+            [key: string]: string | number
+        }): Promise<Pagination<Inventory>> {
+            let res = await getInventories(params)
+            this.inventories = res.data
+            return res
         },
         async fetchGetInventory(id: number): Promise<Inventory> {
             let res = await getInventory(id)

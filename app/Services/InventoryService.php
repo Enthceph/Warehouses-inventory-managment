@@ -86,8 +86,7 @@ class InventoryService
             })
             ->when($request->has('expires_at_to'), function ($query) use ($request) {
                 $query->where('expires_at', '<=', $request->expires_at_to);
-            })
-            ->get();
+            });
     }
 
     public function getAnalyticsFilterInfo()
@@ -98,6 +97,10 @@ class InventoryService
             ->whereHas('warehouse', function ($query) use ($companyId) {
                 $query->where('company_id', $companyId);
             })->get()->toArray();
+            
+        if(!$inventories){
+            return [];
+        }
 
         $unitPrices = array_column($inventories, 'unit_price');
         $minUnitPrice = min($unitPrices);
