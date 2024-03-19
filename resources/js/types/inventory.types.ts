@@ -16,13 +16,11 @@ export interface Inventory {
     warehouse: Warehouse
 }
 
-export interface InventoryFormData {
-    quantity: Inventory['quantity']
-    unit_price: Inventory['unit_price']
-    total_value: Inventory['total_value']
-    product_id: Inventory['product_id']
+export type InventoryFormData = Pick<
+    Inventory,
+    'quantity' | 'unit_price' | 'total_value' | 'product_id' | 'expires_at'
+> & {
     warehouse_id: Inventory['warehouse_id'] | null
-    expires_at: Inventory['expires_at']
 }
 
 export interface AnalyticsFilterOptions {

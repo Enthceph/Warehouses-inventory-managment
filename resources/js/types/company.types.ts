@@ -11,8 +11,4 @@ export interface CompanyForUpdate {
     contact_info?: string
 }
 
-export interface CompanyForm {
-    name: Company['name']
-    address?: Company['address']
-    contact_info?: Company['contact_info']
-}
+export type CompanyForm = Omit<Company, 'id'>

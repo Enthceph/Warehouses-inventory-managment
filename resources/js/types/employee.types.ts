@@ -11,17 +11,14 @@ export interface Employee {
     created_at: Date
 }
 
-export interface AddEmployeeForm {
-    full_name: Employee['full_name']
-    email: Employee['email']
+export type AddEmployeeForm = Pick<
+    Employee,
+    'full_name' | 'email' | 'role_id'
+> & {
     password: string
     password_confirmation: string
-    role_id: Employee['role_id']
 }
-
-export interface UpdateEmployeeForm {
-    id: Employee['id']
-    full_name?: Employee['full_name']
-    email?: Employee['email']
-    role_id?: Employee['role_id']
-}
+export type UpdateEmployeeForm = Pick<
+    Employee,
+    'id' | 'full_name' | 'email' | 'role_id'
+>

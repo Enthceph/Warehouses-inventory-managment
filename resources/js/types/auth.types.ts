@@ -7,10 +7,7 @@ export interface AuthUser {
     created_at: Date | null
 }
 
-export type LoginForm = {
-    email: AuthUser['email']
-    password: string
-}
+export type LoginForm = Pick<AuthUser, 'email'> & { password: string }
 
 export type LoginResponse = {
     access_token: string

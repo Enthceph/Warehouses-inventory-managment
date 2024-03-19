@@ -6,11 +6,6 @@ export interface ProductCategory {
     deleted_at: Date | null
 }
 
-export interface AddProductCategoryForm {
-    name: ProductCategory['name']
-}
+export type AddProductCategoryForm = Pick<ProductCategory, 'name'>
 
-export interface UpdateProductCategoryForm {
-    id: ProductCategory['id']
-    name: ProductCategory['name']
-}
+export type UpdateProductCategoryForm = Pick<ProductCategory, 'id' | 'name'>

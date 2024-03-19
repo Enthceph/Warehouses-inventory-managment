@@ -5,16 +5,12 @@ export interface Warehouse {
     contact_info: string | null
     created_at: Date | null
 }
+export type UpdateWarehouseForm = Pick<
+    Warehouse,
+    'id' | 'name' | 'location' | 'contact_info'
+>
 
-export interface UpdateWarehouseForm {
-    id: Warehouse['id']
-    name: Warehouse['name']
-    location: Warehouse['location']
-    contact_info: Warehouse['contact_info']
-}
-
-export interface AddWarehouseForm {
-    name: Warehouse['name']
-    location: Warehouse['location']
-    contact_info: Warehouse['contact_info']
-}
+export type AddWarehouseForm = Pick<
+    Warehouse,
+    'name' | 'location' | 'contact_info'
+>
