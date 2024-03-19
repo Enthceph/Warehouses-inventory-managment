@@ -96,8 +96,8 @@ class InventoryService
         $inventories = Inventory::with(['product', 'warehouse'])
             ->whereHas('warehouse', function ($query) use ($companyId) {
                 $query->where('company_id', $companyId);
-            })->get()->toArray();
-            
+            })->get()->toArray('data');
+
         if(!$inventories){
             return [];
         }
