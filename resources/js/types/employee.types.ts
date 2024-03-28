@@ -1,8 +1,8 @@
 export interface Employee {
     id: number
-    full_name: string
+    fullName: string
     email: string
-    role_id: number
+    roleId: number
     role: {
         id: number
         name: string
@@ -13,12 +13,12 @@ export interface Employee {
 
 export type AddEmployeeForm = Pick<
     Employee,
-    'full_name' | 'email' | 'role_id'
+    'fullName' | 'email' | 'roleId'
 > & {
     password: string
     password_confirmation: string
 }
 export type UpdateEmployeeForm = Pick<
     Employee,
-    'id' | 'full_name' | 'email' | 'role_id'
+    'id' | 'fullName' | 'email' | 'roleId'
 >

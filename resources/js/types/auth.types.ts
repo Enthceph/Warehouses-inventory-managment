@@ -1,6 +1,6 @@
 export interface AuthUser {
     id: Number
-    full_name: string
+    fullName: string
     email: string
     role: string
     company: string
@@ -10,5 +10,5 @@ export interface AuthUser {
 export type LoginForm = Pick<AuthUser, 'email'> & { password: string }
 
 export type LoginResponse = {
-    access_token: string
+    accessToken: string
 }
