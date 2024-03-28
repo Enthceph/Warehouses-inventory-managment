@@ -1,25 +1,26 @@
 import { Company, CompanyForUpdate } from '@/js/types/company.types'
 import apiRequest from '../utils/request'
-import { JSONResponse } from '@/js/types/response.types'
+import { JSONResponse, JSONResponseData } from '@/js/types/response.types'
 
-export const getUserCompany = () => apiRequest.get('company').json<Company>()
+export const getUserCompany = () =>
+    apiRequest.get('company').json<JSONResponseData<Company>>()
 
 export const getCompany = (id: Number) =>
-    apiRequest.get(`company/${id}`).json<Company>()
+    apiRequest.get(`company/${id}`).json<JSONResponseData<Company>>()
 
 export const addCompany = (company: Company) =>
     apiRequest
         .post(`company`, {
             json: company,
         })
-        .json<JSONResponse>()
+        .json()
 
 export const updateCompany = (id: Number, company: CompanyForUpdate) =>
     apiRequest
         .patch(`company/${id}`, {
             json: company,
         })
-        .json<Company>()
+        .json()
 
 export const deleteCompany = (id: Number) =>
-    apiRequest.delete(`company/${id}`).json<JSONResponse>()
+    apiRequest.delete(`company/${id}`).json()

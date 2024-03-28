@@ -8,34 +8,38 @@ export const useCompanyStore = defineStore({
         id: 0,
         name: '',
         address: '',
-        contact_info: '',
+        contactInfo: '',
     }),
     getters: {},
     actions: {
         async fetchCompany() {
-            const company = await getUserCompany()
-            this.setCompany(company)
-            return company
+            const res = await getUserCompany()
+            this.setCompany(res.data)
+
+            return res.data
         },
         async fetchGetCompany(id: Number) {
-            return await getCompany(id)
+            const res = await getCompany(id)
+
+            return res.data
         },
         async fetchUpdateCompany(id: number, company: CompanyForUpdate) {
             let updatedCompany = await updateCompany(id, company)
-            this.setCompany(updatedCompany)
+            this.fetchCompany()
+
             return updatedCompany
         },
         setCompany(company: Company) {
             this.id = company.id
             this.name = company.name
             this.address = company.address
-            this.contact_info = company.contact_info
+            this.contactInfo = company.contactInfo
         },
         clearCompany() {
             this.id = 0
             this.name = ''
             this.address = ''
-            this.contact_info = ''
+            this.contactInfo = ''
         },
     },
 })

@@ -8,6 +8,8 @@ use App\Models\Company;
 use App\Services\CompanyService;
 use Illuminate\Http\Response;
 use App\Http\Requests\CreateCompanyRequest;
+use App\Http\Resources\CompanyCollection;
+use App\Http\Resources\CompanyResource;
 
 class CompanyController extends Controller
 {
@@ -16,33 +18,29 @@ class CompanyController extends Controller
     ) {
     }
 
-    public function index() : Company
+    public function index() : CompanyResource
     {
-        return $this->service->get();
+        return new CompanyResource($this->service->get());
     }
 
-    public function store(CreateCompanyRequest $request) : Company
+    public function store(CreateCompanyRequest $request) : CompanyResource
     {
         $this->authorize('store', Company::class);
 
-        return $this->service->store($request);
+        return new CompanyResource($this->service->store($request));
     }
 
-    public function update(UpdateCompanyRequest $request, Company $company) : Response
+    public function update(UpdateCompanyRequest $request, Company $company)
     {
-        $this->authorize('update', Company::class);
+        $this->authorize('update', $company);
 
         $this->service->update($request, $company);
-
-        return response(['message' => 'Company was updated']);
     }
 
-    public function destroy(Company $company) : Response
+    public function destroy(Company $company)
     {
         $this->authorize('update', $company);
 
         $this->service->destroy($company);
-
-        return response(['message' => 'Company was deleted']);
     }
 }
