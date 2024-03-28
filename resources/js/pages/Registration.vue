@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import RegistrationUserForm from "@/js/components/Forms/Registration/RegistrationUserForm.vue";
-import RegistrationCompanyForm from "@/js/components/Forms/Registration/RegistrationCompanyForm.vue";
-import { register } from "@/js/api/auth";
-import { CompanyForm } from "../types/company.types";
-import { UserForm } from "../types/user.types";
+import RegistrationUserForm from '@/js/components/Forms/Registration/RegistrationUserForm.vue'
+import RegistrationCompanyForm from '@/js/components/Forms/Registration/RegistrationCompanyForm.vue'
+import { register } from '@/js/api/auth'
+import { CompanyForm } from '../types/company.types'
+import { UserForm } from '../types/user.types'
 
-const router = useRouter();
+const router = useRouter()
 
 const registrationData = reactive({
     user: <UserForm>{},
-    company: <CompanyForm>{}
+    company: <CompanyForm>{},
 })
 
 const step = ref(1)
@@ -36,9 +36,17 @@ const submitOrganisationForm = async (data: CompanyForm) => {
             <RegistrationUserForm @submit="submitUserForm" />
         </q-step>
 
-        <q-step :done="step > 2" :name="2" icon="corporate_fare" title="Company">
-            <RegistrationCompanyForm :user="registrationData.user" @stepBack="step -= 1"
-                @submit="submitOrganisationForm" />
+        <q-step
+            :done="step > 2"
+            :name="2"
+            icon="corporate_fare"
+            title="Company"
+        >
+            <RegistrationCompanyForm
+                :user="registrationData.user"
+                @stepBack="step -= 1"
+                @submit="submitOrganisationForm"
+            />
         </q-step>
     </q-stepper>
 </template>
@@ -49,4 +57,3 @@ h2 {
     font-weight: bold;
 }
 </style>
-@/js/api/auth

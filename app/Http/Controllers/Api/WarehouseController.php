@@ -20,7 +20,7 @@ class WarehouseController extends Controller
     /**
      * @return Warehouse[]
      */
-    public function index() : Collection
+    public function index()
     {
         $this->authorize('view', Warehouse::class);
 

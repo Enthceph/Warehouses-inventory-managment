@@ -1,6 +1,10 @@
-import {Context} from "@/js/types/router.types";
+import { Context } from '@/js/types/router.types'
 
-const middlewarePipeline = (context: Context, middleware: Function[], index: number) => {
+const middlewarePipeline = (
+    context: Context,
+    middleware: Function[],
+    index: number
+) => {
     const nextMiddleware = middleware[index]
 
     if (!nextMiddleware) {
@@ -8,11 +12,9 @@ const middlewarePipeline = (context: Context, middleware: Function[], index: num
     }
 
     return () => {
-        const nextPipeline = middlewarePipeline(
-            context, middleware, index + 1
-        )
+        const nextPipeline = middlewarePipeline(context, middleware, index + 1)
 
-        nextMiddleware({...context, next: nextPipeline})
+        nextMiddleware({ ...context, next: nextPipeline })
     }
 }
 

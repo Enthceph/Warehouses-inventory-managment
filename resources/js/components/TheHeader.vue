@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import TheUserBadge from "@/js/components/TheUserBadge.vue";
-import { useWarehousesStore } from "@/js/stores/warehouses";
+import TheUserBadge from '@/js/components/TheUserBadge.vue'
+import { useWarehousesStore } from '@/js/stores/warehouses'
 
 const route = useRoute()
 const warehouseStore = useWarehousesStore()
@@ -12,9 +12,13 @@ const warehouseStore = useWarehousesStore()
 
         <h2 class="text-h6 font-bold h2">
             <span>{{ route.name }}</span>
-            <span v-if="route.name === 'Warehouse' && warehouseStore.selectedWarehouse">: {{
-                warehouseStore.selectedWarehouse.name
-            }}</span>
+            <span
+                v-if="
+                    route.name === 'Warehouse' &&
+                    warehouseStore.selectedWarehouse
+                "
+                >: {{ warehouseStore.selectedWarehouse.name }}</span
+            >
         </h2>
 
         <router-link class="ml-auto" to="/settings">
@@ -26,7 +30,7 @@ const warehouseStore = useWarehousesStore()
 <style scoped>
 header {
     align-items: center;
-    background-color: #1C77FB;
+    background-color: #1c77fb;
     color: white;
     display: flex;
     gap: 12px;

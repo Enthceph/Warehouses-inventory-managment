@@ -1,9 +1,9 @@
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 
 import router from './router'
 
-import {createPinia} from 'pinia'
-import {Notify, Quasar} from 'quasar'
+import { createPinia } from 'pinia'
+import { Notify, Quasar } from 'quasar'
 import '@quasar/extras/material-icons/material-icons.css'
 import 'quasar/src/css/index.sass'
 
@@ -20,19 +20,19 @@ const pinia = createPinia()
 const app = createApp(Index)
 
 Notify.registerType('success', {
-    position: "top-right",
-    color: "positive",
-    icon: 'check_circle'
+    position: 'top-right',
+    color: 'positive',
+    icon: 'check_circle',
 })
 Notify.registerType('error', {
-    position: "top-right",
-    color: "negative",
+    position: 'top-right',
+    color: 'negative',
     icon: 'error',
 })
 
 app.use(Quasar, {
     plugins: {
-        Notify
+        Notify,
     },
 })
     .use(VueApexCharts)
@@ -42,4 +42,3 @@ app.use(Quasar, {
 router.isReady().then(() => {
     app.mount('#app')
 })
-

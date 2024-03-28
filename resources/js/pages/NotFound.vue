@@ -6,21 +6,19 @@ function randomIntFromInterval(min, max) {
 let rand = randomIntFromInterval(1, 4)
 
 let imgPath = computed(
-    () => `${import.meta.env.VITE_ASSETS_PATH}/NotFound${rand}.jpg`)
-
+    () => `${import.meta.env.VITE_ASSETS_PATH}/NotFound${rand}.jpg`
+)
 </script>
 
 <template>
     <div class="not-found">
         <div class="text">
             <span>
-                404 | NotFound <br><br>
-                <router-link to="/analytics">
-                    go back?
-                </router-link>
+                404 | NotFound <br /><br />
+                <router-link to="/analytics"> go back? </router-link>
             </span>
         </div>
-        <img :src="imgPath" alt="NotFound">
+        <img :src="imgPath" alt="NotFound" />
     </div>
 </template>
 

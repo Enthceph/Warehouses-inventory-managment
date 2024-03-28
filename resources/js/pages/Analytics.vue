@@ -1,7 +1,11 @@
 <script lang="ts" setup>
-import { getAnalyticsFilterInfo, getInventories } from "@/js/api/inventory";
-import { AnalyticsFilterModels, AnalyticsFilterOptions, Inventory } from "../types/inventory.types";
-import Table from "../components/Table/Table.vue";
+import { getAnalyticsFilterInfo, getInventories } from '@/js/api/inventory'
+import {
+    AnalyticsFilterModels,
+    AnalyticsFilterOptions,
+    Inventory,
+} from '../types/inventory.types'
+import Table from '../components/Table/Table.vue'
 
 const router = useRouter()
 
@@ -19,7 +23,7 @@ const filterOptions = reactive<AnalyticsFilterOptions>({
     unit_price: undefined,
     total_value: undefined,
     quantity: undefined,
-    created_at: undefined
+    created_at: undefined,
 })
 
 const filterModels = reactive<AnalyticsFilterModels>({
@@ -31,7 +35,7 @@ const filterModels = reactive<AnalyticsFilterModels>({
     created_at: undefined,
     expires_at: undefined,
     unit_price: undefined,
-    total_value: undefined
+    total_value: undefined,
 })
 
 const submit = async () => {
@@ -65,21 +69,28 @@ const tableColumnNames = [
     'Expires at',
 ]
 
-const tableData = computed(() => filteredInventory.value.map(inventory => {
-    return {
-        id: inventory.id,
-        product: inventory.product.name,
-        quantity: inventory.quantity,
-        unit_price: inventory.unit_price,
-        total_value: inventory.total_value,
-        warehouse: inventory.warehouse.name,
-        created_at: new Date(inventory.created_at).toLocaleDateString('ru-RU'),
-        expires_at: inventory.expires_at !== null ? new Date(inventory.expires_at).toLocaleDateString('ru-RU') : null,
-    }
-}))
+const tableData = computed(() =>
+    filteredInventory.value.map((inventory) => {
+        return {
+            id: inventory.id,
+            product: inventory.product.name,
+            quantity: inventory.quantity,
+            unit_price: inventory.unit_price,
+            total_value: inventory.total_value,
+            warehouse: inventory.warehouse.name,
+            created_at: new Date(inventory.created_at).toLocaleDateString(
+                'ru-RU'
+            ),
+            expires_at:
+                inventory.expires_at !== null
+                    ? new Date(inventory.expires_at).toLocaleDateString('ru-RU')
+                    : null,
+        }
+    })
+)
 
 const filterModelsToUrlQuery = (filterModels: AnalyticsFilterModels) => {
-    const query: { [key: string]: string | number; } = {}
+    const query: { [key: string]: string | number } = {}
 
     Object.entries(toRaw(filterModels)).forEach(([key, param]) => {
         if (!param) return
@@ -100,38 +111,85 @@ const filterModelsToUrlQuery = (filterModels: AnalyticsFilterModels) => {
 }
 
 const isObject = (objValue: any): boolean => {
-    return objValue && typeof objValue === 'object' && objValue.constructor === Object;
+    return (
+        objValue &&
+        typeof objValue === 'object' &&
+        objValue.constructor === Object
+    )
 }
 </script>
 
 <template>
     <q-form @submit.prevent="submit">
         <div class="search-form">
-            <q-select name="products" label="Products" v-model="filterModels.products" :options="filterOptions.products"
-                multiple filled />
+            <q-select
+                name="products"
+                label="Products"
+                v-model="filterModels.products"
+                :options="filterOptions.products"
+                multiple
+                filled
+            />
 
-            <q-select name="warehouses" label="Warehouses" v-model="filterModels.warehouses"
-                :options="filterOptions.warehouses" multiple filled />
+            <q-select
+                name="warehouses"
+                label="Warehouses"
+                v-model="filterModels.warehouses"
+                :options="filterOptions.warehouses"
+                multiple
+                filled
+            />
 
-            <q-select name="outlets" label="Outlets" v-model="filterModels.outlets" :options="filterOptions.outlets"
-                multiple filled />
+            <q-select
+                name="outlets"
+                label="Outlets"
+                v-model="filterModels.outlets"
+                :options="filterOptions.outlets"
+                multiple
+                filled
+            />
 
-            <q-select name="additional_info" label="Additional info" v-model="filterModels.additional_info"
-                :options="filterOptions.additional_info" multiple filled />
+            <q-select
+                name="additional_info"
+                label="Additional info"
+                v-model="filterModels.additional_info"
+                :options="filterOptions.additional_info"
+                multiple
+                filled
+            />
 
             <div></div>
 
             <div class="q-pa-md">
-                <div class="q-mb-sm text-center">
-                    Arrived to warehouse
-                </div>
+                <div class="q-mb-sm text-center">Arrived to warehouse</div>
                 <div class="flex-center">
-                    <q-btn class="flex-center" color="primary" icon="event" round>
-                        <q-popup-proxy cover transition-hide="scale" transition-show="scale">
+                    <q-btn
+                        class="flex-center"
+                        color="primary"
+                        icon="event"
+                        round
+                    >
+                        <q-popup-proxy
+                            cover
+                            transition-hide="scale"
+                            transition-show="scale"
+                        >
                             <q-date v-model="filterModels.created_at" range>
-                                <div class="row items-center justify-end q-gutter-sm">
-                                    <q-btn v-close-popup color="primary" flat label="Cancel" />
-                                    <q-btn v-close-popup color="primary" flat label="OK" />
+                                <div
+                                    class="row items-center justify-end q-gutter-sm"
+                                >
+                                    <q-btn
+                                        v-close-popup
+                                        color="primary"
+                                        flat
+                                        label="Cancel"
+                                    />
+                                    <q-btn
+                                        v-close-popup
+                                        color="primary"
+                                        flat
+                                        label="OK"
+                                    />
                                 </div>
                             </q-date>
                         </q-popup-proxy>
@@ -140,16 +198,35 @@ const isObject = (objValue: any): boolean => {
             </div>
 
             <div class="q-pa-md">
-                <div class="q-mb-sm  text-center">
-                    Terms of expiring
-                </div>
+                <div class="q-mb-sm text-center">Terms of expiring</div>
                 <div class="flex-center">
-                    <q-btn class="flex-center" color="primary" icon="event" round>
-                        <q-popup-proxy cover transition-hide="scale" transition-show="scale">
+                    <q-btn
+                        class="flex-center"
+                        color="primary"
+                        icon="event"
+                        round
+                    >
+                        <q-popup-proxy
+                            cover
+                            transition-hide="scale"
+                            transition-show="scale"
+                        >
                             <q-date v-model="filterModels.expires_at" range>
-                                <div class="row items-center justify-end q-gutter-sm">
-                                    <q-btn v-close-popup color="primary" flat label="Cancel" />
-                                    <q-btn v-close-popup color="primary" flat label="OK" />
+                                <div
+                                    class="row items-center justify-end q-gutter-sm"
+                                >
+                                    <q-btn
+                                        v-close-popup
+                                        color="primary"
+                                        flat
+                                        label="Cancel"
+                                    />
+                                    <q-btn
+                                        v-close-popup
+                                        color="primary"
+                                        flat
+                                        label="OK"
+                                    />
                                 </div>
                             </q-date>
                         </q-popup-proxy>
@@ -158,10 +235,14 @@ const isObject = (objValue: any): boolean => {
             </div>
 
             <div class="q-pa-md">
-                <div class="q-mb-sm  text-center">Unit prices</div>
+                <div class="q-mb-sm text-center">Unit prices</div>
 
-                <q-range label v-model="filterModels.unit_price" :max="filterOptions.unit_price?.max"
-                    :min="filterOptions.unit_price?.min" />
+                <q-range
+                    label
+                    v-model="filterModels.unit_price"
+                    :max="filterOptions.unit_price?.max"
+                    :min="filterOptions.unit_price?.min"
+                />
 
                 <div class="minmax flex justify-between">
                     <span>{{ filterOptions.unit_price?.min }}</span>
@@ -172,8 +253,12 @@ const isObject = (objValue: any): boolean => {
             <div class="q-pa-md">
                 <div class="q-mb-sm text-center">Total value</div>
 
-                <q-range label v-model="filterModels.total_value" :max="filterOptions.total_value?.max"
-                    :min="filterOptions.total_value?.min" />
+                <q-range
+                    label
+                    v-model="filterModels.total_value"
+                    :max="filterOptions.total_value?.max"
+                    :min="filterOptions.total_value?.min"
+                />
 
                 <div class="minmax flex justify-between">
                     <span>{{ filterOptions.total_value?.min }}</span>
@@ -183,8 +268,12 @@ const isObject = (objValue: any): boolean => {
             <div class="q-pa-md">
                 <div>Quantity</div>
 
-                <q-range label v-model="filterModels.quantity" :max="filterOptions.quantity?.max"
-                    :min="filterOptions.quantity?.min" />
+                <q-range
+                    label
+                    v-model="filterModels.quantity"
+                    :max="filterOptions.quantity?.max"
+                    :min="filterOptions.quantity?.min"
+                />
 
                 <div class="minmax flex justify-between">
                     <span>{{ filterOptions.quantity?.min }}</span>
@@ -195,12 +284,19 @@ const isObject = (objValue: any): boolean => {
 
         <div class="buttons">
             <q-btn unelevated class="btn-1" type="submit">Search</q-btn>
-            <q-btn unelevated class="btn-2" type="reset" @click="clear">Clear</q-btn>
+            <q-btn unelevated class="btn-2" type="reset" @click="clear"
+                >Clear</q-btn
+            >
         </div>
     </q-form>
 
-    <Table v-if="filteredInventory.length > 0" :column-names="tableColumnNames" :columns="tableData" :data="tableData"
-        :hide-action-buttons="true" />
+    <Table
+        v-if="filteredInventory.length > 0"
+        :column-names="tableColumnNames"
+        :columns="tableData"
+        :data="tableData"
+        :hide-action-buttons="true"
+    />
 </template>
 
 <style scoped>
@@ -232,7 +328,7 @@ const isObject = (objValue: any): boolean => {
 }
 
 .buttons .btn-1 {
-    background-color: #1C77FB;
+    background-color: #1c77fb;
     /* Green */
     border: none;
     border-radius: 5px;
@@ -249,7 +345,7 @@ const isObject = (objValue: any): boolean => {
 .buttons .btn-2 {
     border: none;
     border-radius: 5px;
-    color: #1C77FB;
+    color: #1c77fb;
     cursor: pointer;
     display: inline-block;
     font-size: 14px;
@@ -272,7 +368,6 @@ const isObject = (objValue: any): boolean => {
 }
 
 .pagination li {
-
     margin: 0 5px;
 }
 

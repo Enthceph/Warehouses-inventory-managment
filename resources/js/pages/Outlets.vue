@@ -1,13 +1,11 @@
 <script lang="ts" setup>
-import { useOutletsStore } from "@/js/stores/outlets";
-import AddOutletForm from "@/js/components/Forms/Outlet/AddOutletForm.vue";
-import Table from "@/js/components/Table/Table.vue";
-import UpdateOutletForm from "@/js/components/Forms/Outlet/UpdateOutletForm.vue";
-import DeleteOutletForm from "@/js/components/Forms/Outlet/DeleteOutletForm.vue";
-import { useAuthStore } from "@/js/stores/auth";
+import { useOutletsStore } from '@/js/stores/outlets'
+import AddOutletForm from '@/js/components/Forms/Outlet/AddOutletForm.vue'
+import Table from '@/js/components/Table/Table.vue'
+import UpdateOutletForm from '@/js/components/Forms/Outlet/UpdateOutletForm.vue'
+import DeleteOutletForm from '@/js/components/Forms/Outlet/DeleteOutletForm.vue'
+import { useAuthStore } from '@/js/stores/auth'
 
-const router = useRouter()
-const route = useRoute()
 const outletStore = useOutletsStore()
 const authStore = useAuthStore()
 
@@ -21,7 +19,7 @@ const columnNames = [
     'Address',
     'Contact info',
     'Warehouse',
-    'Created'
+    'Created',
 ]
 
 const columns = computed(() => {
@@ -32,26 +30,39 @@ const columns = computed(() => {
             address: outlet.address,
             contact_info: outlet.contact_info,
             warehouse: outlet.warehouse.name,
-            created_at: outlet.created_at ? new Date(outlet.created_at).toLocaleDateString('ru-RU') : null,
+            created_at: outlet.created_at
+                ? new Date(outlet.created_at).toLocaleDateString('ru-RU')
+                : null,
         }
     })
 })
 </script>
 
 <template>
-    <Table :column-names="columnNames" :columns="columns" :data="outletStore.outlets"
-        :hide-action-buttons="authStore.role !== 'Owner'">
+    <Table
+        :column-names="columnNames"
+        :columns="columns"
+        :data="outletStore.outlets"
+        :hide-action-buttons="authStore.role !== 'Owner'"
+    >
         <template v-slot:addForm="{ submit, cancel }" #addForm>
             <AddOutletForm @cancel="cancel" @submit="submit" />
         </template>
 
         <template v-slot:updateForm="{ submit, cancel, selected }" #updateForm>
-            <UpdateOutletForm :outlet="selected" @cancel="cancel" @submit="submit" />
+            <UpdateOutletForm
+                :outlet="selected"
+                @cancel="cancel"
+                @submit="submit"
+            />
         </template>
 
         <template v-slot:deleteForm="{ submit, cancel, selected }" #deleteForm>
-            <DeleteOutletForm :outlet="selected" @cancel="cancel" @submit="submit" />
+            <DeleteOutletForm
+                :outlet="selected"
+                @cancel="cancel"
+                @submit="submit"
+            />
         </template>
     </Table>
-
 </template>

@@ -2,15 +2,15 @@
 
 <template>
     <div class="center-layout">
-        <slot/>
+        <slot />
     </div>
 </template>
 
 <style scoped>
 .center-layout {
-    display:     grid;
-    min-height:  100vh;
+    display: grid;
+    min-height: 100vh;
     place-items: center;
-    width:       100%;
+    width: 100%;
 }
 </style>

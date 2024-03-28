@@ -5,7 +5,6 @@ import middlewarePipeline from '@/js/router/middleware/middlewarePipeline'
 
 import CenterLayout from '../layouts/CenterLayout.vue'
 import NoLayout from '../layouts/NoLayout.vue'
-import DefaultLayout from '../layouts/DefaultLayout.vue'
 import { Component } from 'vue'
 
 declare module 'vue-router' {

@@ -1,5 +1,5 @@
 export const getBearerToken = (): string => {
-    return "Bearer " + localStorage.getItem('access_token')
+    return 'Bearer ' + localStorage.getItem('access_token')
 }
 
 export const getToken = (): string | null => {

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {useAuthStore} from "@/js/stores/auth";
+import { useAuthStore } from '@/js/stores/auth'
 
 const authStore = useAuthStore()
 
@@ -26,19 +26,19 @@ onMounted(() => {
 <style scoped>
 .badge {
     max-width: 250px;
-    padding:   12px;
-    width:     100%;
+    padding: 12px;
+    width: 100%;
 }
 
 .badge-items {
     align-items: center;
-    display:     flex;
-    gap:         16px;
+    display: flex;
+    gap: 16px;
 }
 
 .user-info {
-    display:        flex;
+    display: flex;
     flex-direction: column;
-    gap:            -6px;
+    gap: -6px;
 }
 </style>

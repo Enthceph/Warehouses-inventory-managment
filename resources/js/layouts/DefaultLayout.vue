@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import TheHeader from '../components/TheHeader.vue'
-import TheMenu from "@/js/components/TheMenu.vue";
+import TheMenu from '@/js/components/TheMenu.vue'
 </script>
 
 <template>
@@ -32,6 +32,6 @@ import TheMenu from "@/js/components/TheMenu.vue";
 
 .page {
     grid-area: 2 / 2 / 3 / 3;
-    padding: 12px
+    padding: 12px;
 }
 </style>
