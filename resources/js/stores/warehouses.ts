@@ -24,12 +24,12 @@ export const useWarehousesStore = defineStore({
     actions: {
         async fetchGetWarehouses(): Promise<Warehouse[]> {
             let res = await getWarehouses()
-            this.warehouses = await res
+            this.warehouses = res.data
             return this.warehouses
         },
         async fetchGetWarehouse(id: number): Promise<Warehouse> {
             let res = await getWarehouse(id)
-            return await res
+            return res.data
         },
         async fetchAddWarehouse(warehouse: AddWarehouseForm) {
             await addWarehouse(warehouse)

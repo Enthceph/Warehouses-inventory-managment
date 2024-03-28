@@ -2,15 +2,15 @@ export interface Warehouse {
     id: number
     name: string
     location: string | null
-    contact_info: string | null
-    created_at: Date | null
+    contactInfo: string | null
+    createdAt: Date | null
 }
 export type UpdateWarehouseForm = Pick<
     Warehouse,
-    'id' | 'name' | 'location' | 'contact_info'
+    'id' | 'name' | 'location' | 'contactInfo'
 >
 
 export type AddWarehouseForm = Pick<
     Warehouse,
-    'name' | 'location' | 'contact_info'
+    'name' | 'location' | 'contactInfo'
 >

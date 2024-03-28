@@ -1,4 +1,4 @@
-import { JSONResponse } from '@/js/types/response.types'
+import { JSONResponse, JSONResponseData } from '@/js/types/response.types'
 import apiRequest from '../utils/request'
 import {
     AddWarehouseForm,
@@ -7,24 +7,24 @@ import {
 } from '@/js/types/warehouse.types'
 
 export const getWarehouses = () =>
-    apiRequest.get('warehouse').json<Warehouse[]>()
+    apiRequest.get('warehouse').json<JSONResponseData<Warehouse[]>>()
 
 export const getWarehouse = (id: Number) =>
-    apiRequest.get(`warehouse/${id}`).json<Warehouse>()
+    apiRequest.get(`warehouse/${id}`).json<JSONResponseData<Warehouse>>()
 
 export const addWarehouse = (warehouse: AddWarehouseForm) =>
     apiRequest
         .post(`warehouse`, {
             json: warehouse,
         })
-        .json<Warehouse>()
+        .json()
 
 export const updateWarehouse = (warehouse: UpdateWarehouseForm) =>
     apiRequest
         .patch(`warehouse/${warehouse.id}`, {
             json: warehouse,
         })
-        .json<Warehouse>()
+        .json()
 
 export const deleteWarehouse = (id: Number) =>
-    apiRequest.delete(`warehouse/${id}`).json<JSONResponse>()
+    apiRequest.delete(`warehouse/${id}`).json()

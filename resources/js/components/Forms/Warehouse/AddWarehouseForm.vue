@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import {useWarehousesStore} from "@/js/stores/warehouses";
-import {AddWarehouseForm} from "@/js/types/warehouse.types";
-import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
+import { useWarehousesStore } from '@/js/stores/warehouses'
+import { AddWarehouseForm } from '@/js/types/warehouse.types'
+import FormWrapper from '@/js/components/Forms/FormWrapper.vue'
 
 const emit = defineEmits(['submit', 'cancel'])
 
 const warehouse = reactive<AddWarehouseForm>({
     name: '',
     location: '',
-    contact_info: '',
+    contactInfo: '',
 })
 
 const loading = ref(false)
@@ -37,10 +37,20 @@ const cancel = () => {
 </script>
 
 <template>
-    <FormWrapper :loading="loading" action-label="Add" title="Add warehouse" @cancel="cancel" @submit="submit">
+    <FormWrapper
+        :loading="loading"
+        action-label="Add"
+        title="Add warehouse"
+        @cancel="cancel"
+        @submit="submit"
+    >
         <q-input
             v-model="warehouse.name"
-            :rules="[v => v.length >= 2 || `The warehouse name must have at least 2 letters`]"
+            :rules="[
+                (v) =>
+                    v.length >= 2 ||
+                    `The warehouse name must have at least 2 letters`,
+            ]"
             hide-bottom-space
             label="Warehouse name"
             placeholder="Enter warehouse name"
@@ -54,7 +64,7 @@ const cancel = () => {
         />
 
         <q-input
-            v-model="warehouse.contact_info"
+            v-model="warehouse.contactInfo"
             label="Contact information"
             placeholder="Enter contact information"
         />
