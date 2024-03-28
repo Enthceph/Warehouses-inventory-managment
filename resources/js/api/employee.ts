@@ -1,4 +1,4 @@
-import { JSONResponse } from '@/js/types/response.types'
+import { JSONResponse, JSONResponseData } from '@/js/types/response.types'
 import apiRequest from '../utils/request'
 import {
     AddEmployeeForm,
@@ -6,24 +6,25 @@ import {
     UpdateEmployeeForm,
 } from '@/js/types/employee.types'
 
-export const getEmployees = () => apiRequest.get('employee').json<Employee[]>()
+export const getEmployees = () =>
+    apiRequest.get('employee').json<JSONResponseData<Employee[]>>()
 
 export const getEmployee = (id: Number) =>
-    apiRequest.get(`employee/${id}`).json<Employee>()
+    apiRequest.get(`employee/${id}`).json<JSONResponseData<Employee>>()
 
 export const addEmployee = (employee: AddEmployeeForm) =>
     apiRequest
         .post(`employee`, {
             json: employee,
         })
-        .json<Employee>()
+        .json()
 
 export const updateEmployee = (employee: UpdateEmployeeForm) =>
     apiRequest
         .patch(`employee/${employee.id}`, {
             json: employee,
         })
-        .json<Employee>()
+        .json()
 
 export const deleteEmployee = (id: Number) =>
-    apiRequest.delete(`employee/${id}`).json<JSONResponse>()
+    apiRequest.delete(`employee/${id}`).json()

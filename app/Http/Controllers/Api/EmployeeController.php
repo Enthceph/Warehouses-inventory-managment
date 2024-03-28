@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Resources\EmployeeCollection;
+use App\Http\Resources\EmployeeResource;
 use App\Models\User;
 use App\Services\EmployeeService;
 use Illuminate\Http\Request;
@@ -23,21 +25,21 @@ class EmployeeController extends Controller
     {
         $this->authorize('view', User::class);
 
-        return $this->service->get();
+        return new EmployeeCollection($this->service->get());
     }
 
-    public function store(StoreEmployeeRequest $request) : User
-    {
-        $this->authorize('store', User::class);
-
-        return $this->service->store($request);
-    }
-
-    public function show(User $user) : User
+    public function show(User $user): EmployeeResource
     {
         $this->authorize('show', $user);
 
-        return $user;
+        return new EmployeeResource($user);
+    }
+
+    public function store(StoreEmployeeRequest $request)
+    {
+        $this->authorize('store', User::class);
+
+        $this->service->store($request);
     }
 
     public function update(UpdateEmployeeRequest $request, User $employee)
@@ -45,16 +47,12 @@ class EmployeeController extends Controller
         $this->authorize('update', $employee);
 
         $this->service->update($request, $employee);
-
-        return response(['message' => 'Employee updated']);
     }
 
-    public function destroy(User $employee) : Response
+    public function destroy(User $employee)
     {
         $this->authorize('delete', $employee);
 
         $employee->delete();
-
-        return response(['message' => 'Employee was deleted']);
     }
 }

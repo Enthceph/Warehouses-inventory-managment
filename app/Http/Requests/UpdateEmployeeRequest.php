@@ -20,4 +20,13 @@ class UpdateEmployeeRequest extends FormRequest
             'password' => 'string|min:8|confirmed',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        if ($this->fullName) {
+            $this->merge([
+                'full_name' => $this->fullName
+            ]);
+        }
+    }
 }

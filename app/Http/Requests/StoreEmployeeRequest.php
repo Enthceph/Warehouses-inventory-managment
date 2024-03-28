@@ -24,11 +24,25 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'full_name' => 'required|string|max:255',
+            'fullName' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'role_id' => 'required|numeric|not_in:1,2|exists:roles,id',
+            'roleId' => 'required|numeric|not_in:1,2|exists:roles,id',
             'password' => 'required|string|min:8|confirmed',
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->fullName) {
+            $this->merge([
+                'full_name' => $this->fullName
+            ]);
+        }
+        if ($this->roleId) {
+            $this->merge([
+                'role_id' => $this->roleId
+            ]);
+        }
     }
 
     public function messages()

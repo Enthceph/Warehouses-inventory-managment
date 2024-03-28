@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import {useEmployeesStore} from "@/js/stores/employees";
-import {AddEmployeeForm} from "@/js/types/employee.types";
-import {useRolesStore} from "@/js/stores/roles";
-import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
+import { useEmployeesStore } from '@/js/stores/employees'
+import { AddEmployeeForm } from '@/js/types/employee.types'
+import { useRolesStore } from '@/js/stores/roles'
+import FormWrapper from '@/js/components/Forms/FormWrapper.vue'
 
 const emit = defineEmits(['submitted', 'cancel'])
 
@@ -16,11 +16,11 @@ const employeeStore = useEmployeesStore()
 const loading = ref(false)
 
 const employee = reactive<AddEmployeeForm>({
-    full_name: '',
+    fullName: '',
     email: '',
     password: '',
     password_confirmation: '',
-    role_id: 6
+    roleId: 6,
 })
 
 const rolesForEmployee = computed(() => {
@@ -53,10 +53,20 @@ const cancel = () => {
 </script>
 
 <template>
-    <FormWrapper :loading="loading" action-label="Add" title="Add employee" @cancel="cancel" @submit="submit">
+    <FormWrapper
+        :loading="loading"
+        action-label="Add"
+        title="Add employee"
+        @cancel="cancel"
+        @submit="submit"
+    >
         <q-input
-            v-model="employee.full_name"
-            :rules="[v => v.length >= 2 || `Employee name must have at least 2 letters`]"
+            v-model="employee.fullName"
+            :rules="[
+                (v) =>
+                    v.length >= 2 ||
+                    `Employee name must have at least 2 letters`,
+            ]"
             hide-bottom-space
             label="Employee Name"
             placeholder="Enter employee name"
@@ -65,7 +75,7 @@ const cancel = () => {
 
         <q-input
             v-model="employee.email"
-            :rules="[val => !!val || 'Enter the employee\'s email address']"
+            :rules="[(val) => !!val || 'Enter the employee\'s email address']"
             hide-bottom-space
             label="E-mail address of the employee"
             placeholder="Enter the employee's email address"
@@ -74,7 +84,7 @@ const cancel = () => {
 
         <q-input
             v-model="employee.password"
-            :rules="[val => !!val || 'Field is required']"
+            :rules="[(val) => !!val || 'Field is required']"
             autocomplete="off"
             hide-bottom-space
             label="Password"
@@ -82,14 +92,16 @@ const cancel = () => {
         />
         <q-input
             v-model="employee.password_confirmation"
-            :rules="[v => v === employee.password || `Passwords are not equal`]"
+            :rules="[
+                (v) => v === employee.password || `Passwords are not equal`,
+            ]"
             hide-bottom-space
             label="Repeat password"
             type="password"
         />
 
         <q-select
-            v-model="employee.role_id"
+            v-model="employee.roleId"
             :options="rolesForEmployee"
             emit-value
             hide-bottom-space

@@ -19,9 +19,9 @@ const columns = computed(() => {
     return employeeStore.employees.map((employee) => {
         return {
             id: employee.id,
-            full_name: employee.full_name,
+            full_name: employee.fullName,
             email: employee.email,
-            created_at: new Date(employee.created_at).toLocaleDateString(
+            created_at: new Date(employee.createdAt).toLocaleDateString(
                 'ru-RU'
             ),
             role: employee.role.name,

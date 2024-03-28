@@ -23,25 +23,26 @@ export const useEmployeesStore = defineStore({
     }),
     actions: {
         async fetchGetEmployees(): Promise<Employee[]> {
-            let res = await getEmployees()
-            this.employees = await res
+            const res = await getEmployees()
+            this.employees = res.data
             return this.employees
         },
 
         async fetchGetEmployee(id: number): Promise<Employee> {
-            return await getEmployee(id)
+            const res = await getEmployee(id)
+            return res.data
         },
 
         async fetchAddEmployee(employee: AddEmployeeForm) {
-            return await addEmployee(employee)
+            await addEmployee(employee)
         },
 
         async fetchUpdateEmployee(employee: UpdateEmployeeForm) {
-            return await updateEmployee(employee)
+            await updateEmployee(employee)
         },
 
         async fetchDeleteEmployee(id: number) {
-            return await deleteEmployee(id)
+            await deleteEmployee(id)
         },
     },
 })

@@ -7,8 +7,7 @@ export interface Employee {
         id: number
         name: string
     }
-    company_id: number
-    created_at: Date
+    createdAt: Date
 }
 
 export type AddEmployeeForm = Pick<
