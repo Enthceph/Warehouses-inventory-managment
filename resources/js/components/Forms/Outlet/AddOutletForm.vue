@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import {useOutletsStore} from "@/js/stores/outlets";
-import {OutletAddForm} from "@/js/types/outlet.types";
-import FormWrapper from "@/js/components/Forms/FormWrapper.vue";
+import { useOutletsStore } from '@/js/stores/outlets'
+import { OutletAddForm } from '@/js/types/outlet.types'
+import FormWrapper from '@/js/components/Forms/FormWrapper.vue'
 
 const emit = defineEmits(['submit', 'cancel'])
 
 const outlet = reactive<OutletAddForm>({
     name: '',
     address: '',
-    contact_info: '',
-    warehouse_name: null
+    contactInfo: '',
+    warehouseName: null,
 })
 
 const loading = ref(false)
@@ -37,10 +37,20 @@ const cancel = () => {
 </script>
 
 <template>
-    <FormWrapper :loading="loading" action-label="Add" title="Add outlet" @cancel="cancel" @submit="submit">
+    <FormWrapper
+        :loading="loading"
+        action-label="Add"
+        title="Add outlet"
+        @cancel="cancel"
+        @submit="submit"
+    >
         <q-input
             v-model="outlet.name"
-            :rules="[v => v.length >= 2 || `The outlet name must have at least 2 letters`]"
+            :rules="[
+                (v) =>
+                    v.length >= 2 ||
+                    `The outlet name must have at least 2 letters`,
+            ]"
             hide-bottom-space
             label="Outlet name"
             placeholder="Enter the name of the outlet"
@@ -54,13 +64,13 @@ const cancel = () => {
         />
 
         <q-input
-            v-model="outlet.contact_info"
+            v-model="outlet.contactInfo"
             label="Contact Information"
             placeholder="Enter contact information"
         />
 
         <q-input
-            v-model="outlet.warehouse_name"
+            v-model="outlet.warehouseName"
             label="Warehouse name (optional)"
             placeholder="Enter warehouse name"
         />

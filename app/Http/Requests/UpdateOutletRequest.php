@@ -26,9 +26,23 @@ class UpdateOutletRequest extends FormRequest
         return [
             'name' => 'string|max:255',
             'address' => 'string|max:255|nullable',
-            'contact_info' => 'string|max:255|nullable',
-            'warehouse_id' => 'integer'
+            'contactInfo' => 'string|max:255|nullable',
+            'warehouseId' => 'integer'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->contactInfo) {
+            $this->merge([
+                'contact_info' => $this->contactInfo
+            ]);
+        }
+        if ($this->warehouseId) {
+            $this->merge([
+                'warehouse_id' => $this->warehouseId
+            ]);
+        }
     }
 
     public function messages()

@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOutletRequest;
 use App\Http\Requests\UpdateOutletRequest;
+use App\Http\Resources\OutletCollection;
+use App\Http\Resources\OutletResource;
 use App\Models\Outlet;
 use App\Services\OutletService;
-use Illuminate\Http\Response;
 
 class OutletController extends Controller
 {
@@ -15,45 +16,39 @@ class OutletController extends Controller
         protected OutletService $service
     ) {
     }
-    /**
-     * @return Outlet[]
-     */
-    public function index()
+
+    public function index(): OutletCollection
     {
         $this->authorize('view', Outlet::class);
 
-        return $this->service->get();
+        return new OutletCollection($this->service->get());
     }
 
-    public function store(StoreOutletRequest $request) : Outlet
+    public function show(Outlet $outlet): OutletResource
+    {
+        $this->authorize('view', $outlet);
+
+        return new OutletResource($outlet);
+    }
+
+    public function store(StoreOutletRequest $request)
     {
         $this->authorize('store', Outlet::class);
 
-        return $this->service->store($request);
+        $this->service->store($request);
     }
 
-    public function update(UpdateOutletRequest $request, Outlet $outlet) : Response
+    public function update(UpdateOutletRequest $request, Outlet $outlet)
     {
         $this->authorize('update', $outlet);
 
         $this->service->update($request, $outlet);
-
-        return response(['message' => 'Outlet changed successfully']);
     }
 
-    public function show(Outlet $outlet) : Outlet
-    {
-        $this->authorize('view', $outlet);
-
-        return $outlet;
-    }
-
-    public function destroy(Outlet $outlet) : Response
+    public function destroy(Outlet $outlet)
     {
         $this->authorize('delete', $outlet);
 
         $outlet->delete();
-
-        return response(['message' => 'Outlet was deleted']);
     }
 }

@@ -28,10 +28,10 @@ const columns = computed(() => {
             id: outlet.id,
             name: outlet.name,
             address: outlet.address,
-            contact_info: outlet.contact_info,
+            contact_info: outlet.contactInfo,
             warehouse: outlet.warehouse.name,
-            created_at: outlet.created_at
-                ? new Date(outlet.created_at).toLocaleDateString('ru-RU')
+            createdAt: outlet.createdAt
+                ? new Date(outlet.createdAt).toLocaleDateString('ru-RU')
                 : null,
         }
     })

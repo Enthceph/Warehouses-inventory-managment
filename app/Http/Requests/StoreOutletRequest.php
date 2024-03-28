@@ -16,9 +16,23 @@ class StoreOutletRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'address' => 'string|max:255|nullable',
-            'contact_info' => 'string|max:255|nullable',
-            'warehouse_name' => 'string|nullable'
+            'contactInfo' => 'string|max:255|nullable',
+            'warehouseName' => 'string|nullable'
         ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->contactInfo) {
+            $this->merge([
+                'contact_info' => $this->contactInfo
+            ]);
+        }
+        if ($this->warehouseName) {
+            $this->merge([
+                'warehouse_name' => $this->warehouseName
+            ]);
+        }
     }
 
     public function messages()

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Http\Requests\StoreOutletRequest;
@@ -23,17 +24,7 @@ class OutletService
 
         $outlets->load('warehouse');
 
-        return $outlets->map(function ($outlet) {
-            return [
-                'id' => $outlet->id,
-                'name' => $outlet->name,
-                'address' => $outlet->address,
-                'contact_info' => $outlet->contact_info,
-                'warehouse' => $outlet->warehouse,
-                'warehouse_id' => $outlet->warehouse_id,
-                'created_at' => $outlet->created_at
-            ];
-        });
+        return $outlets;
     }
 
     public function store(StoreOutletRequest $request)
