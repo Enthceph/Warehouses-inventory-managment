@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { setToken } from "@/js/utils/token";
-import { login } from "@/js/api/auth";
+import { setToken } from '@/js/utils/token'
+import { login } from '@/js/api/auth'
 
-const emit = defineEmits<{ (e: 'submit'): void; }>();
+const emit = defineEmits<{ (e: 'submit'): void }>()
 
 const form = ref(null)
 const data = reactive({
     email: 'test@test.com',
-    password: 'qwertyui'
+    password: 'qwertyui',
 })
 const loading = ref(false)
 
@@ -16,11 +16,11 @@ const submit = async () => {
 
     try {
         const res = await login(data)
-        setToken(res.access_token);
+        setToken(res.accessToken)
 
         emit('submit')
     } catch (error) {
-        console.error("Failed to update company", error)
+        console.error('Failed to update company', error)
     } finally {
         loading.value = false
     }
@@ -29,22 +29,39 @@ const submit = async () => {
 
 <template>
     <q-card>
-        <q-form ref="form" autocomplete="off" class="form" @submit.prevent="submit">
+        <q-form
+            ref="form"
+            autocomplete="off"
+            class="form"
+            @submit.prevent="submit"
+        >
             <h2 class="text-h5 font-bold">Login</h2>
 
             <div class="form-inputs">
-                <q-input v-model="data.email" autocomplete="off" label="Email" required type="email" />
-                <q-input v-model="data.password" autocomplete="off" label="Password" required type="password" />
+                <q-input
+                    v-model="data.email"
+                    autocomplete="off"
+                    label="Email"
+                    required
+                    type="email"
+                />
+                <q-input
+                    v-model="data.password"
+                    autocomplete="off"
+                    label="Password"
+                    required
+                    type="password"
+                />
             </div>
 
             <div class="buttons-group">
-                <q-btn class="w-full" color="info" type="submit">
-                    Login
-                </q-btn>
+                <q-btn class="w-full" color="info" type="submit"> Login </q-btn>
             </div>
 
             <div class="to-registration-form">
-                <router-link to="/registration">Not registered yet?</router-link>
+                <router-link to="/registration"
+                    >Not registered yet?</router-link
+                >
             </div>
         </q-form>
     </q-card>

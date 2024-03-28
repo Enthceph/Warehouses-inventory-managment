@@ -20,7 +20,7 @@ export const checkAuth = () =>
 
 export const getAuthUser = () => apiRequest.get('getAuthUser').json<AuthUser>()
 
-export const changeName = (data: { name: AuthUser['full_name'] }) =>
+export const changeName = (data: { name: AuthUser['fullName'] }) =>
     apiRequest.patch('changeName', { json: data }).json<JSONResponse>()
 
 export const changeEmail = (data: { email: AuthUser['email'] }) =>

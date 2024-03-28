@@ -6,7 +6,7 @@ export const useAuthStore = defineStore({
     id: 'authStore',
     state: (): AuthUser => ({
         id: 0,
-        full_name: '',
+        fullName: '',
         email: '',
         role: '',
         company: '',
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore({
 
         setUser(auth: AuthUser) {
             this.id = auth.id
-            this.full_name = auth.full_name
+            this.fullName = auth.fullName
             this.email = auth.email
             this.role = auth.role
             this.company = auth.company
@@ -31,7 +31,7 @@ export const useAuthStore = defineStore({
 
         clearUser() {
             this.id = 0
-            this.full_name = ''
+            this.fullName = ''
             this.email = ''
             this.role = ''
             this.company = ''
