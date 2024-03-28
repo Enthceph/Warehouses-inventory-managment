@@ -24,7 +24,7 @@ export const useInventoriesStore = defineStore({
         },
         async fetchGetInventory(id: number): Promise<Inventory> {
             let res = await getInventory(id)
-            return await res
+            return res
         },
         async fetchAddInventory(inventory: InventoryFormData) {
             await addInventory(inventory)

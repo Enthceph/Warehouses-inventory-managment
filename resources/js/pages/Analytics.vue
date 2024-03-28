@@ -17,25 +17,25 @@ const filteredInventory = ref<Inventory[]>([])
 
 const filterOptions = reactive<AnalyticsFilterOptions>({
     products: [],
-    additional_info: [],
+    additionalInfo: [],
     warehouses: [],
     outlets: [],
-    unit_price: undefined,
-    total_value: undefined,
+    unitPrice: undefined,
+    totalValue: undefined,
     quantity: undefined,
-    created_at: undefined,
+    createdAt: undefined,
 })
 
 const filterModels = reactive<AnalyticsFilterModels>({
     products: undefined,
     warehouses: undefined,
     outlets: undefined,
-    additional_info: undefined,
+    additionalInfo: undefined,
     quantity: undefined,
-    created_at: undefined,
-    expires_at: undefined,
-    unit_price: undefined,
-    total_value: undefined,
+    createdAt: undefined,
+    expiresAt: undefined,
+    unitPrice: undefined,
+    totalValue: undefined,
 })
 
 const submit = async () => {
@@ -43,19 +43,20 @@ const submit = async () => {
 
     router.replace({ query })
 
-    filteredInventory.value = await getInventories(query)
+    const inventoryPagination = await getInventories(query)
+    filteredInventory.value = inventoryPagination.data
 }
 
 const clear = () => {
     filterModels.products = undefined
     filterModels.warehouses = undefined
     filterModels.outlets = undefined
-    filterModels.additional_info = undefined
+    filterModels.additionalInfo = undefined
     filterModels.quantity = undefined
-    filterModels.created_at = undefined
-    filterModels.expires_at = undefined
-    filterModels.unit_price = undefined
-    filterModels.total_value = undefined
+    filterModels.createdAt = undefined
+    filterModels.expiresAt = undefined
+    filterModels.unitPrice = undefined
+    filterModels.totalValue = undefined
 }
 
 const tableColumnNames = [
@@ -75,15 +76,15 @@ const tableData = computed(() =>
             id: inventory.id,
             product: inventory.product.name,
             quantity: inventory.quantity,
-            unit_price: inventory.unit_price,
-            total_value: inventory.total_value,
+            unitPrice: inventory.unitPrice,
+            totalValue: inventory.totalValue,
             warehouse: inventory.warehouse.name,
-            created_at: new Date(inventory.created_at).toLocaleDateString(
+            createdAt: new Date(inventory.createdAt).toLocaleDateString(
                 'ru-RU'
             ),
-            expires_at:
-                inventory.expires_at !== null
-                    ? new Date(inventory.expires_at).toLocaleDateString('ru-RU')
+            expiresAt:
+                inventory.expiresAt !== null
+                    ? new Date(inventory.expiresAt).toLocaleDateString('ru-RU')
                     : null,
         }
     })
@@ -150,10 +151,10 @@ const isObject = (objValue: any): boolean => {
             />
 
             <q-select
-                name="additional_info"
+                name="additionalInfo"
                 label="Additional info"
-                v-model="filterModels.additional_info"
-                :options="filterOptions.additional_info"
+                v-model="filterModels.additionalInfo"
+                :options="filterOptions.additionalInfo"
                 multiple
                 filled
             />
@@ -174,7 +175,7 @@ const isObject = (objValue: any): boolean => {
                             transition-hide="scale"
                             transition-show="scale"
                         >
-                            <q-date v-model="filterModels.created_at" range>
+                            <q-date v-model="filterModels.createdAt" range>
                                 <div
                                     class="row items-center justify-end q-gutter-sm"
                                 >
@@ -211,7 +212,7 @@ const isObject = (objValue: any): boolean => {
                             transition-hide="scale"
                             transition-show="scale"
                         >
-                            <q-date v-model="filterModels.expires_at" range>
+                            <q-date v-model="filterModels.expiresAt" range>
                                 <div
                                     class="row items-center justify-end q-gutter-sm"
                                 >
@@ -239,14 +240,14 @@ const isObject = (objValue: any): boolean => {
 
                 <q-range
                     label
-                    v-model="filterModels.unit_price"
-                    :max="filterOptions.unit_price?.max"
-                    :min="filterOptions.unit_price?.min"
+                    v-model="filterModels.unitPrice"
+                    :max="filterOptions.unitPrice?.max"
+                    :min="filterOptions.unitPrice?.min"
                 />
 
                 <div class="minmax flex justify-between">
-                    <span>{{ filterOptions.unit_price?.min }}</span>
-                    <span>{{ filterOptions.unit_price?.max }}</span>
+                    <span>{{ filterOptions.unitPrice?.min }}</span>
+                    <span>{{ filterOptions.unitPrice?.max }}</span>
                 </div>
             </div>
 
@@ -255,14 +256,14 @@ const isObject = (objValue: any): boolean => {
 
                 <q-range
                     label
-                    v-model="filterModels.total_value"
-                    :max="filterOptions.total_value?.max"
-                    :min="filterOptions.total_value?.min"
+                    v-model="filterModels.totalValue"
+                    :max="filterOptions.totalValue?.max"
+                    :min="filterOptions.totalValue?.min"
                 />
 
                 <div class="minmax flex justify-between">
-                    <span>{{ filterOptions.total_value?.min }}</span>
-                    <span>{{ filterOptions.total_value?.max }}</span>
+                    <span>{{ filterOptions.totalValue?.min }}</span>
+                    <span>{{ filterOptions.totalValue?.max }}</span>
                 </div>
             </div>
             <div class="q-pa-md">

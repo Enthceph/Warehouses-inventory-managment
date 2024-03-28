@@ -28,10 +28,10 @@ const fetchNewPage = async (query: PaginationModel) => {
         page: query.page,
         perPage: query.per_page || 20,
     })
-
-    pagination.page = res.current_page
-    pagination.last_page = res.last_page
-    pagination.per_page = res.per_page
+    console.log(res)
+    pagination.page = res.meta.current_page
+    pagination.last_page = res.meta.last_page
+    pagination.per_page = res.meta.per_page
 
     router.replace({
         query: {
@@ -58,15 +58,15 @@ const columns = computed(() => {
             id: inventory.id,
             product: inventory.product.name,
             quantity: inventory.quantity,
-            unit_price: inventory.unit_price,
-            total_value: inventory.total_value,
+            unit_price: inventory.unitPrice,
+            total_value: inventory.totalValue,
             warehouse: inventory.warehouse.name,
-            created_at: new Date(inventory.created_at).toLocaleDateString(
+            created_at: new Date(inventory.createdAt).toLocaleDateString(
                 'ru-RU'
             ),
             expires_at:
-                inventory.expires_at !== null
-                    ? new Date(inventory.expires_at).toLocaleDateString('ru-RU')
+                inventory.expiresAt !== null
+                    ? new Date(inventory.expiresAt).toLocaleDateString('ru-RU')
                     : null,
         }
     })

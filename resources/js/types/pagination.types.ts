@@ -1,17 +1,25 @@
 export interface Pagination<T = any> {
     data: T[]
-    current_page: number
-    first_page_url: string
-    from: number
-    last_page: number
-    last_page_url: string
-    links: PaginationLink[]
-    next_page_url: string
-    path: string
-    per_page: number
-    prev_page_url: string
-    to: number
-    total: number
+    links: {
+        first: string | null
+        last: string | null
+        next: string | null
+        prev: string | null
+    }
+    meta: {
+        current_page: number
+        first_page_url: string
+        from: number
+        last_page: number
+        last_page_url: string
+        links: PaginationLink[]
+        next_page_url: string
+        path: string
+        per_page: number
+        prev_page_url: string
+        to: number
+        total: number
+    }
 }
 
 interface PaginationLink {

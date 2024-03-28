@@ -4,37 +4,35 @@ import { Warehouse } from '@/js/types/warehouse.types'
 export interface Inventory {
     id: number
     quantity: number
-    unit_price: number
-    total_value: number
-    product_id: number
-    warehouse_id: number
-    created_at: string
-    updated_at: string
-    deleted_at: null | string
-    expires_at: string | null
+    unitPrice: number
+    totalValue: number
+    productId: number
+    warehouseId: number
+    createdAt: string
+    expiresAt: string | null
     product: Product
     warehouse: Warehouse
 }
 
 export type InventoryFormData = Pick<
     Inventory,
-    'quantity' | 'unit_price' | 'total_value' | 'product_id' | 'expires_at'
+    'quantity' | 'unitPrice' | 'totalValue' | 'productId' | 'expiresAt'
 > & {
-    warehouse_id: Inventory['warehouse_id'] | null
+    warehouseId: Inventory['warehouseId'] | null
 }
 
 export interface AnalyticsFilterOptions {
     products: String[]
-    additional_info: String[]
+    additionalInfo: String[]
     warehouses: String[]
     outlets: String[]
-    unit_price:
+    unitPrice:
         | {
               min: number
               max: number
           }
         | undefined
-    total_value:
+    totalValue:
         | {
               min: number
               max: number
@@ -46,7 +44,7 @@ export interface AnalyticsFilterOptions {
               max: number
           }
         | undefined
-    created_at:
+    createdAt:
         | {
               from: Date
               to: Date
@@ -58,32 +56,32 @@ export interface AnalyticsFilterModels {
     products: String[] | undefined
     warehouses: String[] | undefined
     outlets: String[] | undefined
-    additional_info: String[] | undefined
+    additionalInfo: String[] | undefined
     quantity:
         | {
               min: number
               max: number
           }
         | undefined
-    created_at:
+    createdAt:
         | {
               from: number
               to: number
           }
         | undefined
-    expires_at:
+    expiresAt:
         | {
               from: number
               to: number
           }
         | undefined
-    unit_price:
+    unitPrice:
         | {
               min: number
               max: number
           }
         | undefined
-    total_value:
+    totalValue:
         | {
               min: number
               max: number

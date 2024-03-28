@@ -98,7 +98,7 @@ class InventoryService
                 $query->where('company_id', $companyId);
             })->get()->toArray('data');
 
-        if(!$inventories){
+        if (!$inventories) {
             return [];
         }
 
@@ -121,7 +121,9 @@ class InventoryService
         $productNames = array_values(
             array_unique(
                 array_column(
-                    array_column($inventories, 'product'), 'name')
+                    array_column($inventories, 'product'),
+                    'name'
+                )
             )
         );
 
@@ -188,5 +190,4 @@ class InventoryService
     {
         return $inventory->delete();
     }
-
 }
