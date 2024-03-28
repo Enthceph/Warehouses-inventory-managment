@@ -17,17 +17,15 @@ class WarehouseController extends Controller
         protected WarehouseService $service
     ) {
     }
-    /**
-     * @return Warehouse[]
-     */
-    public function index()
+
+    public function index(): WarehouseCollection
     {
         $this->authorize('view', Warehouse::class);
 
         return new WarehouseCollection($this->service->get());
     }
 
-    public function show(Warehouse $warehouse)
+    public function show(Warehouse $warehouse): WarehouseResource
     {
         $this->authorize('show', $warehouse);
 

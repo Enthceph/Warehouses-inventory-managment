@@ -18,10 +18,8 @@ class EmployeeController extends Controller
         protected EmployeeService $service
     ) {
     }
-    /**
-     * @return User[]
-     */
-    public function index()
+
+    public function index(): EmployeeCollection
     {
         $this->authorize('view', User::class);
 

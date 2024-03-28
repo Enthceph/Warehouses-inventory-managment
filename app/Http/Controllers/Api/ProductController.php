@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -17,19 +18,19 @@ class ProductController extends Controller
     ) {
     }
 
-    /**
-     * @return Product[]
-     */
-    public function index()
+
+    public function index(): ProductCollection
     {
         $this->authorize('view', Product::class);
 
-        return new ProductCollection($this->service->get()) ;
+        return new ProductCollection($this->service->get());
     }
-    public function show(Product $product) : Product
+
+    public function show(Product $product): ProductResource
     {
         $this->authorize('view', $product);
-        return $this->service->show($product);
+
+        return new ProductResource($this->service->show($product));
     }
 
     public function store(StoreProductRequest $request)

@@ -28,7 +28,7 @@ const fetchNewPage = async (query: PaginationModel) => {
         page: query.page,
         perPage: query.per_page || 20,
     })
-    console.log(res)
+
     pagination.page = res.meta.current_page
     pagination.last_page = res.meta.last_page
     pagination.per_page = res.meta.per_page
