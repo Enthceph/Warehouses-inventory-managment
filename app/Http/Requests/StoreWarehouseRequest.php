@@ -32,6 +32,15 @@ class StoreWarehouseRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        if ($this->contactInfo) {
+            $this->merge([
+                'contact_info' => $this->contactInfo
+            ]);
+        }
+    }
+
     public function messages()
     {
         return [

@@ -20,10 +20,10 @@ const tableData = computed(() => {
         return {
             id: warehouse.id,
             name: warehouse.name,
-            contact_info: warehouse.contact_info,
+            contact_info: warehouse.contactInfo,
             location: warehouse.location,
-            created_at: warehouse.created_at
-                ? new Date(warehouse.created_at).toLocaleDateString('ru-RU')
+            created_at: warehouse.createdAt
+                ? new Date(warehouse.createdAt).toLocaleDateString('ru-RU')
                 : null,
         }
     })
