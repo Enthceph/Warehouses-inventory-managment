@@ -20,11 +20,9 @@ const columns = computed(() =>
         return {
             id: product.id,
             name: product.name,
-            additional_info: product.additional_info,
+            additionalInfo: product.additionalInfo,
             category: product.category.name,
-            created_at: new Date(product.created_at).toLocaleDateString(
-                'ru-RU'
-            ),
+            createdAt: new Date(product.createdAt).toLocaleDateString('ru-RU'),
         }
     })
 )

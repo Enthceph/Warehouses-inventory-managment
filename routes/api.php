@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\InventoryController;
 use App\Http\Controllers\Api\OutletController;
 use App\Http\Controllers\Api\ProductCategoriesController;
-use App\Http\Controllers\Api\ProductsController;
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\WarehouseController;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('outlet', OutletController::class);
     Route::apiResource('employee', EmployeeController::class);
     Route::apiResource('company', CompanyController::class);
-    Route::apiResource('product', ProductsController::class);
+    Route::apiResource('product', ProductController::class);
     Route::apiResource('productCategory', ProductCategoriesController::class);
 
     Route::apiResource('role', RoleController::class)->only('index');
