@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
+use App\Http\Resources\ProductCategoryCollection;
+use App\Http\Resources\ProductCategoryResource;
 use App\Models\ProductCategory;
 use App\Services\ProductCategoryService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Response;
 
 class ProductCategoriesController extends Controller
 {
@@ -17,46 +17,38 @@ class ProductCategoriesController extends Controller
     ) {
     }
 
-    /**
-     * @return ProductCategory[]
-     */
-    public function index()
+
+    public function index(): ProductCategoryCollection
     {
         $this->authorize('view', ProductCategory::class);
 
-        return $this->service->get();
+        return new ProductCategoryCollection($this->service->get());
     }
 
-    public function show(ProductCategory $productCategory) : ProductCategory
+    public function show(ProductCategory $productCategory): ProductCategoryResource
     {
         $this->authorize('view', $productCategory);
 
-        return $this->service->show($productCategory);
+        return new ProductCategoryResource($this->service->show($productCategory));
     }
-    public function store(StoreProductCategoryRequest $request) : Response
+    public function store(StoreProductCategoryRequest $request)
     {
         $this->authorize('store', ProductCategory::class);
 
         $this->service->store($request);
-
-        return response(['message' => 'Product created successfully']);
     }
 
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory) : Response
+    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
         $this->authorize('update', $productCategory);
 
         $this->service->update($request, $productCategory);
-
-        return response(['message' => 'Product category changed successfully']);
     }
 
-    public function destroy(ProductCategory $productCategory) : Response
+    public function destroy(ProductCategory $productCategory)
     {
         $this->authorize('delete', $productCategory);
 
         $this->service->destroy($productCategory);
-
-        return response(['message' => 'Product category was deleted']);
     }
 }

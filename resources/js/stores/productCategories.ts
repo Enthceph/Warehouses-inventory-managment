@@ -30,7 +30,7 @@ export const useProductCategoriesStore = defineStore({
             this.loading = true
 
             let res = await getProductCategories()
-            this.categories = await res
+            this.categories = res.data
 
             this.loading = false
 
@@ -38,7 +38,7 @@ export const useProductCategoriesStore = defineStore({
         },
         async fetchGetProductCategory(id: number): Promise<ProductCategory> {
             let res = await getProductCategory(id)
-            return await res
+            return res.data
         },
         async fetchAddProductCategory(category: AddProductCategoryForm) {
             await addProductCategory(category)
