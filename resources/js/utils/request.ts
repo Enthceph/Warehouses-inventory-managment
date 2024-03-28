@@ -30,14 +30,10 @@ const apiRequest = ky.create({
                     }
 
                     return res
-                } else {
-                    console.error('Non-JSON response received')
-                    throw new Error('Non-JSON response received')
                 }
             },
         ],
     },
-    // ${import.meta.env.VITE_SERVER_URL}/
     prefixUrl: `api/`,
 })
 
